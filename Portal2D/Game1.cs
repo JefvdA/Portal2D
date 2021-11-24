@@ -2,6 +2,7 @@
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using Portal2D.Classes;
+using Portal2D.Interfaces;
 
 namespace Portal2D
 {
@@ -11,6 +12,8 @@ namespace Portal2D
         private SpriteBatch _spriteBatch;
 
         private Texture2D _heroTexture;
+        private IInputReader _inputReader;
+        private MovementManager _movementManager;
 
         private Hero hero;
 
@@ -26,7 +29,7 @@ namespace Portal2D
             // TODO: Add your initialization logic here
             base.Initialize();
 
-            hero = new Hero(_heroTexture);
+            hero = new Hero(_heroTexture, _inputReader, _movementManager);
         }
 
         protected override void LoadContent()
@@ -35,6 +38,8 @@ namespace Portal2D
 
             // TODO: use this.Content to load your game content here
             _heroTexture = Content.Load<Texture2D>("CharacterSheet");
+            _inputReader = new KeyboardReader();
+            _movementManager = new MovementManager();
         }
 
         protected override void Update(GameTime gameTime)
