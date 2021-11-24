@@ -13,20 +13,9 @@ namespace Portal2D.Classes
     {
         private Texture2D texture;
         private MovementManager movementManager;
-        private Vector2 position ;
+        public Vector2 position { get; set; }
 
-        public Vector2 Position
-        {
-            get { return position; }
-            set { position = value; }
-        }
-        private IInputReader inputReader;
-
-        public IInputReader InputReader
-        {
-            get { return inputReader; }
-            set { inputReader = value; }
-        }
+        public IInputReader inputReader { get; set; }
 
         Animation animation;
 
@@ -39,7 +28,7 @@ namespace Portal2D.Classes
             animation = new Animation();
             animation.GetFramesFromTextureProperties(texture.Width, texture.Height, 6, 1);
 
-            position = new Vector2(0, 0);
+            position = new Vector2(0, 100);
             //speed = new Vector2(0, 0);
         }
 

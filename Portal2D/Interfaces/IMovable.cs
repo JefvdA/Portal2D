@@ -7,8 +7,8 @@ namespace Portal2D.Interfaces
 {
     interface IMovable
     {
-        public Vector2 Position { get; set; }
-        public IInputReader InputReader { get; set; }
+        public Vector2 position { get; set; }
+        public IInputReader inputReader { get; set; }
 
     }
 }
