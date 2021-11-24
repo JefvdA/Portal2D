@@ -5,9 +5,9 @@ using System.Text;
 
 namespace Portal2D.Classes
 {
-    class MovementManager
+    static class MovementManager
     {
-        public void Move(IMovable movable)
+        public static void Move(IMovable movable)
         {
             var direction = movable.InputReader.ReadInput();
             movable.Position += direction;

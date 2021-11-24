@@ -12,7 +12,6 @@ namespace Portal2D.Classes
     class Hero : IGameObject,IMovable
     {
         private Texture2D texture;
-        private MovementManager movementManager;
         private Vector2 position ;
 
         public Vector2 Position
@@ -30,11 +29,10 @@ namespace Portal2D.Classes
 
         Animation animation;
 
-        public Hero(Texture2D texture, IInputReader inputReader, MovementManager movementManager)
+        public Hero(Texture2D texture, IInputReader inputReader)
         {
             this.texture = texture;
             this.inputReader = inputReader;
-            this.movementManager = movementManager;
 
             animation = new Animation();
             animation.GetFramesFromTextureProperties(texture.Width, texture.Height, 6, 1);
@@ -56,7 +54,7 @@ namespace Portal2D.Classes
 
         public void Move()
         {
-            movementManager.Move(this);
+            MovementManager.Move(this);
         }
         //public void ChangeInput(IInputReader inputReader)
         //{
