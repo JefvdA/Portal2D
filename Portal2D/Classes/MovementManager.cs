@@ -7,10 +7,11 @@ namespace Portal2D.Classes
 {
     static class MovementManager
     {
-        public static void Move(IMovable movable)
+        public static void Move(IMovable moveable)
         {
-            var direction = movable.InputReader.ReadInput();
-            movable.Position += direction;
+            var direction = moveable.InputReader.ReadInput();
+            var afstand = direction* moveable.Speed;
+            moveable.Position += direction;
         }
 
     }
