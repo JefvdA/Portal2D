@@ -1,0 +1,11 @@
+{
+  "Version": 1,
+  "ProjectMap": {
+    "356a2ef8-25e9-4dc9-99bb-a393df84e6ad": {
+      "ProjectGuid": "356a2ef8-25e9-4dc9-99bb-a393df84e6ad",
+      "DisplayName": "Portal2D",
+      "ColorIndex": 0
+    }
+  },
+  "NextColorIndex": 1
+}

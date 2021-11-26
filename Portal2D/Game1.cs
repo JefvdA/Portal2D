@@ -11,11 +11,18 @@ namespace Portal2D
         private GraphicsDeviceManager _graphics;
         private SpriteBatch _spriteBatch;
 
+        private Color backGroundColor = Color.CornflowerBlue;
+
         private Texture2D _heroTexture;
         private IInputReader _inputReader;
-        //private MovementManager _movementManager;
 
         private Hero hero;
+
+        // Variables for block
+        private Texture2D _blockTexture;
+
+        private Block block1;
+        private Block block2;
 
         public Game1()
         {
@@ -26,17 +33,21 @@ namespace Portal2D
 
         protected override void Initialize()
         {
-            // TODO: Add your initialization logic here
             base.Initialize();
 
             hero = new Hero(_heroTexture, _inputReader);
+
+            block1 = new Block(_blockTexture, Color.Green, 5, new Vector2(125, 125));
+            block2 = new Block(_blockTexture, Color.Red, 5, new Vector2(150, 150));
         }
 
         protected override void LoadContent()
         {
             _spriteBatch = new SpriteBatch(GraphicsDevice);
 
-            // TODO: use this.Content to load your game content here
+            _blockTexture = new Texture2D(GraphicsDevice, 1, 1);
+            _blockTexture.SetData(new[] { Color.White});
+
             _heroTexture = Content.Load<Texture2D>("CharacterSheet");
             _inputReader = new KeyboardReader();
         }
@@ -46,19 +57,23 @@ namespace Portal2D
             if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
                 Exit();
 
-            // TODO: Add your update logic here
             hero.Update(gameTime);
+
+            //if (block1.Rect.Intersects(block2.Rect))
+            //    backGroundColor = Color.Black;
 
             base.Update(gameTime);
         }
 
         protected override void Draw(GameTime gameTime)
         {
-            GraphicsDevice.Clear(Color.CornflowerBlue);
+            GraphicsDevice.Clear(backGroundColor);
             _spriteBatch.Begin();
 
-            // TODO: Add your drawing code here
             hero.Draw(_spriteBatch);
+
+            block1.Draw(_spriteBatch);
+            block2.Draw(_spriteBatch);
 
             _spriteBatch.End();
             base.Draw(gameTime);
