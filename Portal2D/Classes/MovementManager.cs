@@ -10,8 +10,8 @@ namespace Portal2D.Classes
         public static void Move(IMovable moveable)
         {
             var direction = moveable.InputReader.ReadInput();
-            var afstand = direction* moveable.Speed;
-            moveable.Position += direction;
+            var distance = direction* moveable.Speed;
+            moveable.Position += distance;
         }
 
     }

@@ -21,13 +21,13 @@ namespace Portal2D.Classes
         public Hero(Texture2D texture, IInputReader inputReader)
         {
             this.texture = texture;
-            this.InputReader = inputReader;
+            InputReader = inputReader;
 
             animation = new Animation();
             animation.GetFramesFromTextureProperties(texture.Width, texture.Height, 6, 1);
 
             Position = new Vector2(0, 100);
-            Speed = new Vector2(1, 1);
+            Speed = new Vector2(0.8f, 1);
         }
 
         public void Draw(SpriteBatch spriteBatch)
