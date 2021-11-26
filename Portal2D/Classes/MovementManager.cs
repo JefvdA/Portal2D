@@ -10,8 +10,12 @@ namespace Portal2D.Classes
         public static void Move(IMovable moveable)
         {
             var direction = moveable.InputReader.ReadInput();
-            var distance = direction* moveable.Speed;
-            moveable.Position += distance;
+
+            var distance = direction * moveable.Speed;
+            var futurePosition = moveable.Position + distance;
+            
+            if(futurePosition.X < (800-256) && futurePosition.X > 0) 
+                moveable.Position = futurePosition;
         }
 
     }
