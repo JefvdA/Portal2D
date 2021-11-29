@@ -5,12 +5,13 @@ using Portal2D.Interfaces;
 
 namespace Portal2D.Classes.Player
 {
-    class Hero : IGameObject, IMovable
+    class Hero : IGameObject, IMovable, ICollidable
     {
         private Texture2D texture;
         public Vector2 Position { get; set; }
         public Vector2 Speed { get; set; }
         public IInputReader InputReader { get; set; }
+        public Rectangle HitBox { get; set; }
 
         Animation animation;
 
@@ -22,7 +23,8 @@ namespace Portal2D.Classes.Player
             animation = new Animation();
             animation.GetFramesFromTextureProperties(texture.Width, texture.Height, 6, 1);
 
-            Position = new Vector2(0, 100);
+            Position = new Vector2(250, 100);
+            HitBox = new Rectangle((int)Position.X, (int)Position.Y, 256, 256);
             Speed = new Vector2(0.8f, 1);
         }
 
@@ -35,15 +37,18 @@ namespace Portal2D.Classes.Player
         {
             animation.Update(gameTime);
             Move();
+
+            HitBox = new Rectangle((int)Position.X, (int)Position.Y, 256, 256);
         }
 
         public void Move()
         {
             MovementManager.Move(this);
         }
-        //public void ChangeInput(IInputReader inputReader)
-        //{
-        //    this.inputReader = inputReader;
-        //}
+
+        public void ChangeInput(IInputReader inputReader)
+        {
+            this.InputReader = inputReader;
+        }
     }
 }

@@ -2,9 +2,9 @@
 using Microsoft.Xna.Framework.Graphics;
 using Portal2D.Interfaces;
 
-namespace Portal2D.Classes
+namespace Portal2D.Classes.Main
 {
-    internal class Block : IGameObject
+    internal class Block : IGameObject, ICollidable
     {
         public Texture2D Texture { get; set; }
         public Color DrawColor { get; set; }
@@ -12,6 +12,7 @@ namespace Portal2D.Classes
         public int Scale { get; set; }
 
         public Vector2 Position { get; set; }
+        public Rectangle HitBox { get; set ; }
 
         public Block(Texture2D texture, Color color, int scale, Vector2 position)
         {
@@ -20,7 +21,8 @@ namespace Portal2D.Classes
             Position = position;
             DrawColor = color;
 
-            Rect = new Rectangle((int)Position.X, (int)Position.Y, 10 * scale, 10 * scale);
+            Rect = new Rectangle((int)Position.X, (int)Position.Y, 10 * Scale, 10 * Scale);
+            HitBox = new Rectangle((int)Position.X, (int)Position.Y, 10 * Scale, 10 * Scale);
         }
 
         public void Draw(SpriteBatch spriteBatch)

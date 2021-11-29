@@ -47,7 +47,7 @@ namespace Portal2D
             _spriteBatch = new SpriteBatch(GraphicsDevice);
 
             _blockTexture = new Texture2D(GraphicsDevice, 1, 1);
-            _blockTexture.SetData(new[] { Color.White});
+            _blockTexture.SetData(new[] { Color.White });
 
             _heroTexture = Content.Load<Texture2D>("CharacterSheet");
             _inputReader = new KeyboardReader();
@@ -63,6 +63,9 @@ namespace Portal2D
             //if (block1.Rect.Intersects(block2.Rect))
             //    backGroundColor = Color.Black;
 
+            if (CollisionManager.CheckCollision(block1, hero))
+                backGroundColor = Color.Black;
+
             base.Update(gameTime);
         }
 
@@ -75,6 +78,8 @@ namespace Portal2D
 
             block1.Draw(_spriteBatch);
             block2.Draw(_spriteBatch);
+
+            _spriteBatch.Draw(_blockTexture, hero.HitBox, Color.Red * 0.5f);
 
             _spriteBatch.End();
             base.Draw(gameTime);
