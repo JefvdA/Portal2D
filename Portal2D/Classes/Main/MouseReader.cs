@@ -1,11 +1,8 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Input;
 using Portal2D.Interfaces;
-using System;
-using System.Collections.Generic;
-using System.Text;
 
-namespace Portal2D.Classes
+namespace Portal2D.Classes.Main
 {
     class MouseReader : IInputReader
     {

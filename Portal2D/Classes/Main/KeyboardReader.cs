@@ -1,12 +1,8 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Input;
 using Portal2D.Interfaces;
-using System.Threading;
-using System;
-using System.Collections.Generic;
-using System.Text;
 
-namespace Portal2D.Classes
+namespace Portal2D.Classes.Main
 {
     class KeyboardReader : IInputReader
     {
@@ -22,7 +18,7 @@ namespace Portal2D.Classes
             {
                 direction.X += 10;
             }
-            if (state.IsKeyDown(Keys.Space)) 
+            if (state.IsKeyDown(Keys.Space))
             {
                 // TODO : JUMP
             }

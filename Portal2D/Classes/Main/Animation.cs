@@ -1,10 +1,7 @@
 ﻿using Microsoft.Xna.Framework;
-using System;
 using System.Collections.Generic;
-using System.Diagnostics;
-using System.Text;
 
-namespace Portal2D.Classes
+namespace Portal2D.Classes.Main
 {
     class Animation
     {
@@ -29,9 +26,9 @@ namespace Portal2D.Classes
             int widthOfFrame = width / numberOfWidthSprites;
             int heigthOfFrame = height / numberOfHeightSprites;
 
-            for (int y = 0; y <= height - heigthOfFrame; y+=heigthOfFrame)
+            for (int y = 0; y <= height - heigthOfFrame; y += heigthOfFrame)
             {
-                for (int x = 0; x < width - widthOfFrame; x+=widthOfFrame)
+                for (int x = 0; x < width - widthOfFrame; x += widthOfFrame)
                 {
                     frames.Add(new AnimationFrame(new Rectangle(x, y, widthOfFrame, height)));
                 }
@@ -45,7 +42,7 @@ namespace Portal2D.Classes
             secondCounter += gameTime.ElapsedGameTime.TotalSeconds;
             int fps = 10;
 
-            if(secondCounter >= 1d / fps)
+            if (secondCounter >= 1d / fps)
             {
                 counter++;
                 secondCounter = 0;

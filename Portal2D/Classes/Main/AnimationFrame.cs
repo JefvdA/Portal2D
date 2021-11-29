@@ -1,9 +1,6 @@
 ﻿using Microsoft.Xna.Framework;
-using System;
-using System.Collections.Generic;
-using System.Text;
 
-namespace Portal2D.Classes
+namespace Portal2D.Classes.Main
 {
     class AnimationFrame
     {

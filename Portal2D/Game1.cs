@@ -1,7 +1,8 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
-using Portal2D.Classes;
+using Portal2D.Classes.Main;
+using Portal2D.Classes.Player;
 using Portal2D.Interfaces;
 
 namespace Portal2D

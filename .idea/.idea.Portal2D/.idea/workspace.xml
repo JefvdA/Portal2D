@@ -4,10 +4,7 @@
     <projectFile>Portal2D/Portal2D.csproj</projectFile>
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="08683670-8faf-408a-b5a1-14df6dc5d166" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/.idea.Portal2D/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.Portal2D/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Portal2D/Classes/MovementManager.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Portal2D/Classes/MovementManager.cs" afterDir="false" />
-    </list>
+    <list default="true" id="08683670-8faf-408a-b5a1-14df6dc5d166" name="Default Changelist" comment="" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -62,7 +59,7 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1637924085197</updated>
-      <workItem from="1637924104828" duration="2929000" />
+      <workItem from="1637924104828" duration="3716000" />
     </task>
     <servers />
   </component>

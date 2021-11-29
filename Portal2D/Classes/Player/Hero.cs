@@ -1,13 +1,9 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using Microsoft.Xna.Framework.Input;
+using Portal2D.Classes.Main;
 using Portal2D.Interfaces;
-using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Text;
 
-namespace Portal2D.Classes
+namespace Portal2D.Classes.Player
 {
     class Hero : IGameObject, IMovable
     {
