@@ -6,6 +6,8 @@ using Portal2D.Classes.Managers;
 using Portal2D.Classes.Player;
 using Portal2D.Interfaces;
 using Portal2D.Implementations;
+using System.Collections.Generic;
+using System.Diagnostics;
 
 namespace Portal2D
 {
@@ -16,16 +18,16 @@ namespace Portal2D
 
         private Color backGroundColor = Color.CornflowerBlue;
 
-        private Texture2D _heroTexture;
-        private IInputReader _inputReader;
+        private const bool SHOW_HITBOXES = true;
 
+        // Reference to player
         private Hero hero;
 
-        // Variables for block
+        // Variables for textures
+        private Texture2D _heroTexture;
         private Texture2D _blockTexture;
 
-        private Block block1;
-        private Block block2;
+        private List<IGameObject> gameObjects = new List<IGameObject>();
 
         public Game1()
         {
@@ -38,10 +40,11 @@ namespace Portal2D
         {
             base.Initialize();
 
-            hero = new Hero(_heroTexture, _inputReader);
+            hero = new Hero(_heroTexture, new KeyboardReader());
 
-            block1 = new Block(_blockTexture, Color.Green, 5, new Vector2(125, 125));
-            block2 = new Block(_blockTexture, Color.Red, 5, new Vector2(150, 150));
+            gameObjects.Add(hero);
+            gameObjects.Add(new Block(_blockTexture, Color.Green, 5, new Vector2(150, 150)));
+            gameObjects.Add(new Block(_blockTexture, Color.Red, 5, new Vector2(650, 150)));
         }
 
         protected override void LoadContent()
@@ -52,7 +55,6 @@ namespace Portal2D
             _blockTexture.SetData(new[] { Color.White });
 
             _heroTexture = Content.Load<Texture2D>("CharacterSheet");
-            _inputReader = new KeyboardReader();
         }
 
         protected override void Update(GameTime gameTime)
@@ -60,10 +62,19 @@ namespace Portal2D
             if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
                 Exit();
 
-            hero.Update(gameTime);
+            foreach (IGameObject gameObject in gameObjects)
+            {
+                gameObject.Update(gameTime);
 
-            if (CollisionManager.CheckCollision(block1, hero))
-                backGroundColor = Color.Black;
+                if (gameObject is ICollidable)
+                {
+                    ICollidable collidableObject = (ICollidable)gameObject;
+                    
+                    bool playerCollision = CollisionManager.CheckCollision(hero, collidableObject) && collidableObject != hero;
+                    if (playerCollision)
+                        backGroundColor = Color.Black;
+                }
+            }
 
             base.Update(gameTime);
         }
@@ -73,12 +84,16 @@ namespace Portal2D
             GraphicsDevice.Clear(backGroundColor);
             _spriteBatch.Begin();
 
-            hero.Draw(_spriteBatch);
+            foreach (IGameObject gameObject in gameObjects)
+            {
+                gameObject.Draw(_spriteBatch);
 
-            block1.Draw(_spriteBatch);
-            block2.Draw(_spriteBatch);
-
-            _spriteBatch.Draw(_blockTexture, hero.HitBox, Color.Red * 0.5f);
+                if (gameObject is ICollidable && SHOW_HITBOXES)
+                {
+                    ICollidable collidableObject = (ICollidable)gameObject;
+                    _spriteBatch.Draw(_blockTexture, collidableObject.HitBox, Color.Green * 0.5f);
+                }
+            }
 
             _spriteBatch.End();
             base.Draw(gameTime);

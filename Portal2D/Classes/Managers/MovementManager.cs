@@ -1,4 +1,5 @@
-﻿using Portal2D.Interfaces;
+﻿using Microsoft.Xna.Framework;
+using Portal2D.Interfaces;
 
 namespace Portal2D.Classes.Managers
 {
@@ -8,10 +9,10 @@ namespace Portal2D.Classes.Managers
         {
             var direction = moveable.InputReader.ReadInput();
 
-            var distance = direction * moveable.Speed;
+            var distance = direction * new Vector2(moveable.Speed, 1);
             var futurePosition = moveable.Position + distance;
-            
-            if(futurePosition.X < (800-256) && futurePosition.X > 0) 
+
+            if (futurePosition.X < (800 - 256) && futurePosition.X > 0)
                 moveable.Position = futurePosition;
         }
 

@@ -4,6 +4,6 @@ namespace Portal2D.Interfaces
 {
     interface IInputReader
     {
-        Vector2 ReadInput();
+        public Vector2 ReadInput();
     }
 }

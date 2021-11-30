@@ -10,7 +10,7 @@ namespace Portal2D.Classes.Player
     {
         private Texture2D texture;
         public Vector2 Position { get; set; }
-        public Vector2 Speed { get; set; }
+        public float Speed { get; set; }
         public IInputReader InputReader { get; set; }
         public Rectangle HitBox { get; set; }
 
@@ -26,7 +26,7 @@ namespace Portal2D.Classes.Player
 
             Position = new Vector2(250, 100);
             HitBox = new Rectangle((int)Position.X, (int)Position.Y, 256, 256); // offset: X:30/52 Y:30/30
-            Speed = new Vector2(0.8f, 1);
+            Speed = 0.8f;
         }
 
         public void Draw(SpriteBatch spriteBatch)
