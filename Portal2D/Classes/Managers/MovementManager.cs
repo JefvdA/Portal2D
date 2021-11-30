@@ -1,6 +1,6 @@
 ﻿using Portal2D.Interfaces;
 
-namespace Portal2D.Classes
+namespace Portal2D.Classes.Managers
 {
     static class MovementManager
     {

@@ -1,7 +1,7 @@
 ﻿using Microsoft.Xna.Framework;
 using System.Collections.Generic;
 
-namespace Portal2D.Classes.Main
+namespace Portal2D.Classes.Main.Animation
 {
     class Animation
     {

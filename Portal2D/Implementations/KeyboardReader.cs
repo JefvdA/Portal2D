@@ -2,7 +2,7 @@
 using Microsoft.Xna.Framework.Input;
 using Portal2D.Interfaces;
 
-namespace Portal2D.Classes.Main
+namespace Portal2D.Implementations
 {
     class KeyboardReader : IInputReader
     {
