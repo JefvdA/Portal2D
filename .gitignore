@@ -55,3 +55,4 @@ monodroid*.msi
 /CompiledContent/Windows/IgnoreMe.dll
 *.cachefile
 *.dll
+.vs/Portal2D/DesignTimeBuild/.dtbcache.v2
