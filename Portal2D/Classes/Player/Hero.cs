@@ -13,7 +13,7 @@ namespace Portal2D.Classes.Player
         public IInputReader InputReader { get; set; }
         public Rectangle HitBox { get; set; }
 
-        Animation animation;
+        private Animation animation;
 
         public Hero(Texture2D texture, IInputReader inputReader)
         {
@@ -24,7 +24,7 @@ namespace Portal2D.Classes.Player
             animation.GetFramesFromTextureProperties(texture.Width, texture.Height, 6, 1);
 
             Position = new Vector2(250, 100);
-            HitBox = new Rectangle((int)Position.X, (int)Position.Y, 256, 256);
+            HitBox = new Rectangle((int)Position.X, (int)Position.Y, 256, 256); // offset: X:30/52 Y:30/30
             Speed = new Vector2(0.8f, 1);
         }
 
@@ -38,7 +38,7 @@ namespace Portal2D.Classes.Player
             animation.Update(gameTime);
             Move();
 
-            HitBox = new Rectangle((int)Position.X, (int)Position.Y, 256, 256);
+            HitBox = new Rectangle((int)Position.X, (int)Position.Y, 256, 256); // offset: X:30/52 Y:30/30
         }
 
         public void Move()

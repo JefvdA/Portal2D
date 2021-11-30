@@ -8,7 +8,7 @@ namespace Portal2D.Classes.Main
     {
         public Texture2D Texture { get; set; }
         public Color DrawColor { get; set; }
-        public Rectangle Rect { get; set; }
+        public Rectangle SourceRectangle { get; set; }
         public int Scale { get; set; }
 
         public Vector2 Position { get; set; }
@@ -21,13 +21,13 @@ namespace Portal2D.Classes.Main
             Position = position;
             DrawColor = color;
 
-            Rect = new Rectangle((int)Position.X, (int)Position.Y, 10 * Scale, 10 * Scale);
+            SourceRectangle = new Rectangle((int)Position.X, (int)Position.Y, 10 * Scale, 10 * Scale);
             HitBox = new Rectangle((int)Position.X, (int)Position.Y, 10 * Scale, 10 * Scale);
         }
 
         public void Draw(SpriteBatch spriteBatch)
         {
-            spriteBatch.Draw(Texture, Rect, DrawColor);
+            spriteBatch.Draw(Texture, SourceRectangle, DrawColor);
         }
 
         public void Update(GameTime gameTime) { }

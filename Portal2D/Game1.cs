@@ -60,9 +60,6 @@ namespace Portal2D
 
             hero.Update(gameTime);
 
-            //if (block1.Rect.Intersects(block2.Rect))
-            //    backGroundColor = Color.Black;
-
             if (CollisionManager.CheckCollision(block1, hero))
                 backGroundColor = Color.Black;
 
