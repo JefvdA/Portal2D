@@ -10,17 +10,21 @@ namespace Portal2D.Implementations
         {
             KeyboardState state = Keyboard.GetState();
             Vector2 direction = Vector2.Zero;
-            if (state.IsKeyDown(Keys.A))
+            if (state.IsKeyDown(Keys.None)) 
+            { 
+                // TODO : idle state
+            }
+            if (state.IsKeyDown(Keys.Left))
             {
                 direction.X -= 10;
             }
-            if (state.IsKeyDown(Keys.D))
+            if (state.IsKeyDown(Keys.Right))
             {
                 direction.X += 10;
             }
             if (state.IsKeyDown(Keys.Space))
             {
-                // TODO : JUMP
+                direction.Y -= 4;
             }
             return direction;
         }
