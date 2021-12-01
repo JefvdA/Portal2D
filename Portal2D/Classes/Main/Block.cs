@@ -13,13 +13,15 @@ namespace Portal2D.Classes.Main
 
         public Vector2 Position { get; set; }
         public Rectangle HitBox { get; set ; }
+        public bool IsTrigger { get; set; }
 
-        public Block(Texture2D texture, Color color, int scale, Vector2 position)
+        public Block(Texture2D texture, Color color, int scale, Vector2 position, bool isTrigger)
         {
             Texture = texture;
             Scale = scale;
             Position = position;
             DrawColor = color;
+            IsTrigger = isTrigger;
 
             SourceRectangle = new Rectangle((int)Position.X, (int)Position.Y, 10 * Scale, 10 * Scale);
             HitBox = new Rectangle((int)Position.X, (int)Position.Y, 10 * Scale, 10 * Scale);

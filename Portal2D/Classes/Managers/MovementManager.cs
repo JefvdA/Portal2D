@@ -16,5 +16,15 @@ namespace Portal2D.Classes.Managers
                 moveable.Position = futurePosition;
         }
 
+        public static Vector2 PredictMove(IMovable moveable)
+        {
+            var direction = moveable.InputReader.ReadInput();
+
+            var distance = direction * new Vector2(moveable.Speed, 1);
+            var futurePosition = moveable.Position + distance;
+
+            return futurePosition;
+        }
+
     }
 }

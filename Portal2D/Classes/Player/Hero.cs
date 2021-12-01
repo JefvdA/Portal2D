@@ -16,6 +16,9 @@ namespace Portal2D.Classes.Player
 
         private Animation animation;
 
+        public bool SafeForFutureCollision { get; set; } = false;
+        public bool IsTrigger { get; set; } = false;
+
         public Hero(Texture2D texture, IInputReader inputReader)
         {
             this.texture = texture;
@@ -37,9 +40,11 @@ namespace Portal2D.Classes.Player
         public void Update(GameTime gameTime)
         {
             animation.Update(gameTime);
-            Move();
 
             HitBox = new Rectangle((int)Position.X, (int)Position.Y, 256, 256); // offset: X:30/52 Y:30/30
+
+            if (SafeForFutureCollision)
+                Move();
         }
 
         public void Move()

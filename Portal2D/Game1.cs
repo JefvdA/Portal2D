@@ -43,8 +43,8 @@ namespace Portal2D
             hero = new Hero(_heroTexture, new KeyboardReader());
 
             gameObjects.Add(hero);
-            gameObjects.Add(new Block(_blockTexture, Color.Green, 5, new Vector2(150, 150)));
-            gameObjects.Add(new Block(_blockTexture, Color.Red, 5, new Vector2(650, 150)));
+            gameObjects.Add(new Block(_blockTexture, Color.Green, 5, new Vector2(150, 150), true));
+            gameObjects.Add(new Block(_blockTexture, Color.Red, 5, new Vector2(650, 150), false));
         }
 
         protected override void LoadContent()
@@ -70,9 +70,23 @@ namespace Portal2D
                 {
                     ICollidable collidableObject = (ICollidable)gameObject;
                     
-                    bool playerCollision = CollisionManager.CheckCollision(hero, collidableObject) && collidableObject != hero;
+                    bool playerCollision = CollisionManager.CheckCollision(hero.HitBox, collidableObject.HitBox) && collidableObject != hero;
                     if (playerCollision)
-                        backGroundColor = Color.Black;
+                    {
+                        // Player is CURRENTLY inside of an object
+                    }
+
+                    bool futurePlayerCollision = CollisionManager.CheckCollision(CollisionManager.PredictCollision(hero), collidableObject.HitBox) && collidableObject != hero && !collidableObject.IsTrigger;
+                    if (futurePlayerCollision)
+                    {
+                        // Player WILL BE inside of an object NEXT FRAME
+                        hero.SafeForFutureCollision = false;
+                        break;
+                    }
+                    else
+                    {
+                        hero.SafeForFutureCollision = true;
+                    }
                 }
             }
 
