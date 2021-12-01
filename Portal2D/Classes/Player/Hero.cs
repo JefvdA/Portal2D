@@ -2,6 +2,7 @@
 using Microsoft.Xna.Framework.Graphics;
 using Portal2D.Classes.Main.Animation;
 using Portal2D.Classes.Managers;
+using Portal2D.Implementations;
 using Portal2D.Interfaces;
 
 namespace Portal2D.Classes.Player
@@ -18,6 +19,7 @@ namespace Portal2D.Classes.Player
 
         public bool SafeForFutureCollision { get; set; } = false;
         public bool IsTrigger { get; set; } = false;
+        public ICollisionTrigger CollisionTrigger { get; set; }
 
         public Hero(Texture2D texture, IInputReader inputReader)
         {
@@ -30,6 +32,8 @@ namespace Portal2D.Classes.Player
             Position = new Vector2(250, 100);
             HitBox = new Rectangle((int)Position.X, (int)Position.Y, 256, 256); // offset: X:30/52 Y:30/30
             Speed = 0.8f;
+
+            CollisionTrigger = new DefaultCollisionTrigger();
         }
 
         public void Draw(SpriteBatch spriteBatch)

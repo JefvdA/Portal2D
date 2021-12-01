@@ -1,5 +1,6 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using Portal2D.Implementations;
 using Portal2D.Interfaces;
 
 namespace Portal2D.Classes.Main
@@ -14,8 +15,9 @@ namespace Portal2D.Classes.Main
         public Vector2 Position { get; set; }
         public Rectangle HitBox { get; set ; }
         public bool IsTrigger { get; set; }
+        public ICollisionTrigger CollisionTrigger { get; set; }
 
-        public Block(Texture2D texture, Color color, int scale, Vector2 position, bool isTrigger)
+        public Block(Texture2D texture, Color color, int scale, Vector2 position, bool isTrigger, ICollisionTrigger collisionTrigger)
         {
             Texture = texture;
             Scale = scale;
@@ -25,6 +27,8 @@ namespace Portal2D.Classes.Main
 
             SourceRectangle = new Rectangle((int)Position.X, (int)Position.Y, 10 * Scale, 10 * Scale);
             HitBox = new Rectangle((int)Position.X, (int)Position.Y, 10 * Scale, 10 * Scale);
+
+            CollisionTrigger = collisionTrigger;
         }
 
         public void Draw(SpriteBatch spriteBatch)

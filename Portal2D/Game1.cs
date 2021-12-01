@@ -16,8 +16,6 @@ namespace Portal2D
         private GraphicsDeviceManager _graphics;
         private SpriteBatch _spriteBatch;
 
-        private Color backGroundColor = Color.CornflowerBlue;
-
         private const bool SHOW_HITBOXES = true;
 
         // Reference to player
@@ -43,8 +41,9 @@ namespace Portal2D
             hero = new Hero(_heroTexture, new KeyboardReader());
 
             gameObjects.Add(hero);
-            gameObjects.Add(new Block(_blockTexture, Color.Green, 5, new Vector2(150, 150), true));
-            gameObjects.Add(new Block(_blockTexture, Color.Red, 5, new Vector2(650, 150), false));
+            gameObjects.Add(new Block(_blockTexture, Color.Green, 5, new Vector2(150, 150), true, new ChangeBGColorCollisionTrigger(Color.LightGreen)));
+            gameObjects.Add(new Block(_blockTexture, Color.Red, 5, new Vector2(650, 150), true, new ChangeBGColorCollisionTrigger(Color.DarkRed)));
+            gameObjects.Add(new Block(_blockTexture, Color.Blue, 5, new Vector2(400, 150), true, new ChangeBGColorCollisionTrigger(Color.CornflowerBlue)));
         }
 
         protected override void LoadContent()
@@ -70,10 +69,11 @@ namespace Portal2D
                 {
                     ICollidable collidableObject = (ICollidable)gameObject;
                     
-                    bool playerCollision = CollisionManager.CheckCollision(hero.HitBox, collidableObject.HitBox) && collidableObject != hero;
+                    bool playerCollision = CollisionManager.CheckCollision(hero.HitBox, collidableObject.HitBox) && collidableObject != hero && collidableObject.IsTrigger;
                     if (playerCollision)
                     {
                         // Player is CURRENTLY inside of an object
+                        collidableObject.CollisionTrigger.OnTrigger();
                     }
 
                     bool futurePlayerCollision = CollisionManager.CheckCollision(CollisionManager.PredictCollision(hero), collidableObject.HitBox) && collidableObject != hero && !collidableObject.IsTrigger;
@@ -95,7 +95,7 @@ namespace Portal2D
 
         protected override void Draw(GameTime gameTime)
         {
-            GraphicsDevice.Clear(backGroundColor);
+            GraphicsDevice.Clear(GameManager.backGroundColor);
             _spriteBatch.Begin();
 
             foreach (IGameObject gameObject in gameObjects)
