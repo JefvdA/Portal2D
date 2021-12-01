@@ -18,8 +18,8 @@ namespace Portal2D.Classes.Managers
                 moveable.Position += new Vector2(distance.X,0);
             if (futurePosition.Y < (230) && futurePosition.Y > 0)
                 moveable.Position += new Vector2(0,distance.Y);
-
         }
+
         public static Vector2 PredictMove(IMovable moveable)
         {
             var direction = moveable.InputReader.ReadInput();
