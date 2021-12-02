@@ -62,14 +62,13 @@ namespace Portal2D
             if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
                 Exit();
 
+            // Check collisions
             foreach (IGameObject gameObject in gameObjects)
             {
-                gameObject.Update(gameTime);
-
                 if (gameObject is ICollidable)
                 {
                     ICollidable collidableObject = (ICollidable)gameObject;
-                    
+
                     bool playerCollision = CollisionManager.CheckCollision(hero.HitBox, collidableObject.HitBox) && collidableObject != hero && collidableObject.IsTrigger;
                     if (playerCollision)
                     {
@@ -82,13 +81,19 @@ namespace Portal2D
                     {
                         // Player WILL BE inside of an object NEXT FRAME
                         hero.SafeForFutureCollision = false;
-                        break;
+                        continue;
                     }
                     else
                     {
                         hero.SafeForFutureCollision = true;
                     }
                 }
+            }
+
+            // Update each gameObject
+            foreach (IGameObject gameObject in gameObjects)
+            {
+                gameObject.Update(gameTime);
             }
 
             base.Update(gameTime);

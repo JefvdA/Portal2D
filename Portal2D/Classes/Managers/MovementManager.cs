@@ -11,8 +11,8 @@ namespace Portal2D.Classes.Managers
             var direction = moveable.InputReader.ReadInput();
 
             var distance = direction * new Vector2(moveable.Speed, 1);
+            distance.Y += 9;
             var futurePosition = moveable.Position + distance;
-            distance.Y += 2;
 
             if (futurePosition.X < (800 - 256) && futurePosition.X > 0)
                 moveable.Position += new Vector2(distance.X,0);
@@ -25,6 +25,7 @@ namespace Portal2D.Classes.Managers
             var direction = moveable.InputReader.ReadInput();
 
             var distance = direction * new Vector2(moveable.Speed, 1);
+            distance.Y += 9;
             var futurePosition = moveable.Position + distance;
 
             return futurePosition;
