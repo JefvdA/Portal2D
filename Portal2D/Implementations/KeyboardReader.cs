@@ -16,15 +16,15 @@ namespace Portal2D.Implementations
             }
             if (state.IsKeyDown(Keys.Left) || state.IsKeyDown(Keys.A))
             {
-                direction.X -= 10;
+                direction.X -= 1;
             }
             if (state.IsKeyDown(Keys.Right) || state.IsKeyDown(Keys.D))
             {
-                direction.X += 10;
+                direction.X += 1;
             }
             if (state.IsKeyDown(Keys.Space))
             {
-                direction.Y -= 20;
+                direction.Y -= 1;
             }
             return direction;
         }
