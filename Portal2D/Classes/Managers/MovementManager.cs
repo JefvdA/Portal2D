@@ -13,18 +13,19 @@ namespace Portal2D.Classes.Managers
 
             if (moveable is IJumpable jumpable)
             {
-
-                Debug.WriteLine(jumpable.CanJump);
-
-                if (direction.Y == -1 && jumpable.CanJump)
+                if (direction.Y == -1 && jumpable.CanJump && jumpable.JumpCounter < jumpable.JumpHeight)
                 {
-                    jumpable.Position = new Vector2(jumpable.Position.X, jumpable.Position.Y - jumpable.JumpHeight);
-
-                    jumpable.CanJump = false; 
+                    var jumpForce = jumpable.JumpHeight / 4;
+                    jumpable.Position = new Vector2(jumpable.Position.X, jumpable.Position.Y - jumpForce);
+                    jumpable.JumpCounter += jumpForce;
+                } else
+                {
+                    jumpable.CanJump = false;
+                    jumpable.JumpCounter = 0;
                 }
             }
 
-            distance.Y += 5;
+            distance.Y += 10;
 
             var futurePosition = moveable.Position + distance;
             if (futurePosition.X < (GameManager.ScreenWidth - 256) && futurePosition.X > 0)

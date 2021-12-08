@@ -22,6 +22,7 @@ namespace Portal2D.Classes.Player
         public ICollisionTrigger CollisionTrigger { get; set; }
         public bool CanJump { get; set; }
         public float JumpHeight { get; set; }
+        public float JumpCounter { get; set; }
 
         public Hero(Texture2D texture, IInputReader inputReader)
         {
