@@ -45,6 +45,9 @@ namespace Portal2D
             gameObjects.Add(new Block(_blockTexture, Color.Red, 5, new Vector2(650, 150), true, new ChangeBGColorCollisionTrigger(Color.DarkRed)));
             gameObjects.Add(new Block(_blockTexture, Color.Blue, 5, new Vector2(400, 150), true, new ChangeBGColorCollisionTrigger(Color.CornflowerBlue)));
             gameObjects.Add(new Block(_blockTexture, Color.Black, 10, new Vector2(500, 400), false, new DefaultCollisionTrigger()));
+
+            GameManager.ScreenWidth = GraphicsDevice.Viewport.Width;
+            GameManager.ScreenHeight = GraphicsDevice.Viewport.Height;
         }
 
         protected override void LoadContent()
@@ -69,10 +72,10 @@ namespace Portal2D
                 {
                     ICollidable collidableObject = (ICollidable)gameObject;
 
-                    bool playerCollision = CollisionManager.CheckCollision(hero.HitBox, collidableObject.HitBox) && collidableObject != hero && collidableObject.IsTrigger;
+                    bool playerCollision= CollisionManager.CheckCollision(hero.HitBox, collidableObject.HitBox) && collidableObject != hero && collidableObject.IsTrigger;
                     if (playerCollision)
                     {
-                        // Player is CURRENTLY inside of an object
+                        // Player is CURRENTLY inside of an object WHICH IS A TRIGGER
                         collidableObject.CollisionTrigger.OnTrigger();
                     }
 
@@ -81,6 +84,7 @@ namespace Portal2D
                     {
                         // Player WILL BE inside of an object NEXT FRAME
                         hero.SafeForFutureCollision = false;
+                        hero.CanJump = true;
                         continue;
                     }
                     else

@@ -1,10 +1,7 @@
-﻿using Microsoft.Xna.Framework;
-
-namespace Portal2D.Interfaces
+﻿namespace Portal2D.Interfaces
 {
-    interface IMovable
+    interface IMovable : IGameObject
     {
-        public Vector2 Position { get; set; }
         public float Speed { get; set; }
         public IInputReader InputReader { get; set; }
     }
