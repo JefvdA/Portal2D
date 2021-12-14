@@ -1,32 +1,45 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Input;
 using Portal2D.Interfaces;
+using System.Diagnostics;
 
 namespace Portal2D.Implementations
 {
     class KeyboardReader : IInputReader
     {
-        public Vector2 ReadInput()
+        private KeyboardState previousState;
+
+        public KeyboardReader()
         {
-            KeyboardState state = Keyboard.GetState();
-            Vector2 direction = Vector2.Zero;
-            if (state.IsKeyDown(Keys.None)) 
-            { 
-                // TODO : idle state
-            }
-            if (state.IsKeyDown(Keys.Left) || state.IsKeyDown(Keys.A))
+            previousState = Keyboard.GetState();
+        }
+
+        public int GetHorizontal()
+        {
+            KeyboardState currentState = Keyboard.GetState();
+            int direction = 0;
+            if (currentState.IsKeyDown(Keys.Left) || currentState.IsKeyDown(Keys.A))
             {
-                direction.X -= 1;
+                direction -= 1;
             }
-            if (state.IsKeyDown(Keys.Right) || state.IsKeyDown(Keys.D))
+            if (currentState.IsKeyDown(Keys.Right) || currentState.IsKeyDown(Keys.D))
             {
-                direction.X += 1;
+                direction += 1;
             }
-            if (state.IsKeyDown(Keys.Space))
-            {
-                direction.Y -= 1;
-            }
+
             return direction;
+        }
+
+        public bool IsKeyPressed(Keys key)
+        {
+            KeyboardState currentState = Keyboard.GetState();
+
+            bool isKeyPressed = false;
+            if (currentState.IsKeyDown(key) && previousState.IsKeyUp(key))
+                isKeyPressed = true;
+
+            previousState = currentState;
+            return isKeyPressed;
         }
     }
 }

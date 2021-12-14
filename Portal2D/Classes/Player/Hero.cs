@@ -4,10 +4,11 @@ using Portal2D.Classes.Main.Animation;
 using Portal2D.Classes.Managers;
 using Portal2D.Implementations;
 using Portal2D.Interfaces;
+using System.Diagnostics;
 
 namespace Portal2D.Classes.Player
 {
-    class Hero : IGameObject, IMovable, IJumpable, ICollidable
+    class Hero : IGameObject, IMoveable, IJumpable, ICollidable
     {
         private Texture2D texture;
         public Vector2 Position { get; set; }
@@ -18,11 +19,13 @@ namespace Portal2D.Classes.Player
         private Animation animation;
 
         public bool SafeForFutureCollision { get; set; } = false;
+        public bool SafeForFalling { get; set; } = true;
         public bool IsTrigger { get; set; } = false;
         public ICollisionTrigger CollisionTrigger { get; set; }
         public bool CanJump { get; set; }
         public float JumpHeight { get; set; }
         public float JumpCounter { get; set; }
+        public bool IsJumping { get; set; }
 
         public Hero(Texture2D texture, IInputReader inputReader)
         {
@@ -52,18 +55,29 @@ namespace Portal2D.Classes.Player
 
             HitBox = new Rectangle((int)Position.X, (int)Position.Y, 256, 256); // offset: X:30/52 Y:30/30
 
-            // if (SafeForFutureCollision)
             Move();
+            Jump();
+            Fall();
         }
 
         public void Move()
         {
-            MovementManager.Move(this);
+            MovementManager.MoveHorizontal(this);
+        }
+
+        public void Jump()
+        {
+            MovementManager.Jump(this);
+        }
+
+        public void Fall()
+        {
+            MovementManager.Fall(this);
         }
 
         public void ChangeInput(IInputReader inputReader)
         {
-            this.InputReader = inputReader;
+            InputReader = inputReader;
         }
     }
 }

@@ -79,17 +79,27 @@ namespace Portal2D
                         collidableObject.CollisionTrigger.OnTrigger();
                     }
 
-                    bool futurePlayerCollision = CollisionManager.CheckCollision(CollisionManager.PredictCollision(hero), collidableObject.HitBox) && collidableObject != hero && !collidableObject.IsTrigger;
+                    bool futurePlayerCollisionFalling = CollisionManager.CheckCollision(CollisionManager.PredictFallCollision(hero), collidableObject.HitBox) && collidableObject != hero && !collidableObject.IsTrigger;
+                    bool futurePlayerCollisionHorizontal = CollisionManager.CheckCollision(CollisionManager.PredictCollisionHorizontal(hero), collidableObject.HitBox) && collidableObject != hero && !collidableObject.IsTrigger;
+                    bool futurePlayerCollision = futurePlayerCollisionFalling || futurePlayerCollisionHorizontal;
                     if (futurePlayerCollision)
                     {
                         // Player WILL BE inside of an object NEXT FRAME
-                        hero.SafeForFutureCollision = false;
-                        hero.CanJump = true;
+                        if(futurePlayerCollisionHorizontal)
+                            hero.SafeForFutureCollision = false;
+                        if (futurePlayerCollisionFalling)
+                        {
+                            hero.SafeForFalling = false;
+                            hero.CanJump = true;
+                        }
                         continue;
                     }
                     else
                     {
-                        hero.SafeForFutureCollision = true;
+                        if(!futurePlayerCollisionHorizontal)
+                            hero.SafeForFutureCollision = true;
+                        if (!futurePlayerCollisionFalling)
+                            hero.SafeForFalling = true;
                     }
                 }
             }

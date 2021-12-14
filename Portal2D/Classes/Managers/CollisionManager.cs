@@ -13,10 +13,19 @@ namespace Portal2D.Classes.Managers
             return false;
         }
 
-        public static Rectangle PredictCollision<T>(T gameObject) 
-            where T : ICollidable, IMovable
+        public static Rectangle PredictCollisionHorizontal<T>(T gameObject) 
+            where T : ICollidable, IMoveable
         {
-            Vector2 futurePosition = MovementManager.PredictMove(gameObject);
+            Vector2 futurePosition = MovementManager.PredictMoveHorizontal(gameObject);
+
+            Rectangle futureHitBox = new Rectangle((int)futurePosition.X, (int)futurePosition.Y, gameObject.HitBox.Width, gameObject.HitBox.Height);
+            return futureHitBox;
+        }
+
+        public static Rectangle PredictFallCollision<T>(T gameObject)
+            where T : ICollidable, IMoveable
+        {
+            Vector2 futurePosition = MovementManager.PredictFall(gameObject);
 
             Rectangle futureHitBox = new Rectangle((int)futurePosition.X, (int)futurePosition.Y, gameObject.HitBox.Width, gameObject.HitBox.Height);
             return futureHitBox;

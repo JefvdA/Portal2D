@@ -16,6 +16,7 @@ namespace Portal2D.Classes.Main
         public bool IsTrigger { get; set; }
         public ICollisionTrigger CollisionTrigger { get; set; }
         public bool SafeForFutureCollision { get; set; }
+        public bool SafeForFalling { get; set; }
 
         public Block(Texture2D texture, Color color, int scale, Vector2 position, bool isTrigger, ICollisionTrigger collisionTrigger)
         {

@@ -1,4 +1,5 @@
 ﻿using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Input;
 using Portal2D.Interfaces;
 using System.Diagnostics;
 
@@ -6,27 +7,10 @@ namespace Portal2D.Classes.Managers
 {
     static class MovementManager
     {
-        public static void Move(IMovable moveable)
+        public static void MoveHorizontal(IMoveable moveable)
         {
-            var direction = moveable.InputReader.ReadInput();
-            var distance = new Vector2(direction.X * moveable.Speed, 0);
-
-            if (moveable is IJumpable jumpable)
-            {
-                if (direction.Y == -1 && jumpable.CanJump && jumpable.JumpCounter < jumpable.JumpHeight)
-                {
-                    var jumpForce = jumpable.JumpHeight / 4;
-                    jumpable.Position = new Vector2(jumpable.Position.X, jumpable.Position.Y - jumpForce);
-                    jumpable.JumpCounter += jumpForce;
-                } else
-                {
-                    jumpable.CanJump = false;
-                    jumpable.JumpCounter = 0;
-                }
-            }
-
-            distance.Y += 10;
-
+            var direction = moveable.InputReader.GetHorizontal();
+            var distance = new Vector2(direction * moveable.Speed, 0);
             var futurePosition = moveable.Position + distance;
             if (futurePosition.X < (GameManager.ScreenWidth - 256) && futurePosition.X > 0)
             {
@@ -38,27 +22,69 @@ namespace Portal2D.Classes.Managers
                 else
                     moveable.Position += new Vector2(distance.X, 0);
             }
+        }
+
+        public static void Jump(IJumpable jumpable)
+        {
+            bool hasJumped = jumpable.InputReader.IsKeyPressed(Keys.Space);
+            var distance = new Vector2(0, 0);
+
+            if (hasJumped)
+                jumpable.IsJumping = true;
+
+            if (jumpable.IsJumping && jumpable.CanJump && jumpable.JumpCounter < jumpable.JumpHeight)
+            {
+                var jumpForce = jumpable.JumpHeight / 4;
+                distance = new Vector2(0, -jumpForce);
+                jumpable.JumpCounter += jumpForce;
+            }
+            else
+            {
+                jumpable.CanJump = false;
+                jumpable.IsJumping = false;
+                jumpable.JumpCounter = 0;
+            }
+            var futurePosition = jumpable.Position + distance;
+
             if (futurePosition.Y < (GameManager.ScreenHeight - 256))
+            {
+                jumpable.Position += new Vector2(0, distance.Y);
+            }
+
+            futurePosition.Y += 7;
+            if (futurePosition.Y > (GameManager.ScreenHeight - 256))
+                jumpable.CanJump = true;
+        }
+
+        public static void Fall(IMoveable moveable)
+        {
+            var distance = new Vector2(0, 7);
+
+            var futurePosition = moveable.Position + distance;
+            if(futurePosition.Y < (GameManager.ScreenHeight - 256))
             {
                 if (moveable is ICollidable collidable)
                 {
-                    if (collidable.SafeForFutureCollision)
+                    if (collidable.SafeForFalling)
                         moveable.Position += new Vector2(0, distance.Y);
                 }
                 else
                     moveable.Position += new Vector2(0, distance.Y);
             }
-
-            if (futurePosition.Y > (GameManager.ScreenHeight - 256) && moveable is IJumpable jumpable1)
-                jumpable1.CanJump = true;
         }
 
-        public static Vector2 PredictMove(IMovable moveable)
+        public static Vector2 PredictMoveHorizontal(IMoveable moveable)
         {
-            var direction = moveable.InputReader.ReadInput();
+            var direction = moveable.InputReader.GetHorizontal();
+            var distance = new Vector2(direction * moveable.Speed, 0);
+            var futurePosition = moveable.Position + distance;
 
-            var distance = new Vector2(direction.X * moveable.Speed, 0);
-            distance.Y += 5;
+            return futurePosition;
+        }
+
+        public static Vector2 PredictFall(IMoveable moveable)
+        {
+            var distance = new Vector2(0, 5);
             var futurePosition = moveable.Position + distance;
 
             return futurePosition;

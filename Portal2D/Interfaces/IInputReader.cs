@@ -1,9 +1,12 @@
 ﻿using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Input;
 
 namespace Portal2D.Interfaces
 {
     interface IInputReader
     {
-        public Vector2 ReadInput();
+        public int GetHorizontal();
+
+        public bool IsKeyPressed(Keys key);
     }
 }
