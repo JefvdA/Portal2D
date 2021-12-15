@@ -8,5 +8,6 @@ namespace Portal2D.Classes.Managers
         public static int ScreenHeight { get; set; }
 
         public static Color backGroundColor = Color.CornflowerBlue;
+        public static int Gravity = 7;
     }
 }

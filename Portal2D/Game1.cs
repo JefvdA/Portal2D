@@ -50,13 +50,13 @@ namespace Portal2D
             //gameObjects.Add(new Block(_blockTexture, Color.Green, 5, new Vector2(150, 150), true, new ChangeBGColorCollisionTrigger(Color.LightGreen)));
             //gameObjects.Add(new Block(_blockTexture, Color.Red, 5, new Vector2(650, 150), true, new ChangeBGColorCollisionTrigger(Color.DarkRed)));
             //gameObjects.Add(new Block(_blockTexture, Color.Blue, 5, new Vector2(400, 150), true, new ChangeBGColorCollisionTrigger(Color.CornflowerBlue)));
-            gameObjects.Add(new Block(_blockTexture, Color.Black, 10, new Vector2(500, 400), false, new DefaultCollisionTrigger()));
+            gameObjects.Add(new Block(_blockTexture, Color.Black, 10, new Vector2(500, 500), false, new DefaultCollisionTrigger()));
 
             //uncomment for fullscreen
-            //_graphics.PreferredBackBufferWidth = GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Width;
-            //_graphics.PreferredBackBufferHeight = GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Height;
-            //_graphics.ToggleFullScreen();
-            //_graphics.ApplyChanges();
+            _graphics.PreferredBackBufferWidth = GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Width;
+            _graphics.PreferredBackBufferHeight = GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Height;
+            _graphics.ToggleFullScreen();
+            _graphics.ApplyChanges();
 
             GameManager.ScreenWidth = GraphicsDevice.Viewport.Width;
             GameManager.ScreenHeight = GraphicsDevice.Viewport.Height;
@@ -91,12 +91,15 @@ namespace Portal2D
                         collidableObject.CollisionTrigger.OnTrigger();
                     }
 
+                    bool futurePlayerCollisionJumping = CollisionManager.CheckCollision(CollisionManager.PredictJumpCollision(hero), collidableObject.HitBox) && collidableObject != hero && !collidableObject.IsTrigger;
                     bool futurePlayerCollisionFalling = CollisionManager.CheckCollision(CollisionManager.PredictFallCollision(hero), collidableObject.HitBox) && collidableObject != hero && !collidableObject.IsTrigger;
                     bool futurePlayerCollisionHorizontal = CollisionManager.CheckCollision(CollisionManager.PredictCollisionHorizontal(hero), collidableObject.HitBox) && collidableObject != hero && !collidableObject.IsTrigger;
-                    bool futurePlayerCollision = futurePlayerCollisionFalling || futurePlayerCollisionHorizontal;
+                    bool futurePlayerCollision = futurePlayerCollisionFalling || futurePlayerCollisionHorizontal || futurePlayerCollisionJumping;
                     if (futurePlayerCollision)
                     {
                         // Player WILL BE inside of an object NEXT FRAME
+                        if (futurePlayerCollisionJumping)
+                            hero.CanJump = false;
                         if(futurePlayerCollisionHorizontal)
                             hero.SafeForFutureCollision = false;
                         if (futurePlayerCollisionFalling)
