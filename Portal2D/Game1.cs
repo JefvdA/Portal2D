@@ -8,6 +8,7 @@ using Portal2D.Interfaces;
 using Portal2D.Implementations;
 using System.Collections.Generic;
 using System.Diagnostics;
+using Portal2D.Classes.Level;
 
 namespace Portal2D
 {
@@ -21,7 +22,11 @@ namespace Portal2D
         // Reference to player
         private Hero hero;
 
+        // Reference to Level
+        private Level1 level1;
+
         // Variables for textures
+        private Texture2D _background;
         private Texture2D _heroTexture;
         private Texture2D _blockTexture;
 
@@ -53,7 +58,6 @@ namespace Portal2D
 
             _blockTexture = new Texture2D(GraphicsDevice, 1, 1);
             _blockTexture.SetData(new[] { Color.White });
-
             _heroTexture = Content.Load<Texture2D>("CharacterSheet");
         }
 
@@ -103,7 +107,6 @@ namespace Portal2D
         {
             GraphicsDevice.Clear(GameManager.backGroundColor);
             _spriteBatch.Begin();
-
             foreach (IGameObject gameObject in gameObjects)
             {
                 gameObject.Draw(_spriteBatch);
