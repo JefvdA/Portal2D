@@ -30,5 +30,14 @@ namespace Portal2D.Classes.Managers
             Rectangle futureHitBox = new Rectangle((int)futurePosition.X, (int)futurePosition.Y, gameObject.HitBox.Width, gameObject.HitBox.Height);
             return futureHitBox;
         }
+
+        public static Rectangle PredictJumpCollision<T>(T gameObject)
+            where T: ICollidable, IJumpable
+        {
+            Vector2 futurePosition = MovementManager.PredictJump(gameObject);
+
+            Rectangle futureHitBox = new Rectangle((int)futurePosition.X, (int)futurePosition.Y, gameObject.HitBox.Width, gameObject.HitBox.Height);
+            return futureHitBox;
+        }
     }
 }

@@ -44,7 +44,7 @@ namespace Portal2D.Classes.Managers
 
             if (jumpable.IsJumping && jumpable.CanJump && jumpable.JumpCounter < jumpable.JumpHeight)
             {
-                var jumpForce = jumpable.JumpHeight / 4;
+                var jumpForce = jumpable.JumpHeight / 12;
                 distance = new Vector2(0, -jumpForce);
                 jumpable.JumpCounter += jumpForce;
             }
@@ -61,14 +61,14 @@ namespace Portal2D.Classes.Managers
                 jumpable.Position += new Vector2(0, distance.Y);
             }
 
-            futurePosition.Y += 7;
+            futurePosition = PredictFall(jumpable);
             if (futurePosition.Y > (GameManager.ScreenHeight - 64))
                 jumpable.CanJump = true;
         }
 
         public static void Fall(IMoveable moveable)
         {
-            var distance = new Vector2(0, 10);
+            var distance = new Vector2(0, GameManager.Gravity);
 
             var futurePosition = moveable.Position + distance;
             if(futurePosition.Y < (GameManager.ScreenHeight - 64))
@@ -102,11 +102,19 @@ namespace Portal2D.Classes.Managers
 
         public static Vector2 PredictFall(IMoveable moveable)
         {
-            var distance = new Vector2(0, 10);
+            var distance = new Vector2(0, GameManager.Gravity);
             var futurePosition = moveable.Position + distance;
 
             return futurePosition;
         }
 
+        public static Vector2 PredictJump(IJumpable jumpable)
+        {
+            var jumpForce = jumpable.JumpHeight / 12;
+            var distance = new Vector2(0, -jumpForce);
+            var futurePosition = jumpable.Position + distance;
+
+            return futurePosition;
+        }
     }
 }

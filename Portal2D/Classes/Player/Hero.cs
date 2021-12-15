@@ -38,7 +38,7 @@ namespace Portal2D.Classes.Player
             Position = new Vector2(250, 100);
             HitBox = new Rectangle((int)Position.X, (int)Position.Y, 64, 64); // offset: X:30/52 Y:30/30
             Speed = 10f;
-            JumpHeight = 150f;
+            JumpHeight = 400f;
             CanJump = true;
 
             CollisionTrigger = new DefaultCollisionTrigger();
