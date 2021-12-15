@@ -47,10 +47,16 @@ namespace Portal2D
             level1 = new Level1(_background);
 
             gameObjects.Add(hero);
-            gameObjects.Add(new Block(_blockTexture, Color.Green, 5, new Vector2(150, 150), true, new ChangeBGColorCollisionTrigger(Color.LightGreen)));
-            gameObjects.Add(new Block(_blockTexture, Color.Red, 5, new Vector2(650, 150), true, new ChangeBGColorCollisionTrigger(Color.DarkRed)));
-            gameObjects.Add(new Block(_blockTexture, Color.Blue, 5, new Vector2(400, 150), true, new ChangeBGColorCollisionTrigger(Color.CornflowerBlue)));
+            //gameObjects.Add(new Block(_blockTexture, Color.Green, 5, new Vector2(150, 150), true, new ChangeBGColorCollisionTrigger(Color.LightGreen)));
+            //gameObjects.Add(new Block(_blockTexture, Color.Red, 5, new Vector2(650, 150), true, new ChangeBGColorCollisionTrigger(Color.DarkRed)));
+            //gameObjects.Add(new Block(_blockTexture, Color.Blue, 5, new Vector2(400, 150), true, new ChangeBGColorCollisionTrigger(Color.CornflowerBlue)));
             gameObjects.Add(new Block(_blockTexture, Color.Black, 10, new Vector2(500, 400), false, new DefaultCollisionTrigger()));
+
+            //uncomment for fullscreen
+            //_graphics.PreferredBackBufferWidth = GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Width;
+            //_graphics.PreferredBackBufferHeight = GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Height;
+            //_graphics.ToggleFullScreen();
+            //_graphics.ApplyChanges();
 
             GameManager.ScreenWidth = GraphicsDevice.Viewport.Width;
             GameManager.ScreenHeight = GraphicsDevice.Viewport.Height;
