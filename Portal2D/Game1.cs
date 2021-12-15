@@ -50,6 +50,9 @@ namespace Portal2D
             gameObjects.Add(new Block(_blockTexture, Color.Red, 5, new Vector2(650, 150), true, new ChangeBGColorCollisionTrigger(Color.DarkRed)));
             gameObjects.Add(new Block(_blockTexture, Color.Blue, 5, new Vector2(400, 150), true, new ChangeBGColorCollisionTrigger(Color.CornflowerBlue)));
             gameObjects.Add(new Block(_blockTexture, Color.Black, 10, new Vector2(500, 400), false, new DefaultCollisionTrigger()));
+
+            GameManager.ScreenWidth = GraphicsDevice.Viewport.Width;
+            GameManager.ScreenHeight = GraphicsDevice.Viewport.Height;
         }
 
         protected override void LoadContent()
@@ -73,23 +76,34 @@ namespace Portal2D
                 {
                     ICollidable collidableObject = (ICollidable)gameObject;
 
-                    bool playerCollision = CollisionManager.CheckCollision(hero.HitBox, collidableObject.HitBox) && collidableObject != hero && collidableObject.IsTrigger;
+                    bool playerCollision= CollisionManager.CheckCollision(hero.HitBox, collidableObject.HitBox) && collidableObject != hero && collidableObject.IsTrigger;
                     if (playerCollision)
                     {
-                        // Player is CURRENTLY inside of an object
+                        // Player is CURRENTLY inside of an object WHICH IS A TRIGGER
                         collidableObject.CollisionTrigger.OnTrigger();
                     }
 
-                    bool futurePlayerCollision = CollisionManager.CheckCollision(CollisionManager.PredictCollision(hero), collidableObject.HitBox) && collidableObject != hero && !collidableObject.IsTrigger;
+                    bool futurePlayerCollisionFalling = CollisionManager.CheckCollision(CollisionManager.PredictFallCollision(hero), collidableObject.HitBox) && collidableObject != hero && !collidableObject.IsTrigger;
+                    bool futurePlayerCollisionHorizontal = CollisionManager.CheckCollision(CollisionManager.PredictCollisionHorizontal(hero), collidableObject.HitBox) && collidableObject != hero && !collidableObject.IsTrigger;
+                    bool futurePlayerCollision = futurePlayerCollisionFalling || futurePlayerCollisionHorizontal;
                     if (futurePlayerCollision)
                     {
                         // Player WILL BE inside of an object NEXT FRAME
-                        hero.SafeForFutureCollision = false;
+                        if(futurePlayerCollisionHorizontal)
+                            hero.SafeForFutureCollision = false;
+                        if (futurePlayerCollisionFalling)
+                        {
+                            hero.SafeForFalling = false;
+                            hero.CanJump = true;
+                        }
                         continue;
                     }
                     else
                     {
-                        hero.SafeForFutureCollision = true;
+                        if(!futurePlayerCollisionHorizontal)
+                            hero.SafeForFutureCollision = true;
+                        if (!futurePlayerCollisionFalling)
+                            hero.SafeForFalling = true;
                     }
                 }
             }
