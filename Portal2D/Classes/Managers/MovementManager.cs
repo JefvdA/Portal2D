@@ -58,7 +58,7 @@ namespace Portal2D.Classes.Managers
 
         public static void Fall(IMoveable moveable)
         {
-            var distance = new Vector2(0, 7);
+            var distance = new Vector2(0, 10);
 
             var futurePosition = moveable.Position + distance;
             if(futurePosition.Y < (GameManager.ScreenHeight - 256))
@@ -84,7 +84,7 @@ namespace Portal2D.Classes.Managers
 
         public static Vector2 PredictFall(IMoveable moveable)
         {
-            var distance = new Vector2(0, 5);
+            var distance = new Vector2(0, 10);
             var futurePosition = moveable.Position + distance;
 
             return futurePosition;
