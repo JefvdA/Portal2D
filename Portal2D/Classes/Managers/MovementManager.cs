@@ -12,7 +12,7 @@ namespace Portal2D.Classes.Managers
             var direction = moveable.InputReader.GetHorizontal();
             var distance = new Vector2(direction * moveable.Speed, 0);
             var futurePosition = moveable.Position + distance;
-            if (futurePosition.X < (GameManager.ScreenWidth - 256) && futurePosition.X > 0)
+            if (futurePosition.X < (GameManager.ScreenWidth - 64) && futurePosition.X > 0)
             {
                 if (moveable is ICollidable collidable)
                 {
@@ -20,6 +20,16 @@ namespace Portal2D.Classes.Managers
                         moveable.Position += new Vector2(distance.X, 0);
                 }
                 else
+                    moveable.Position += new Vector2(distance.X, 0);
+            }
+            else
+            {
+                distance = new Vector2(direction, 0);
+                futurePosition = moveable.Position + distance;
+
+                Debug.WriteLine(distance.X);
+
+                if (futurePosition.X < (GameManager.ScreenWidth - 64) && futurePosition.X > 0)
                     moveable.Position += new Vector2(distance.X, 0);
             }
         }
@@ -46,13 +56,13 @@ namespace Portal2D.Classes.Managers
             }
             var futurePosition = jumpable.Position + distance;
 
-            if (futurePosition.Y < (GameManager.ScreenHeight - 256))
+            if (futurePosition.Y < (GameManager.ScreenHeight - 64))
             {
                 jumpable.Position += new Vector2(0, distance.Y);
             }
 
             futurePosition.Y += 7;
-            if (futurePosition.Y > (GameManager.ScreenHeight - 256))
+            if (futurePosition.Y > (GameManager.ScreenHeight - 64))
                 jumpable.CanJump = true;
         }
 
@@ -61,7 +71,7 @@ namespace Portal2D.Classes.Managers
             var distance = new Vector2(0, 10);
 
             var futurePosition = moveable.Position + distance;
-            if(futurePosition.Y < (GameManager.ScreenHeight - 256))
+            if(futurePosition.Y < (GameManager.ScreenHeight - 64))
             {
                 if (moveable is ICollidable collidable)
                 {
@@ -69,6 +79,14 @@ namespace Portal2D.Classes.Managers
                         moveable.Position += new Vector2(0, distance.Y);
                 }
                 else
+                    moveable.Position += new Vector2(0, distance.Y);
+            }
+            else
+            {
+                distance = new Vector2(0, 1);
+                futurePosition = moveable.Position + distance;
+
+                if (futurePosition.Y < (GameManager.ScreenHeight - 64))
                     moveable.Position += new Vector2(0, distance.Y);
             }
         }

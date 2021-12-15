@@ -68,7 +68,7 @@ namespace Portal2D
 
             _blockTexture = new Texture2D(GraphicsDevice, 1, 1);
             _blockTexture.SetData(new[] { Color.White });
-            _heroTexture = Content.Load<Texture2D>("CharacterSheet");
+            _heroTexture = Content.Load<Texture2D>("Character_run");
             _background = Content.Load<Texture2D>("Background");
         }
 
@@ -128,7 +128,7 @@ namespace Portal2D
         protected override void Draw(GameTime gameTime)
         {
             GraphicsDevice.Clear(GameManager.backGroundColor);
-            _spriteBatch.Begin();
+            _spriteBatch.Begin(samplerState:SamplerState.PointClamp);
             level1.Draw(_spriteBatch);
             foreach (IGameObject gameObject in gameObjects)
             {
