@@ -9,6 +9,7 @@ using Portal2D.Implementations;
 using System.Collections.Generic;
 using System.Diagnostics;
 using Portal2D.Classes.Level;
+using Portal2D.Classes.Menu;
 
 namespace Portal2D
 {
@@ -24,6 +25,9 @@ namespace Portal2D
 
         // Reference to Level
         private Level1 level1;
+
+        //Reference to Menu
+        private Menu menu;
 
         // Variables for textures
         private Texture2D _background;
@@ -45,6 +49,7 @@ namespace Portal2D
 
             hero = new Hero(_heroTexture, new KeyboardReader());
             level1 = new Level1(_background);
+            menu = new Menu(_background);
 
             gameObjects.Add(hero);
             //gameObjects.Add(new Block(_blockTexture, Color.Green, 5, new Vector2(150, 150), true, new ChangeBGColorCollisionTrigger(Color.LightGreen)));
@@ -127,8 +132,7 @@ namespace Portal2D
 
         protected override void Draw(GameTime gameTime)
         {
-            GraphicsDevice.Clear(GameManager.backGroundColor);
-            _spriteBatch.Begin(samplerState:SamplerState.PointClamp);
+            _spriteBatch.Begin(samplerState: SamplerState.PointClamp);
             level1.Draw(_spriteBatch);
             foreach (IGameObject gameObject in gameObjects)
             {
@@ -140,6 +144,7 @@ namespace Portal2D
                     _spriteBatch.Draw(_blockTexture, collidableObject.HitBox, Color.Green * 0.5f);
                 }
             }
+            //menu.Draw(_spriteBatch);
             _spriteBatch.End();
             base.Draw(gameTime);
         }
