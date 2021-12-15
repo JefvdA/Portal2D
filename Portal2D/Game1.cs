@@ -44,6 +44,7 @@ namespace Portal2D
             base.Initialize();
 
             hero = new Hero(_heroTexture, new KeyboardReader());
+            level1 = new Level1(_background);
 
             gameObjects.Add(hero);
             gameObjects.Add(new Block(_blockTexture, Color.Green, 5, new Vector2(150, 150), true, new ChangeBGColorCollisionTrigger(Color.LightGreen)));
@@ -62,6 +63,7 @@ namespace Portal2D
             _blockTexture = new Texture2D(GraphicsDevice, 1, 1);
             _blockTexture.SetData(new[] { Color.White });
             _heroTexture = Content.Load<Texture2D>("CharacterSheet");
+            _background = Content.Load<Texture2D>("Background");
         }
 
         protected override void Update(GameTime gameTime)
@@ -121,6 +123,7 @@ namespace Portal2D
         {
             GraphicsDevice.Clear(GameManager.backGroundColor);
             _spriteBatch.Begin();
+            level1.Draw(_spriteBatch);
             foreach (IGameObject gameObject in gameObjects)
             {
                 gameObject.Draw(_spriteBatch);
@@ -131,7 +134,6 @@ namespace Portal2D
                     _spriteBatch.Draw(_blockTexture, collidableObject.HitBox, Color.Green * 0.5f);
                 }
             }
-
             _spriteBatch.End();
             base.Draw(gameTime);
         }
