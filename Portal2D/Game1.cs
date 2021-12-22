@@ -13,6 +13,7 @@ using Portal2D.Classes.Menu;
 
 namespace Portal2D
 {
+
     public class Game1 : Game
     {
         private GraphicsDeviceManager _graphics;
@@ -48,14 +49,15 @@ namespace Portal2D
             level1 = new Level(_background, _heroTexture);
             currentLevel = level1;
             menu = new Menu(_background);
+            GameManager.OnStart();
 
             currentLevel.AddGameObject(new Block(_blockTexture, Color.Black, 10, new Vector2(500, 800), false, new DefaultCollisionTrigger()));
 
             //uncomment for fullscreen
-            _graphics.PreferredBackBufferWidth = GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Width;
-            _graphics.PreferredBackBufferHeight = GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Height;
-            _graphics.ToggleFullScreen();
-            _graphics.ApplyChanges();
+            //_graphics.PreferredBackBufferWidth = GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Width;
+            //_graphics.PreferredBackBufferHeight = GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Height;
+            //_graphics.ToggleFullScreen();
+            //_graphics.ApplyChanges();
 
             GameManager.ScreenWidth = GraphicsDevice.Viewport.Width;
             GameManager.ScreenHeight = GraphicsDevice.Viewport.Height;
@@ -75,27 +77,34 @@ namespace Portal2D
         {
             if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
                 Exit();
-
-            currentLevel.Update(gameTime);
+            if(GameManager._gameState == GameState.Playing)
+                currentLevel.Update(gameTime);
 
             base.Update(gameTime);
         }
 
         protected override void Draw(GameTime gameTime)
         {
+            GameManager.CheckGameState();
             _spriteBatch.Begin(samplerState: SamplerState.PointClamp);
-            currentLevel.Draw(_spriteBatch);
-
-            foreach(var gameObject in currentLevel.GameObjects)
+            if (GameManager._gameState == GameState.InMenu) 
             {
-                if (gameObject is ICollidable && SHOW_HITBOXES)
+                menu.Draw(_spriteBatch);
+            }
+            else
+            {
+                currentLevel.Draw(_spriteBatch);
+
+                foreach (var gameObject in currentLevel.GameObjects)
                 {
-                    ICollidable collidableObject = (ICollidable)gameObject;
-                    _spriteBatch.Draw(_blockTexture, collidableObject.HitBox, Color.Green * 0.5f);
+                    if (gameObject is ICollidable && SHOW_HITBOXES)
+                    {
+                        ICollidable collidableObject = (ICollidable)gameObject;
+                        _spriteBatch.Draw(_blockTexture, collidableObject.HitBox, Color.Green * 0.5f);
+                    }
                 }
             }
-
-            //menu.Draw(_spriteBatch);
+          
             _spriteBatch.End();
             base.Draw(gameTime);
         }
