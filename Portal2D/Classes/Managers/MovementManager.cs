@@ -12,7 +12,7 @@ namespace Portal2D.Classes.Managers
             var direction = moveable.InputReader.GetHorizontal();
             var distance = new Vector2(direction * moveable.Speed, 0);
             var futurePosition = moveable.Position + distance;
-            if (futurePosition.X < (GameManager.ScreenWidth - 64) && futurePosition.X > 0)
+            if (futurePosition.X < (GameManager.ScreenWidth - 128) && futurePosition.X > 0)
             {
                 if (moveable is ICollidable collidable)
                 {
@@ -29,7 +29,7 @@ namespace Portal2D.Classes.Managers
 
                 Debug.WriteLine(distance.X);
 
-                if (futurePosition.X < (GameManager.ScreenWidth - 64) && futurePosition.X > 0)
+                if (futurePosition.X < (GameManager.ScreenWidth - 128) && futurePosition.X > 0)
                     moveable.Position += new Vector2(distance.X, 0);
             }
         }
@@ -56,13 +56,13 @@ namespace Portal2D.Classes.Managers
             }
             var futurePosition = jumpable.Position + distance;
 
-            if (futurePosition.Y < (GameManager.ScreenHeight - 64))
+            if (futurePosition.Y < (GameManager.ScreenHeight - 128))
             {
                 jumpable.Position += new Vector2(0, distance.Y);
             }
 
             futurePosition = PredictFall(jumpable);
-            if (futurePosition.Y > (GameManager.ScreenHeight - 64))
+            if (futurePosition.Y > (GameManager.ScreenHeight - 128))
                 jumpable.CanJump = true;
         }
 
@@ -71,7 +71,7 @@ namespace Portal2D.Classes.Managers
             var distance = new Vector2(0, GameManager.Gravity);
 
             var futurePosition = moveable.Position + distance;
-            if(futurePosition.Y < (GameManager.ScreenHeight - 64))
+            if(futurePosition.Y < (GameManager.ScreenHeight - 128))
             {
                 if (moveable is ICollidable collidable)
                 {
@@ -86,7 +86,7 @@ namespace Portal2D.Classes.Managers
                 distance = new Vector2(0, 1);
                 futurePosition = moveable.Position + distance;
 
-                if (futurePosition.Y < (GameManager.ScreenHeight - 64))
+                if (futurePosition.Y < (GameManager.ScreenHeight - 128))
                     moveable.Position += new Vector2(0, distance.Y);
             }
         }

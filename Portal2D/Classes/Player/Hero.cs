@@ -36,7 +36,7 @@ namespace Portal2D.Classes.Player
             animation.GetFramesFromTextureProperties(texture.Width, texture.Height, 6, 1);
 
             Position = new Vector2(250, 100);
-            HitBox = new Rectangle((int)Position.X, (int)Position.Y, 64, 64); // offset: X:30/52 Y:30/30
+            HitBox = new Rectangle((int)Position.X, (int)Position.Y, 128, 128);
             Speed = 10f;
             JumpHeight = 400f;
             CanJump = true;
@@ -46,14 +46,14 @@ namespace Portal2D.Classes.Player
 
         public void Draw(SpriteBatch spriteBatch)
         {
-            spriteBatch.Draw(texture, Position, animation.CurrentFrame.SourceRectangle, Color.White, 0f, Vector2.Zero, 2f, SpriteEffects.None, 0f);
+            spriteBatch.Draw(texture, Position, animation.CurrentFrame.SourceRectangle, Color.White, 0f, Vector2.Zero, 4f, SpriteEffects.None, 0f);
         }
 
         public void Update(GameTime gameTime)
         {
             animation.Update(gameTime);
 
-            HitBox = new Rectangle((int)Position.X, (int)Position.Y, 64, 64); // offset: X:30/52 Y:30/30
+            HitBox = new Rectangle((int)Position.X, (int)Position.Y, 128, 128);
 
             Move();
             Jump();
