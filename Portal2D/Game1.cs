@@ -24,7 +24,7 @@ namespace Portal2D
         private Hero hero;
 
         // Reference to Level
-        private Level1 level1;
+        private Level level1;
 
         //Reference to Menu
         private Menu menu;
