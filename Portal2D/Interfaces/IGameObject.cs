@@ -3,7 +3,7 @@ using Microsoft.Xna.Framework.Graphics;
 
 namespace Portal2D.Interfaces
 {
-    interface IGameObject
+    public interface IGameObject
     {
         public Vector2 Position { get; set; }
 

@@ -20,10 +20,8 @@ namespace Portal2D
 
         private const bool SHOW_HITBOXES = true;
 
-        // Reference to player
-        private Hero hero;
-
         // Reference to Level
+        private Level currentLevel;
         private Level level1;
 
         //Reference to Menu
@@ -47,15 +45,11 @@ namespace Portal2D
         {
             base.Initialize();
 
-            hero = new Hero(_heroTexture, new KeyboardReader());
-            level1 = new Level(_background);
+            level1 = new Level(_background, _heroTexture);
+            currentLevel = level1;
             menu = new Menu(_background);
 
-            gameObjects.Add(hero);
-            //gameObjects.Add(new Block(_blockTexture, Color.Green, 5, new Vector2(150, 150), true, new ChangeBGColorCollisionTrigger(Color.LightGreen)));
-            //gameObjects.Add(new Block(_blockTexture, Color.Red, 5, new Vector2(650, 150), true, new ChangeBGColorCollisionTrigger(Color.DarkRed)));
-            //gameObjects.Add(new Block(_blockTexture, Color.Blue, 5, new Vector2(400, 150), true, new ChangeBGColorCollisionTrigger(Color.CornflowerBlue)));
-            gameObjects.Add(new Block(_blockTexture, Color.Black, 10, new Vector2(500, 500), false, new DefaultCollisionTrigger()));
+            currentLevel.AddGameObject(new Block(_blockTexture, Color.Black, 10, new Vector2(500, 800), false, new DefaultCollisionTrigger()));
 
             //uncomment for fullscreen
             _graphics.PreferredBackBufferWidth = GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Width;
@@ -82,53 +76,7 @@ namespace Portal2D
             if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
                 Exit();
 
-            // Check collisions
-            foreach (IGameObject gameObject in gameObjects)
-            {
-                if (gameObject is ICollidable)
-                {
-                    ICollidable collidableObject = (ICollidable)gameObject;
-
-                    bool playerCollision= CollisionManager.CheckCollision(hero.HitBox, collidableObject.HitBox) && collidableObject != hero && collidableObject.IsTrigger;
-                    if (playerCollision)
-                    {
-                        // Player is CURRENTLY inside of an object WHICH IS A TRIGGER
-                        collidableObject.CollisionTrigger.OnTrigger();
-                    }
-
-                    bool futurePlayerCollisionJumping = CollisionManager.CheckCollision(CollisionManager.PredictJumpCollision(hero), collidableObject.HitBox) && collidableObject != hero && !collidableObject.IsTrigger;
-                    bool futurePlayerCollisionFalling = CollisionManager.CheckCollision(CollisionManager.PredictFallCollision(hero), collidableObject.HitBox) && collidableObject != hero && !collidableObject.IsTrigger;
-                    bool futurePlayerCollisionHorizontal = CollisionManager.CheckCollision(CollisionManager.PredictCollisionHorizontal(hero), collidableObject.HitBox) && collidableObject != hero && !collidableObject.IsTrigger;
-                    bool futurePlayerCollision = futurePlayerCollisionFalling || futurePlayerCollisionHorizontal || futurePlayerCollisionJumping;
-                    if (futurePlayerCollision)
-                    {
-                        // Player WILL BE inside of an object NEXT FRAME
-                        if (futurePlayerCollisionJumping)
-                            hero.CanJump = false;
-                        if(futurePlayerCollisionHorizontal)
-                            hero.SafeForFutureCollision = false;
-                        if (futurePlayerCollisionFalling)
-                        {
-                            hero.SafeForFalling = false;
-                            hero.CanJump = true;
-                        }
-                        continue;
-                    }
-                    else
-                    {
-                        if(!futurePlayerCollisionHorizontal)
-                            hero.SafeForFutureCollision = true;
-                        if (!futurePlayerCollisionFalling)
-                            hero.SafeForFalling = true;
-                    }
-                }
-            }
-
-            // Update each gameObject
-            foreach (IGameObject gameObject in gameObjects)
-            {
-                gameObject.Update(gameTime);
-            }
+            currentLevel.Update(gameTime);
 
             base.Update(gameTime);
         }
@@ -136,17 +84,17 @@ namespace Portal2D
         protected override void Draw(GameTime gameTime)
         {
             _spriteBatch.Begin(samplerState: SamplerState.PointClamp);
-            level1.Draw(_spriteBatch);
-            foreach (IGameObject gameObject in gameObjects)
-            {
-                gameObject.Draw(_spriteBatch);
+            currentLevel.Draw(_spriteBatch);
 
+            foreach(var gameObject in currentLevel.GameObjects)
+            {
                 if (gameObject is ICollidable && SHOW_HITBOXES)
                 {
                     ICollidable collidableObject = (ICollidable)gameObject;
                     _spriteBatch.Draw(_blockTexture, collidableObject.HitBox, Color.Green * 0.5f);
                 }
             }
+
             //menu.Draw(_spriteBatch);
             _spriteBatch.End();
             base.Draw(gameTime);
