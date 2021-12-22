@@ -48,7 +48,7 @@ namespace Portal2D
             base.Initialize();
 
             hero = new Hero(_heroTexture, new KeyboardReader());
-            level1 = new Level1(_background);
+            level1 = new Level(_background);
             menu = new Menu(_background);
 
             gameObjects.Add(hero);
