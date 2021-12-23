@@ -31,6 +31,7 @@ namespace Portal2D
         private Texture2D _background;
         private Texture2D _heroTexture;
         private Texture2D _blockTexture;
+        private Texture2D _level1;
 
         private List<IGameObject> gameObjects = new List<IGameObject>();
 
@@ -44,10 +45,9 @@ namespace Portal2D
         protected override void Initialize()
         {
             base.Initialize();
-
             level1 = new Level(_background, _spriteSheet, _heroTexture);
             currentLevel = level1;
-            menu = new Menu(_background);
+            menu = new Menu(_background, _level1);
             GameManager.OnStart();
 
             //uncomment for fullscreen
@@ -69,6 +69,7 @@ namespace Portal2D
             _heroTexture = Content.Load<Texture2D>("Character_run");
             _background = Content.Load<Texture2D>("Background");
             _spriteSheet = Content.Load<Texture2D>("Spritesheet");
+            _level1 = Content.Load<Texture2D>("Level1");
         }
 
         protected override void Update(GameTime gameTime)
@@ -85,22 +86,24 @@ namespace Portal2D
         {
             GameManager.CheckGameState();
             _spriteBatch.Begin(SpriteSortMode.Immediate, BlendState.AlphaBlend, samplerState: SamplerState.PointClamp);
+            currentLevel.Draw(_spriteBatch);
+
+            foreach (var gameObject in currentLevel.GameObjects)
+            {
+                if (gameObject is ICollidable && SHOW_HITBOXES)
+                {
+                    ICollidable collidableObject = (ICollidable)gameObject;
+                    _spriteBatch.Draw(_blockTexture, collidableObject.HitBox, Color.Green * 0.5f);
+                }
+            }
             if (GameManager._gameState == GameState.InMenu) 
             {
+                this.IsMouseVisible = true;
                 menu.Draw(_spriteBatch);
             }
             else
             {
-                currentLevel.Draw(_spriteBatch);
-
-                foreach (var gameObject in currentLevel.GameObjects)
-                {
-                    if (gameObject is ICollidable && SHOW_HITBOXES)
-                    {
-                        ICollidable collidableObject = (ICollidable)gameObject;
-                        _spriteBatch.Draw(_blockTexture, collidableObject.HitBox, Color.Green * 0.5f);
-                    }
-                }
+                this.IsMouseVisible = false;
             }
 
             _spriteBatch.End();
