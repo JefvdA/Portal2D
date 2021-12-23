@@ -52,10 +52,10 @@ namespace Portal2D
             GameManager.OnStart();
 
             //uncomment for fullscreen
-            //_graphics.PreferredBackBufferWidth = GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Width;
-            //_graphics.PreferredBackBufferHeight = GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Height;
-            //_graphics.ToggleFullScreen();
-            //_graphics.ApplyChanges();
+            _graphics.PreferredBackBufferWidth = GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Width;
+            _graphics.PreferredBackBufferHeight = GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Height;
+            _graphics.ToggleFullScreen();
+            _graphics.ApplyChanges();
 
             GameManager.ScreenWidth = GraphicsDevice.Viewport.Width;
             GameManager.ScreenHeight = GraphicsDevice.Viewport.Height;
@@ -76,7 +76,7 @@ namespace Portal2D
 
         protected override void Update(GameTime gameTime)
         {
-            if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed)
+            if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Back))
                 Exit();
             if(GameManager._gameState == GameState.Playing)
                 currentLevel.Update(gameTime);
@@ -88,14 +88,17 @@ namespace Portal2D
         {
             GameManager.CheckGameState();
             _spriteBatch.Begin(SpriteSortMode.Immediate, BlendState.AlphaBlend, samplerState: SamplerState.PointClamp);
-            currentLevel.Draw(_spriteBatch);
-
-            foreach (var gameObject in currentLevel.GameObjects)
+            menu.Draw(_spriteBatch);
+            if(GameManager._gameState == GameState.Playing)
             {
-                if (gameObject is ICollidable && SHOW_HITBOXES)
+                currentLevel.Draw(_spriteBatch);
+                foreach (var gameObject in currentLevel.GameObjects)
                 {
-                    ICollidable collidableObject = (ICollidable)gameObject;
-                    _spriteBatch.Draw(_blockTexture, collidableObject.HitBox, Color.Green * 0.5f);
+                    if (gameObject is ICollidable && SHOW_HITBOXES)
+                    {
+                        ICollidable collidableObject = (ICollidable)gameObject;
+                        _spriteBatch.Draw(_blockTexture, collidableObject.HitBox, Color.Green * 0.5f);
+                    }
                 }
             }
             if (GameManager._gameState == GameState.InMenu)
