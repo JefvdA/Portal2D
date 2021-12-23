@@ -16,7 +16,7 @@ namespace Portal2D.Classes.Menu
         {
             this.background = Background;
             MenuItem a = new MenuItem("test", new Vector2(10, 10), 5f);
-            items.Add(a);
+            //items.Add(a);
         }
         public void Draw(SpriteBatch spriteBatch)
         {
