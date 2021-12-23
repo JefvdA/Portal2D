@@ -87,7 +87,7 @@ namespace Portal2D
         protected override void Draw(GameTime gameTime)
         {
             GameManager.CheckGameState();
-            _spriteBatch.Begin(samplerState: SamplerState.PointClamp);
+            _spriteBatch.Begin(SpriteSortMode.Immediate, BlendState.AlphaBlend, samplerState: SamplerState.PointClamp);
             if (GameManager._gameState == GameState.InMenu) 
             {
                 menu.Draw(_spriteBatch);
@@ -105,7 +105,7 @@ namespace Portal2D
                     }
                 }
             }
-          
+
             _spriteBatch.End();
             base.Draw(gameTime);
         }
