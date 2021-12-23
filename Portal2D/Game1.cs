@@ -17,7 +17,7 @@ namespace Portal2D
         private GraphicsDeviceManager _graphics;
         private SpriteBatch _spriteBatch;
 
-        private const bool SHOW_HITBOXES = true;
+        private const bool SHOW_HITBOXES = false;
 
         // Reference to Level
         private Level currentLevel;
@@ -49,9 +49,6 @@ namespace Portal2D
             currentLevel = level1;
             menu = new Menu(_background);
             GameManager.OnStart();
-
-            currentLevel.AddGameObject(new Block(_blockTexture, Color.Black, 10, new Vector2(500, 950), false, new DefaultCollisionTrigger()));
-            currentLevel.AddGameObject(new Block(_blockTexture, Color.Black, 10, new Vector2(700, 950), false, new DefaultCollisionTrigger()));
 
             //uncomment for fullscreen
             _graphics.PreferredBackBufferWidth = GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Width;
