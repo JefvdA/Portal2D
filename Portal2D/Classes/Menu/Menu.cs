@@ -21,10 +21,10 @@ namespace Portal2D.Classes.Menu
         public void Draw(SpriteBatch spriteBatch)
         {
             spriteBatch.Draw(background,new Vector2(0,0), Color.White * 0.8f);
-            foreach (var item in items)
-            {
-                item.Draw(spriteBatch);
-            }
+            //foreach (var item in items)
+            //{
+            //    item.Draw(spriteBatch);
+            //}
         }
     }
 }
