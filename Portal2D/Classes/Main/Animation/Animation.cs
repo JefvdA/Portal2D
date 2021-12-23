@@ -30,7 +30,7 @@ namespace Portal2D.Classes.Main.Animation
             {
                 for (int x = 0; x < width - widthOfFrame; x += widthOfFrame)
                 {
-                    frames.Add(new AnimationFrame(new Rectangle(x, y, widthOfFrame, height)));
+                    frames.Add(new AnimationFrame(new Rectangle(x, y, widthOfFrame, heigthOfFrame)));
                 }
             }
         }

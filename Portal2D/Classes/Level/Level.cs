@@ -1,10 +1,13 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using Portal2D.Classes.Main;
+using Portal2D.Classes.Main.Spritesheet;
 using Portal2D.Classes.Managers;
 using Portal2D.Classes.Player;
 using Portal2D.Implementations;
 using Portal2D.Interfaces;
 using System.Collections.Generic;
+using System.Diagnostics;
 
 namespace Portal2D.Classes.Level
 {
@@ -12,19 +15,45 @@ namespace Portal2D.Classes.Level
     {
         // Reference to player
         private Hero hero;
+
         private Texture2D heroTexture;
+        private Texture2D spriteSheetTexture;
+
+        private Spritesheet spriteSheet;
 
         private Texture2D backGround;
         public List<IGameObject> GameObjects { get; private set; }
-
-        public Level(Texture2D backGround, Texture2D heroTexture)
+        private int[,] gameBoard = new int[,]
         {
+            { -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, },
+            { -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, },
+            { -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, },
+            { -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, },
+            { -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, },
+            { -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, },
+            { -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, },
+            { -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, },
+            { -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, },
+            { -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, },
+            { -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, },
+            { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, },
+        };
+
+        public Level(Texture2D backGround, Texture2D spritesheetTexture, Texture2D heroTexture)
+        {
+            GameObjects = new List<IGameObject>();
+
             this.backGround = backGround;
             this.heroTexture = heroTexture;
-            this.GameObjects = new List<IGameObject>();
+            this.spriteSheetTexture = spritesheetTexture;
+
+            this.spriteSheet = new Spritesheet();
+            spriteSheet.GetItemsFromProperties(256, 256, 16, 16);
 
             hero = new Hero(heroTexture, new KeyboardReader());
             AddGameObject(hero);
+
+            CreateTiles();
         }
 
         public void Update(GameTime gameTime)
@@ -53,21 +82,21 @@ namespace Portal2D.Classes.Level
                         if (futurePlayerCollisionJumping)
                             hero.CanJump = false;
                         if (futurePlayerCollisionHorizontal)
+                        {
                             hero.SafeForFutureCollision = false;
+                            Debug.WriteLine("PLayer can't move");
+                        }
                         if (futurePlayerCollisionFalling)
                         {
                             hero.SafeForFalling = false;
                             hero.CanJump = true;
                         }
-                        continue;
+                        break;
                     }
-                    else
-                    {
-                        if (!futurePlayerCollisionHorizontal)
-                            hero.SafeForFutureCollision = true;
-                        if (!futurePlayerCollisionFalling)
-                            hero.SafeForFalling = true;
-                    }
+                    if (!futurePlayerCollisionHorizontal)
+                        hero.SafeForFutureCollision = true;
+                    if (!futurePlayerCollisionFalling)
+                        hero.SafeForFalling = true;
                 }
             }
 
@@ -91,6 +120,26 @@ namespace Portal2D.Classes.Level
         public void AddGameObject(IGameObject gameObject)
         {
             GameObjects.Add(gameObject);
+        }
+
+        private void CreateTiles()
+        {
+            for(int y = 0; y < gameBoard.GetLength(0); y++)
+            {
+                for(int x = 0; x < gameBoard.GetLength(1); x++)
+                {
+                    var tile = gameBoard[y, x];
+
+                    if (tile == -1)
+                        continue;
+
+                    var sourceRectangle = spriteSheet.GetItem(tile);
+                    Debug.WriteLine(sourceRectangle);
+                    var posX = x * 96;
+                    var posY = y * 96;
+                    AddGameObject(new Tile(spriteSheetTexture, sourceRectangle, new Vector2(posX, posY), false, new DefaultCollisionTrigger()));
+                }
+            }
         }
     }
 }

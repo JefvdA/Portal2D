@@ -3,11 +3,9 @@ using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using Portal2D.Classes.Main;
 using Portal2D.Classes.Managers;
-using Portal2D.Classes.Player;
 using Portal2D.Interfaces;
 using Portal2D.Implementations;
 using System.Collections.Generic;
-using System.Diagnostics;
 using Portal2D.Classes.Level;
 using Portal2D.Classes.Menu;
 
@@ -29,6 +27,7 @@ namespace Portal2D
         private Menu menu;
 
         // Variables for textures
+        private Texture2D _spriteSheet;
         private Texture2D _background;
         private Texture2D _heroTexture;
         private Texture2D _blockTexture;
@@ -46,12 +45,13 @@ namespace Portal2D
         {
             base.Initialize();
 
-            level1 = new Level(_background, _heroTexture);
+            level1 = new Level(_background, _spriteSheet, _heroTexture);
             currentLevel = level1;
             menu = new Menu(_background);
             GameManager.OnStart();
 
-            currentLevel.AddGameObject(new Block(_blockTexture, Color.Black, 10, new Vector2(500, 800), false, new DefaultCollisionTrigger()));
+            currentLevel.AddGameObject(new Block(_blockTexture, Color.Black, 10, new Vector2(500, 950), false, new DefaultCollisionTrigger()));
+            currentLevel.AddGameObject(new Block(_blockTexture, Color.Black, 10, new Vector2(700, 950), false, new DefaultCollisionTrigger()));
 
             //uncomment for fullscreen
             //_graphics.PreferredBackBufferWidth = GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Width;
@@ -71,6 +71,7 @@ namespace Portal2D
             _blockTexture.SetData(new[] { Color.White });
             _heroTexture = Content.Load<Texture2D>("Character_run");
             _background = Content.Load<Texture2D>("Background");
+            _spriteSheet = Content.Load<Texture2D>("Spritesheet");
         }
 
         protected override void Update(GameTime gameTime)
