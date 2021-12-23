@@ -32,6 +32,7 @@ namespace Portal2D
         private Texture2D _heroTexture;
         private Texture2D _blockTexture;
         private Texture2D _level1;
+        private Texture2D _exit;
 
         private List<IGameObject> gameObjects = new List<IGameObject>();
 
@@ -47,14 +48,14 @@ namespace Portal2D
             base.Initialize();
             level1 = new Level(_background, _spriteSheet, _heroTexture);
             currentLevel = level1;
-            menu = new Menu(_background, _level1);
+            menu = new Menu(_background, _level1, _exit);
             GameManager.OnStart();
 
             //uncomment for fullscreen
-            _graphics.PreferredBackBufferWidth = GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Width;
-            _graphics.PreferredBackBufferHeight = GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Height;
-            _graphics.ToggleFullScreen();
-            _graphics.ApplyChanges();
+            //_graphics.PreferredBackBufferWidth = GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Width;
+            //_graphics.PreferredBackBufferHeight = GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Height;
+            //_graphics.ToggleFullScreen();
+            //_graphics.ApplyChanges();
 
             GameManager.ScreenWidth = GraphicsDevice.Viewport.Width;
             GameManager.ScreenHeight = GraphicsDevice.Viewport.Height;
@@ -70,11 +71,12 @@ namespace Portal2D
             _background = Content.Load<Texture2D>("Background");
             _spriteSheet = Content.Load<Texture2D>("Spritesheet");
             _level1 = Content.Load<Texture2D>("Level1");
+            _exit = Content.Load<Texture2D>("Exit");
         }
 
         protected override void Update(GameTime gameTime)
         {
-            if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
+            if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed)
                 Exit();
             if(GameManager._gameState == GameState.Playing)
                 currentLevel.Update(gameTime);
@@ -96,10 +98,14 @@ namespace Portal2D
                     _spriteBatch.Draw(_blockTexture, collidableObject.HitBox, Color.Green * 0.5f);
                 }
             }
-            if (GameManager._gameState == GameState.InMenu) 
+            if (GameManager._gameState == GameState.InMenu)
             {
                 this.IsMouseVisible = true;
                 menu.Draw(_spriteBatch);
+            }
+            else if (GameManager._gameState == GameState.Exit) 
+            {
+                Exit();
             }
             else
             {
