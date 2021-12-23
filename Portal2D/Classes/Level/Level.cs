@@ -58,7 +58,7 @@ namespace Portal2D.Classes.Level
 
         public void Update(GameTime gameTime)
         {
-            // Check collisions
+            // Check collisions - TRIGGER - HORIZONTAL
             foreach (IGameObject gameObject in GameObjects)
             {
                 if (gameObject is ICollidable)
@@ -72,31 +72,30 @@ namespace Portal2D.Classes.Level
                         collidableObject.CollisionTrigger.OnTrigger();
                     }
 
+                    bool futurePlayerCollisionHorizontal = CollisionManager.CheckCollision(CollisionManager.PredictCollisionHorizontal(hero), collidableObject.HitBox) && collidableObject != hero && !collidableObject.IsTrigger;
+                    hero.SafeForFutureCollision = !futurePlayerCollisionHorizontal;
+                    if (futurePlayerCollisionHorizontal)
+                        break;
+                }
+            }
+
+            // Check collisions - FALLING - JUMPING
+            foreach (IGameObject gameObject in GameObjects)
+            {
+                if(gameObject is ICollidable collidableObject)
+                {
                     bool futurePlayerCollisionJumping = CollisionManager.CheckCollision(CollisionManager.PredictJumpCollision(hero), collidableObject.HitBox) && collidableObject != hero && !collidableObject.IsTrigger;
                     bool futurePlayerCollisionFalling = CollisionManager.CheckCollision(CollisionManager.PredictFallCollision(hero), collidableObject.HitBox) && collidableObject != hero && !collidableObject.IsTrigger;
-                    bool futurePlayerCollisionHorizontal = CollisionManager.CheckCollision(CollisionManager.PredictCollisionHorizontal(hero), collidableObject.HitBox) && collidableObject != hero && !collidableObject.IsTrigger;
-                    bool futurePlayerCollision = futurePlayerCollisionFalling || futurePlayerCollisionHorizontal || futurePlayerCollisionJumping;
-                    if (futurePlayerCollision)
-                    {
-                        // Player WILL BE inside of an object NEXT FRAME
-                        if (futurePlayerCollisionJumping)
-                            hero.CanJump = false;
-                        if (futurePlayerCollisionHorizontal)
-                        {
-                            hero.SafeForFutureCollision = false;
-                            Debug.WriteLine("PLayer can't move");
-                        }
-                        if (futurePlayerCollisionFalling)
-                        {
-                            hero.SafeForFalling = false;
-                            hero.CanJump = true;
-                        }
+
+                    hero.SafeForFalling = !futurePlayerCollisionFalling;
+
+                    if (futurePlayerCollisionJumping)
+                        hero.CanJump = false;
+                    if (futurePlayerCollisionFalling)
+                        hero.CanJump = true;
+
+                    if (futurePlayerCollisionFalling || futurePlayerCollisionJumping)
                         break;
-                    }
-                    if (!futurePlayerCollisionHorizontal)
-                        hero.SafeForFutureCollision = true;
-                    if (!futurePlayerCollisionFalling)
-                        hero.SafeForFalling = true;
                 }
             }
 
