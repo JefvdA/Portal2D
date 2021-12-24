@@ -101,7 +101,7 @@ namespace Portal2D
                     }
                 }
             }
-            if (GameManager._gameState == GameState.InMenu)
+            if (GameManager._gameState == GameState.Paused)
             {
                 this.IsMouseVisible = true;
                 menu.Draw(_spriteBatch);

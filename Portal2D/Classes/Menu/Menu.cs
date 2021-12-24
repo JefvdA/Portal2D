@@ -26,6 +26,7 @@ namespace Portal2D.Classes.Menu
         public void Draw(SpriteBatch spriteBatch)
         {
             this.Level1position = new Vector2(GameManager.ScreenWidth / 2 -201, GameManager.ScreenHeight / 2 -201);
+            this.Exitposition = new Vector2(GameManager.ScreenWidth-512, GameManager.ScreenHeight -512);
             mouseState = Mouse.GetState();
             if (mouseState.LeftButton == ButtonState.Pressed) 
             {

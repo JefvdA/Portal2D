@@ -24,7 +24,7 @@ namespace Portal2D.Classes.Managers
             if (inputreader.IsKeyPressed(Keys.Escape) == true)
             {
                 if (_gameState == GameState.Playing)
-                    _gameState = GameState.InMenu;
+                    _gameState = GameState.Paused;
                 else
                     _gameState = GameState.Playing;
             }
@@ -32,6 +32,6 @@ namespace Portal2D.Classes.Managers
 }
     enum GameState
     {
-        Playing, InMenu, Exit
+        Playing, MainMenu,Paused, Exit
     }
 }
