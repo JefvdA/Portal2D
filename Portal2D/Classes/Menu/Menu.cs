@@ -32,9 +32,9 @@ namespace Portal2D.Classes.Menu
             {
                 MouseClicked(mouseState.X, mouseState.Y);
             }
-            spriteBatch.Draw(background, new Vector2(0, 0), Color.Gray * 0.2f);
-            spriteBatch.Draw(Level1, Level1position, Color.White * 1f);
-            spriteBatch.Draw(Exit, Exitposition, Color.White * 1f);
+            spriteBatch.Draw(background, new Vector2(0, 0), Color.Gray);
+            spriteBatch.Draw(Level1, Level1position, Color.White);
+            spriteBatch.Draw(Exit, Exitposition, Color.White);
         }
         void MouseClicked(int x, int y)
         {

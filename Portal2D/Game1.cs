@@ -29,7 +29,8 @@ namespace Portal2D
         // Variables for textures
         private Texture2D _spriteSheet;
         private Texture2D _background;
-        private Texture2D _heroTexture;
+        private Texture2D _heroRunningTexture;
+        private Texture2D _heroIdleTexture;
         private Texture2D _blockTexture;
         private Texture2D _level1;
         private Texture2D _exit;
@@ -46,7 +47,7 @@ namespace Portal2D
         protected override void Initialize()
         {
             base.Initialize();
-            level1 = new Level(_background, _spriteSheet, _heroTexture);
+            level1 = new Level(_background, _spriteSheet, _heroRunningTexture, _heroIdleTexture);
             currentLevel = level1;
             menu = new Menu(_background, _level1, _exit);
             GameManager.OnStart();
@@ -67,7 +68,8 @@ namespace Portal2D
 
             _blockTexture = new Texture2D(GraphicsDevice, 1, 1);
             _blockTexture.SetData(new[] { Color.White });
-            _heroTexture = Content.Load<Texture2D>("Character_run");
+            _heroRunningTexture = Content.Load<Texture2D>("Character_run");
+            _heroIdleTexture = Content.Load<Texture2D>("Cyborg_idle");
             _background = Content.Load<Texture2D>("Background");
             _spriteSheet = Content.Load<Texture2D>("Spritesheet");
             _level1 = Content.Load<Texture2D>("Level1");

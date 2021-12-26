@@ -16,7 +16,8 @@ namespace Portal2D.Classes.Level
         // Reference to player
         private Hero hero;
 
-        private Texture2D heroTexture;
+        private Texture2D heroRunningTexture;
+        private Texture2D heroIdleTexture;
         private Texture2D spriteSheetTexture;
 
         private Spritesheet spriteSheet;
@@ -39,18 +40,19 @@ namespace Portal2D.Classes.Level
             {  31,  32,  32,  32,  32,  32,  32,  32,  32,  32,  32,  32,  32,  32,  32,  32,  32,  32,  32,  33, },
         };
 
-        public Level(Texture2D backGround, Texture2D spritesheetTexture, Texture2D heroTexture)
+        public Level(Texture2D backGround, Texture2D spritesheetTexture, Texture2D heroRunningTexture, Texture2D heroIdleTexture)
         {
             GameObjects = new List<IGameObject>();
 
             this.backGround = backGround;
-            this.heroTexture = heroTexture;
+            this.heroRunningTexture = heroRunningTexture;
+            this.heroIdleTexture = heroIdleTexture;
             this.spriteSheetTexture = spritesheetTexture;
 
             this.spriteSheet = new Spritesheet();
             spriteSheet.GetItemsFromProperties(256, 256, 16, 16);
 
-            hero = new Hero(heroTexture, new KeyboardReader());
+            hero = new Hero(heroRunningTexture,heroIdleTexture, new KeyboardReader());
             AddGameObject(hero);
 
             CreateTiles();
