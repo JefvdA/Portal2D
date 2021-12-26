@@ -17,7 +17,7 @@ namespace Portal2D
         private GraphicsDeviceManager _graphics;
         private SpriteBatch _spriteBatch;
 
-        private const bool SHOW_HITBOXES = true;
+        private const bool SHOW_HITBOXES = false;
 
         // Reference to Level
         private Level currentLevel;
@@ -31,6 +31,8 @@ namespace Portal2D
         private Texture2D _background;
         private Texture2D _heroTexture;
         private Texture2D _blockTexture;
+        private Texture2D _level1;
+        private Texture2D _exit;
 
         private List<IGameObject> gameObjects = new List<IGameObject>();
 
@@ -44,20 +46,16 @@ namespace Portal2D
         protected override void Initialize()
         {
             base.Initialize();
-
             level1 = new Level(_background, _spriteSheet, _heroTexture);
             currentLevel = level1;
-            menu = new Menu(_background);
+            menu = new Menu(_background, _level1, _exit);
             GameManager.OnStart();
 
-            currentLevel.AddGameObject(new Block(_blockTexture, Color.Black, 10, new Vector2(500, 950), false, new DefaultCollisionTrigger()));
-            currentLevel.AddGameObject(new Block(_blockTexture, Color.Black, 10, new Vector2(700, 950), false, new DefaultCollisionTrigger()));
-
             //uncomment for fullscreen
-            //_graphics.PreferredBackBufferWidth = GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Width;
-            //_graphics.PreferredBackBufferHeight = GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Height;
-            //_graphics.ToggleFullScreen();
-            //_graphics.ApplyChanges();
+            _graphics.PreferredBackBufferWidth = GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Width;
+            _graphics.PreferredBackBufferHeight = GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Height;
+            _graphics.ToggleFullScreen();
+            _graphics.ApplyChanges();
 
             GameManager.ScreenWidth = GraphicsDevice.Viewport.Width;
             GameManager.ScreenHeight = GraphicsDevice.Viewport.Height;
@@ -72,11 +70,13 @@ namespace Portal2D
             _heroTexture = Content.Load<Texture2D>("Character_run");
             _background = Content.Load<Texture2D>("Background");
             _spriteSheet = Content.Load<Texture2D>("Spritesheet");
+            _level1 = Content.Load<Texture2D>("Level1");
+            _exit = Content.Load<Texture2D>("Exit");
         }
 
         protected override void Update(GameTime gameTime)
         {
-            if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
+            if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Back))
                 Exit();
             if(GameManager._gameState == GameState.Playing)
                 currentLevel.Update(gameTime);
@@ -87,15 +87,11 @@ namespace Portal2D
         protected override void Draw(GameTime gameTime)
         {
             GameManager.CheckGameState();
-            _spriteBatch.Begin(samplerState: SamplerState.PointClamp);
-            if (GameManager._gameState == GameState.InMenu) 
-            {
-                menu.Draw(_spriteBatch);
-            }
-            else
+            _spriteBatch.Begin(SpriteSortMode.Immediate, BlendState.AlphaBlend, samplerState: SamplerState.PointClamp);
+            menu.Draw(_spriteBatch);
+            if(GameManager._gameState == GameState.Playing)
             {
                 currentLevel.Draw(_spriteBatch);
-
                 foreach (var gameObject in currentLevel.GameObjects)
                 {
                     if (gameObject is ICollidable && SHOW_HITBOXES)
@@ -105,7 +101,20 @@ namespace Portal2D
                     }
                 }
             }
-          
+            if (GameManager._gameState == GameState.Paused)
+            {
+                this.IsMouseVisible = true;
+                menu.Draw(_spriteBatch);
+            }
+            else if (GameManager._gameState == GameState.Exit) 
+            {
+                Exit();
+            }
+            else
+            {
+                this.IsMouseVisible = false;
+            }
+
             _spriteBatch.End();
             base.Draw(gameTime);
         }

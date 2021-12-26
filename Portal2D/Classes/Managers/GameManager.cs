@@ -21,10 +21,10 @@ namespace Portal2D.Classes.Managers
         }
         public static void CheckGameState() 
         {
-            if (inputreader.IsKeyPressed(Keys.Back) == true)
+            if (inputreader.IsKeyPressed(Keys.Escape) == true)
             {
                 if (_gameState == GameState.Playing)
-                    _gameState = GameState.InMenu;
+                    _gameState = GameState.Paused;
                 else
                     _gameState = GameState.Playing;
             }
@@ -32,6 +32,6 @@ namespace Portal2D.Classes.Managers
 }
     enum GameState
     {
-        Playing, InMenu
+        Playing, MainMenu,Paused, Exit
     }
 }
