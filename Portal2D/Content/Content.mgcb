@@ -25,18 +25,6 @@
 /processorParam:TextureFormat=Color
 /build:Background.jpg
 
-#begin C:/Users/stef_/Desktop/Cyborg_idle.png
-/importer:TextureImporter
-/processor:TextureProcessor
-/processorParam:ColorKeyColor=255,0,255,255
-/processorParam:ColorKeyEnabled=True
-/processorParam:GenerateMipmaps=False
-/processorParam:PremultiplyAlpha=True
-/processorParam:ResizeToPowerOfTwo=False
-/processorParam:MakeSquare=False
-/processorParam:TextureFormat=Color
-/build:C:/Users/stef_/Desktop/Cyborg_idle.png;Cyborg_idle.png
-
 #begin Character_run.png
 /importer:TextureImporter
 /processor:TextureProcessor
@@ -60,6 +48,18 @@
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
 /build:CharacterSheet.png
+
+#begin Cyborg_idle.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:Cyborg_idle.png
 
 #begin Exit.png
 /importer:TextureImporter
