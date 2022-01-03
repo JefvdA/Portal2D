@@ -57,7 +57,7 @@ namespace Portal2D.Classes.Level
             spriteSheet.GetItemsFromProperties(256, 256, 16, 16);
 
             hero = new Hero(heroRunningTexture,heroIdleTexture, new KeyboardReader());
-            enemy = new Enemy(enemyTexture);
+            enemy = new Enemy(enemyTexture, new KeyboardReader());
             AddGameObject(enemy);
             AddGameObject(hero);
 
@@ -103,6 +103,40 @@ namespace Portal2D.Classes.Level
                         hero.CanJump = true;
 
                     if (futurePlayerCollisionFalling || futurePlayerCollisionJumping)
+                        break;
+                }
+            }
+
+            foreach (IGameObject gameObject in GameObjects)
+            {
+                if (gameObject is ICollidable)
+                {
+                    ICollidable collidableObject = (ICollidable)gameObject;
+
+                    bool playerCollision = CollisionManager.CheckCollision(hero.HitBox, collidableObject.HitBox) && collidableObject != hero && collidableObject.IsTrigger;
+                    if (playerCollision)
+                    {
+                        // Player is CURRENTLY inside of an object WHICH IS A TRIGGER
+                        collidableObject.CollisionTrigger.OnTrigger();
+                    }
+
+                    bool futurePlayerCollisionHorizontal = CollisionManager.CheckCollision(CollisionManager.PredictCollisionHorizontal(hero), collidableObject.HitBox) && collidableObject != hero && !collidableObject.IsTrigger;
+                    hero.SafeForFutureCollision = !futurePlayerCollisionHorizontal;
+                    if (futurePlayerCollisionHorizontal)
+                        break;
+                }
+            }
+
+            // Check collisions - FALLING - JUMPING
+            foreach (IGameObject gameObject in GameObjects)
+            {
+                if (gameObject is ICollidable collidableObject)
+                {
+                    bool futurePlayerCollisionFalling = CollisionManager.CheckCollision(CollisionManager.PredictFallCollision(enemy), collidableObject.HitBox) && collidableObject != enemy && !collidableObject.IsTrigger;
+
+                    enemy.SafeForFalling = !futurePlayerCollisionFalling;
+
+                    if (futurePlayerCollisionFalling)
                         break;
                 }
             }

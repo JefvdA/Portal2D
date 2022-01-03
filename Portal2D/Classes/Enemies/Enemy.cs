@@ -22,10 +22,12 @@ namespace Portal2D.Classes.Enemies
         public bool IsTrigger { get; set; } = false;
         public ICollisionTrigger CollisionTrigger { get; set; }
 
+
         private Animation animation;
 
-        public Enemy(Texture2D _texture)
+        public Enemy(Texture2D _texture, IInputReader inputreader)
         {
+            InputReader = inputreader;
             texture = _texture;
             Position = new Vector2(250, 100);
             Speed = 10;
@@ -41,6 +43,7 @@ namespace Portal2D.Classes.Enemies
 
             HitBox = new Rectangle((int)Position.X, (int)Position.Y, 400, 400);
             Fall();
+            Move();
         }
         public void Draw(SpriteBatch spriteBatch)
         {
@@ -49,6 +52,10 @@ namespace Portal2D.Classes.Enemies
         public void Fall()
         {
             MovementManager.Fall(this);
+        }
+        public void Move()
+        {
+            MovementManager.MoveHorizontal(this);
         }
     }
 }

@@ -31,6 +31,6 @@ namespace Portal2D.Classes.Managers
 }
     enum GameState
     {
-        Playing, MainMenu,Paused, Exit
+        Playing, MainMenu,Paused, Exit, GameOver, GameWon
     }
 }

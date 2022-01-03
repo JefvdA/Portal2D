@@ -25,6 +25,7 @@ namespace Portal2D
 
         //Reference to Menu
         private Menu menu;
+        private GameOverScreen gameOverScreen;
 
         // Variables for textures
         private Texture2D _spriteSheet;
@@ -51,6 +52,7 @@ namespace Portal2D
             level1 = new Level(_background, _spriteSheet, _heroRunningTexture, _heroIdleTexture, _enemyTexture);
             currentLevel = level1;
             menu = new Menu(_background, _level1, _exit);
+            gameOverScreen = new GameOverScreen(_background);
             GameManager.OnStart();
 
             //uncomment for fullscreen
@@ -92,32 +94,39 @@ namespace Portal2D
         {
             GameManager.CheckGameState();
             _spriteBatch.Begin(SpriteSortMode.Immediate, BlendState.AlphaBlend, samplerState: SamplerState.PointClamp);
-            if (GameManager._gameState == GameState.Playing)
+            switch (GameManager._gameState)
             {
-                this.IsMouseVisible = false;
-                currentLevel.Draw(_spriteBatch);
-                foreach (var gameObject in currentLevel.GameObjects)
-                {
-                    if (gameObject is ICollidable && SHOW_HITBOXES)
+                case GameState.Playing:
+                    this.IsMouseVisible = false;
+                    currentLevel.Draw(_spriteBatch);
+                    foreach (var gameObject in currentLevel.GameObjects)
                     {
-                        ICollidable collidableObject = (ICollidable)gameObject;
-                        _spriteBatch.Draw(_blockTexture, collidableObject.HitBox, Color.Green * 0.5f);
+                        if (gameObject is ICollidable && SHOW_HITBOXES)
+                        {
+                            ICollidable collidableObject = (ICollidable)gameObject;
+                            _spriteBatch.Draw(_blockTexture, collidableObject.HitBox, Color.Green * 0.5f);
+                        }
                     }
-                }
-            }
-            if (GameManager._gameState == GameState.Paused)
-            {
-                this.IsMouseVisible = true;
-                menu.Draw(_spriteBatch);
-            }
-            if (GameManager._gameState == GameState.MainMenu)
-            {
-                this.IsMouseVisible = true;
-                menu.Draw(_spriteBatch);
-            }
-            if (GameManager._gameState == GameState.Exit)
-            {
-                Exit();
+                    break;
+                case GameState.MainMenu:
+                    this.IsMouseVisible = true;
+                    menu.Draw(_spriteBatch);
+                    break;
+                case GameState.Paused:
+                    this.IsMouseVisible = true;
+                    menu.Draw(_spriteBatch);
+                    break;
+                case GameState.Exit:
+                    Exit();
+                    break;
+                case GameState.GameOver:
+                    GraphicsDevice.Clear(Color.Black);
+                    gameOverScreen.Draw(_spriteBatch);
+                    break;
+                case GameState.GameWon:
+                    break;
+                default:
+                    break;
             }
 
             _spriteBatch.End();
