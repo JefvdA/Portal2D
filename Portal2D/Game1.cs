@@ -17,7 +17,7 @@ namespace Portal2D
         private GraphicsDeviceManager _graphics;
         private SpriteBatch _spriteBatch;
 
-        private const bool SHOW_HITBOXES = false;
+        private const bool SHOW_HITBOXES = true;
 
         // Reference to Level
         private Level currentLevel;
@@ -34,6 +34,7 @@ namespace Portal2D
         private Texture2D _blockTexture;
         private Texture2D _level1;
         private Texture2D _exit;
+        private Texture2D _enemyTexture;
 
         private List<IGameObject> gameObjects = new List<IGameObject>();
 
@@ -47,7 +48,7 @@ namespace Portal2D
         protected override void Initialize()
         {
             base.Initialize();
-            level1 = new Level(_background, _spriteSheet, _heroRunningTexture, _heroIdleTexture);
+            level1 = new Level(_background, _spriteSheet, _heroRunningTexture, _heroIdleTexture, _enemyTexture);
             currentLevel = level1;
             menu = new Menu(_background, _level1, _exit);
             GameManager.OnStart();
@@ -74,6 +75,7 @@ namespace Portal2D
             _spriteSheet = Content.Load<Texture2D>("Spritesheet");
             _level1 = Content.Load<Texture2D>("Level1");
             _exit = Content.Load<Texture2D>("Exit");
+            _enemyTexture = Content.Load<Texture2D>("CharacterSheet");
         }
 
         protected override void Update(GameTime gameTime)
@@ -90,9 +92,9 @@ namespace Portal2D
         {
             GameManager.CheckGameState();
             _spriteBatch.Begin(SpriteSortMode.Immediate, BlendState.AlphaBlend, samplerState: SamplerState.PointClamp);
-            menu.Draw(_spriteBatch);
-            if(GameManager._gameState == GameState.Playing)
+            if (GameManager._gameState == GameState.Playing)
             {
+                this.IsMouseVisible = false;
                 currentLevel.Draw(_spriteBatch);
                 foreach (var gameObject in currentLevel.GameObjects)
                 {
@@ -108,13 +110,14 @@ namespace Portal2D
                 this.IsMouseVisible = true;
                 menu.Draw(_spriteBatch);
             }
-            else if (GameManager._gameState == GameState.Exit) 
+            if (GameManager._gameState == GameState.MainMenu)
+            {
+                this.IsMouseVisible = true;
+                menu.Draw(_spriteBatch);
+            }
+            if (GameManager._gameState == GameState.Exit)
             {
                 Exit();
-            }
-            else
-            {
-                this.IsMouseVisible = false;
             }
 
             _spriteBatch.End();

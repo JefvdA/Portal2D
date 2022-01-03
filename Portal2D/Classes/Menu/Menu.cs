@@ -41,7 +41,7 @@ namespace Portal2D.Classes.Menu
             Rectangle mouseClickRect = new Rectangle(x, y, 10, 10);
             Rectangle startButtonRect = new Rectangle((int)Level1position.X,(int)Level1position.Y, 403, 403);
             Rectangle exitButtonRect = new Rectangle((int)Exitposition.X,(int)Exitposition.Y, 512, 512);
-            if (mouseClickRect.Intersects(startButtonRect)) 
+            if (mouseClickRect.Intersects(startButtonRect))
             {
                 GameManager._gameState = GameState.Playing;
             }

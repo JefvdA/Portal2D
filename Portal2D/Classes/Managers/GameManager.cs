@@ -18,6 +18,7 @@ namespace Portal2D.Classes.Managers
         public static void OnStart()
         {
             inputreader = new KeyboardReader();
+            _gameState = GameState.MainMenu;
         }
         public static void CheckGameState() 
         {
@@ -25,8 +26,6 @@ namespace Portal2D.Classes.Managers
             {
                 if (_gameState == GameState.Playing)
                     _gameState = GameState.Paused;
-                else
-                    _gameState = GameState.Playing;
             }
         } 
 }

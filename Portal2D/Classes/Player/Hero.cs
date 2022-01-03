@@ -43,7 +43,7 @@ namespace Portal2D.Classes.Player
             animation2.GetFramesFromTextureProperties(IdleTexture.Width,IdleTexture.Height, 4, 1);
 
             Position = new Vector2(250, 100);
-            HitBox = new Rectangle((int)Position.X, (int)Position.Y, 200, 200);
+            HitBox = new Rectangle((int)Position.X, (int)Position.Y, 128, 128);
             Speed = 10f;
             JumpHeight = 400f;
             CanJump = true;
@@ -64,7 +64,7 @@ namespace Portal2D.Classes.Player
             }
             else if (InputReader.GetHorizontal() == -1)
             {
-                spriteBatch.Draw(RunningTexture, Position, animation.CurrentFrame.SourceRectangle, Color.White, 0f, Vector2.Zero, 4f, SpriteEffects.FlipHorizontally, 0f);
+                spriteBatch.Draw(RunningTexture, new Vector2(Position.X - 60, Position.Y), animation.CurrentFrame.SourceRectangle, Color.White, 0f, Vector2.Zero, 4f, SpriteEffects.FlipHorizontally, 0f);
             }
             else if (InputReader.GetHorizontal() == 0 && previous == 1)
             {
@@ -72,7 +72,7 @@ namespace Portal2D.Classes.Player
             }
             else if (InputReader.GetHorizontal() == 0 && previous == -1)
             {
-                spriteBatch.Draw(IdleTexture, new Vector2(Position.X - 40, Position.Y -60), animation2.CurrentFrame.SourceRectangle, Color.White, 0f, Vector2.Zero, 4f, SpriteEffects.FlipHorizontally, 0f);
+                spriteBatch.Draw(IdleTexture, new Vector2(Position.X - 60, Position.Y - 60), animation2.CurrentFrame.SourceRectangle, Color.White, 0f, Vector2.Zero, 4f, SpriteEffects.FlipHorizontally, 0f);
             }
 
         }

@@ -1,5 +1,6 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using Portal2D.Classes.Enemies;
 using Portal2D.Classes.Main;
 using Portal2D.Classes.Main.Spritesheet;
 using Portal2D.Classes.Managers;
@@ -15,7 +16,9 @@ namespace Portal2D.Classes.Level
     {
         // Reference to player
         private Hero hero;
+        private Enemy enemy;
 
+        private Texture2D enemyTexture;
         private Texture2D heroRunningTexture;
         private Texture2D heroIdleTexture;
         private Texture2D spriteSheetTexture;
@@ -40,7 +43,7 @@ namespace Portal2D.Classes.Level
             {  31,  32,  32,  32,  32,  32,  32,  32,  32,  32,  32,  32,  32,  32,  32,  32,  32,  32,  32,  33, },
         };
 
-        public Level(Texture2D backGround, Texture2D spritesheetTexture, Texture2D heroRunningTexture, Texture2D heroIdleTexture)
+        public Level(Texture2D backGround, Texture2D spritesheetTexture, Texture2D heroRunningTexture, Texture2D heroIdleTexture, Texture2D enemyTexture)
         {
             GameObjects = new List<IGameObject>();
 
@@ -48,11 +51,14 @@ namespace Portal2D.Classes.Level
             this.heroRunningTexture = heroRunningTexture;
             this.heroIdleTexture = heroIdleTexture;
             this.spriteSheetTexture = spritesheetTexture;
+            this.enemyTexture = enemyTexture;
 
             this.spriteSheet = new Spritesheet();
             spriteSheet.GetItemsFromProperties(256, 256, 16, 16);
 
             hero = new Hero(heroRunningTexture,heroIdleTexture, new KeyboardReader());
+            enemy = new Enemy(enemyTexture);
+            AddGameObject(enemy);
             AddGameObject(hero);
 
             CreateTiles();
@@ -135,7 +141,6 @@ namespace Portal2D.Classes.Level
                         continue;
 
                     var sourceRectangle = spriteSheet.GetItem(tile);
-                    Debug.WriteLine(sourceRectangle);
                     var posX = x * 96;
                     var posY = y * 96;
                     AddGameObject(new Tile(spriteSheetTexture, sourceRectangle, new Vector2(posX, posY), false, new DefaultCollisionTrigger()));
