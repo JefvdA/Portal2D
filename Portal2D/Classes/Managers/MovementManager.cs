@@ -27,8 +27,6 @@ namespace Portal2D.Classes.Managers
                 distance = new Vector2(direction, 0);
                 futurePosition = moveable.Position + distance;
 
-                Debug.WriteLine(distance.X);
-
                 if (futurePosition.X < (GameManager.ScreenWidth - 128) && futurePosition.X > 0)
                     moveable.Position += new Vector2(distance.X, 0);
             }

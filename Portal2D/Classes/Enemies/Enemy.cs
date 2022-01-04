@@ -10,52 +10,45 @@ using System.Text;
 
 namespace Portal2D.Classes.Enemies
 {
-    class Enemy : IGameObject, IMoveable, ICollidable
+    class Enemy : IGameObject
     {
         private Texture2D texture;
         public Vector2 Position { get; set; }
         public Rectangle HitBox { get; set; }
         public float Speed { get; set; }
-        public IInputReader InputReader { get; set; }
-        public bool SafeForFutureCollision { get; set; } = false;
-        public bool SafeForFalling { get; set; } = true;
-        public bool IsTrigger { get; set; } = false;
-        public ICollisionTrigger CollisionTrigger { get; set; }
-
+        public float direction;
 
         private Animation animation;
 
-        public Enemy(Texture2D _texture, IInputReader inputreader)
+        public Enemy(Texture2D _texture)
         {
-            InputReader = inputreader;
+            direction = 1f;
             texture = _texture;
-            Position = new Vector2(250, 100);
-            Speed = 10;
+            Position = new Vector2(500, 500);
+            Speed = 5f;
             animation = new Animation();
             animation.GetFramesFromTextureProperties(texture.Width, texture.Height, 6, 1);
-            HitBox = new Rectangle((int)Position.X, (int)Position.Y, 400, 400);
-
-            CollisionTrigger = new DefaultCollisionTrigger();
         }
         public void Update(GameTime gameTime)
         {
             animation.Update(gameTime);
 
-            HitBox = new Rectangle((int)Position.X, (int)Position.Y, 400, 400);
-            Fall();
             Move();
+            Position += new Vector2(direction, 0);
         }
         public void Draw(SpriteBatch spriteBatch)
         {
-            spriteBatch.Draw(texture, Position, animation.CurrentFrame.SourceRectangle, Color.White, 0f, Vector2.Zero, 1f, SpriteEffects.None, 0f);
-        }
-        public void Fall()
-        {
-            MovementManager.Fall(this);
+            if(direction > 0)
+                spriteBatch.Draw(texture, Position, animation.CurrentFrame.SourceRectangle, Color.White, 0f, Vector2.Zero, 1f, SpriteEffects.None, 0f);
+            else
+                spriteBatch.Draw(texture, Position, animation.CurrentFrame.SourceRectangle, Color.White, 0f, Vector2.Zero, 1f, SpriteEffects.FlipHorizontally, 0f);
         }
         public void Move()
         {
-            MovementManager.MoveHorizontal(this);
+            if (Position.X == 1000)
+                direction = -Speed;
+            if (Position.X == 500)
+                direction = Speed;
         }
     }
 }
