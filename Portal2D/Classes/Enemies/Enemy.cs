@@ -10,24 +10,31 @@ using System.Text;
 
 namespace Portal2D.Classes.Enemies
 {
-    class Enemy : IGameObject
+    class Enemy : IGameObject, ICollidable
     {
         private Texture2D texture;
         public Vector2 Position { get; set; }
         public Rectangle HitBox { get; set; }
         public float Speed { get; set; }
+        public bool SafeForFutureCollision { get; set; }
+        public bool SafeForFalling { get; set; }
+        public ICollisionTrigger CollisionTrigger { get; set; }
+        public bool IsTrigger { get; set; } = true;
+
         public float direction;
 
         private Animation animation;
 
         public Enemy(Texture2D _texture)
         {
+            CollisionTrigger = new EnemyCollsionTrigger();
             direction = 1f;
             texture = _texture;
-            Position = new Vector2(500, 500);
+            Position = new Vector2(500, 250);
             Speed = 5f;
             animation = new Animation();
             animation.GetFramesFromTextureProperties(texture.Width, texture.Height, 6, 1);
+            HitBox = new Rectangle((int)Position.X, (int)Position.Y, texture.Width / 6, texture.Height);
         }
         public void Update(GameTime gameTime)
         {
@@ -35,6 +42,7 @@ namespace Portal2D.Classes.Enemies
 
             Move();
             Position += new Vector2(direction, 0);
+            HitBox = new Rectangle((int)Position.X, (int)Position.Y, texture.Width/6, texture.Height);
         }
         public void Draw(SpriteBatch spriteBatch)
         {

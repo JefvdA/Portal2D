@@ -52,14 +52,14 @@ namespace Portal2D
             level1 = new Level(_background, _spriteSheet, _heroRunningTexture, _heroIdleTexture, _enemyTexture);
             currentLevel = level1;
             menu = new Menu(_background, _level1, _exit);
-            gameOverScreen = new GameOverScreen(_background);
+            gameOverScreen = new GameOverScreen(_exit);
             GameManager.OnStart();
 
             //uncomment for fullscreen
-            _graphics.PreferredBackBufferWidth = GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Width;
-            _graphics.PreferredBackBufferHeight = GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Height;
-            _graphics.ToggleFullScreen();
-            _graphics.ApplyChanges();
+            //_graphics.PreferredBackBufferWidth = GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Width;
+            //_graphics.PreferredBackBufferHeight = GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Height;
+            //_graphics.ToggleFullScreen();
+            //_graphics.ApplyChanges();
 
             GameManager.ScreenWidth = GraphicsDevice.Viewport.Width;
             GameManager.ScreenHeight = GraphicsDevice.Viewport.Height;
@@ -120,7 +120,8 @@ namespace Portal2D
                     Exit();
                     break;
                 case GameState.GameOver:
-                    GraphicsDevice.Clear(Color.Black);
+                    this.IsMouseVisible = true;
+                    GraphicsDevice.Clear(Color.Blue);
                     gameOverScreen.Draw(_spriteBatch);
                     break;
                 case GameState.GameWon:
