@@ -20,7 +20,7 @@ namespace Portal2D.Classes.Main.Spritesheet
 
             for (int y = 0; y <= height - heigthOfItem; y += heigthOfItem)
             {
-                for (int x = 0; x < width - widthOfItem; x += widthOfItem)
+                for (int x = 0; x <= width - widthOfItem; x += widthOfItem)
                 {
                     items.Add(new SpritesheetItem(new Rectangle(x, y, widthOfItem, heigthOfItem)));
                 }

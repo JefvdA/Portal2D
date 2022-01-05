@@ -56,10 +56,10 @@ namespace Portal2D
             GameManager.OnStart();
 
             //uncomment for fullscreen
-            //_graphics.PreferredBackBufferWidth = GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Width;
-            //_graphics.PreferredBackBufferHeight = GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Height;
-            //_graphics.ToggleFullScreen();
-            //_graphics.ApplyChanges();
+            _graphics.PreferredBackBufferWidth = GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Width;
+            _graphics.PreferredBackBufferHeight = GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Height;
+            _graphics.ToggleFullScreen();
+            _graphics.ApplyChanges();
 
             GameManager.ScreenWidth = GraphicsDevice.Viewport.Width;
             GameManager.ScreenHeight = GraphicsDevice.Viewport.Height;
@@ -77,7 +77,7 @@ namespace Portal2D
             _spriteSheet = Content.Load<Texture2D>("Spritesheet");
             _level1 = Content.Load<Texture2D>("Level1");
             _exit = Content.Load<Texture2D>("Exit");
-            _enemyTexture = Content.Load<Texture2D>("CharacterSheet");
+            _enemyTexture = Content.Load<Texture2D>("Biker_run");
         }
 
         protected override void Update(GameTime gameTime)
