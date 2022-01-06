@@ -8,7 +8,6 @@ using Portal2D.Classes.Player;
 using Portal2D.Implementations;
 using Portal2D.Interfaces;
 using System.Collections.Generic;
-using System.Diagnostics;
 
 namespace Portal2D.Classes.Level
 {
@@ -16,9 +15,11 @@ namespace Portal2D.Classes.Level
     {
         // Reference to player
         private Hero hero;
-        private Enemy enemy;
+        private Enemy enemy1;
+        private Enemy enemy2;
 
-        private Texture2D enemyTexture;
+        private Texture2D basicEnemyTexture;
+        private Texture2D advancedEnemyTexture;
         private Texture2D heroRunningTexture;
         private Texture2D heroIdleTexture;
         private Texture2D spriteSheetTexture;
@@ -43,7 +44,7 @@ namespace Portal2D.Classes.Level
             {  17,  18,  18,  18,  18,  18,  18,  18,  18,  18,  18,  18,  18,  18,  18,  18,  18,  18,  18,  19, },
         };
 
-        public Level(Texture2D backGround, Texture2D spritesheetTexture, Texture2D heroRunningTexture, Texture2D heroIdleTexture, Texture2D enemyTexture)
+        public Level(Texture2D backGround, Texture2D spritesheetTexture, Texture2D heroRunningTexture, Texture2D heroIdleTexture, Texture2D basicEnemyTexture, Texture2D advancedEnemyTexture)
         {
             GameObjects = new List<IGameObject>();
 
@@ -51,14 +52,17 @@ namespace Portal2D.Classes.Level
             this.heroRunningTexture = heroRunningTexture;
             this.heroIdleTexture = heroIdleTexture;
             this.spriteSheetTexture = spritesheetTexture;
-            this.enemyTexture = enemyTexture;
+            this.basicEnemyTexture= basicEnemyTexture;
+            this.advancedEnemyTexture = advancedEnemyTexture;
 
             this.spriteSheet = new Spritesheet();
             spriteSheet.GetItemsFromProperties(256, 256, 16, 16);
 
             hero = new Hero(heroRunningTexture,heroIdleTexture, new KeyboardReader());
-            enemy = new BasicEnemy(enemyTexture, new Vector2(750, 860), 500, 1000);
-            AddGameObject(enemy);
+            enemy1 = new BasicEnemy(this.basicEnemyTexture, new Vector2(750, 860), 500, 1000);
+            enemy2 = new AdvancedEnemy(this.advancedEnemyTexture, new Vector2(550, 600), hero);
+            AddGameObject(enemy1);
+            AddGameObject(enemy2);
             AddGameObject(hero);
 
             CreateTiles();

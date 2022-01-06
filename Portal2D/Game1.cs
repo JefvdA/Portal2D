@@ -17,7 +17,7 @@ namespace Portal2D
         private GraphicsDeviceManager _graphics;
         private SpriteBatch _spriteBatch;
 
-        private const bool SHOW_HITBOXES = true;
+        private const bool SHOW_HITBOXES = false;
 
         // Reference to Level
         private Level currentLevel;
@@ -35,7 +35,8 @@ namespace Portal2D
         private Texture2D _blockTexture;
         private Texture2D _level1;
         private Texture2D _exit;
-        private Texture2D _enemyTexture;
+        private Texture2D _basicEnemyTexture;
+        private Texture2D _advancedEnemyTexture;
 
         private List<IGameObject> gameObjects = new List<IGameObject>();
 
@@ -49,7 +50,7 @@ namespace Portal2D
         protected override void Initialize()
         {
             base.Initialize();
-            level1 = new Level(_background, _spriteSheet, _heroRunningTexture, _heroIdleTexture, _enemyTexture);
+            level1 = new Level(_background, _spriteSheet, _heroRunningTexture, _heroIdleTexture, _basicEnemyTexture, _advancedEnemyTexture);
             currentLevel = level1;
             menu = new Menu(_background, _level1, _exit);
             gameOverScreen = new GameOverScreen(_exit);
@@ -77,7 +78,8 @@ namespace Portal2D
             _spriteSheet = Content.Load<Texture2D>("Spritesheet");
             _level1 = Content.Load<Texture2D>("Level1");
             _exit = Content.Load<Texture2D>("Exit");
-            _enemyTexture = Content.Load<Texture2D>("Biker_run");
+            _basicEnemyTexture = Content.Load<Texture2D>("Biker_run");
+            _advancedEnemyTexture = Content.Load<Texture2D>("Punk_run");
         }
 
         protected override void Update(GameTime gameTime)
