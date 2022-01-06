@@ -21,17 +21,15 @@ namespace Portal2D.Classes.Enemies
         public ICollisionTrigger CollisionTrigger { get; set; }
         public bool IsTrigger { get; set; } = true;
 
-        public float direction;
+        protected float direction;
 
         private Animation animation;
 
-        public Enemy(Texture2D _texture)
+        public Enemy(Texture2D _texture, Vector2 position)
         {
             CollisionTrigger = new EnemyCollsionTrigger();
-            direction = 1f;
             texture = _texture;
-            Position = new Vector2(500, 866);
-            Speed = 5f;
+            Position = position;
             animation = new Animation();
             animation.GetFramesFromTextureProperties(texture.Width, texture.Height, 6, 1);
             HitBox = new Rectangle((int)Position.X, (int)Position.Y+64, 128, 128);
@@ -50,14 +48,6 @@ namespace Portal2D.Classes.Enemies
             else
                 spriteBatch.Draw(texture, new Vector2(Position.X - 60, Position.Y), animation.CurrentFrame.SourceRectangle, Color.White, 0f, Vector2.Zero, 4f, SpriteEffects.FlipHorizontally, 0f);
         }
-        public void Move()
-        {
-            if (Position.X == 1000)
-                direction = -Speed;
-            if (Position.X == 500)
-                direction = Speed;
-
-            Position += new Vector2(direction, 0);
-        }
+        public virtual void Move() { }
     }
 }

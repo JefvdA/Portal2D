@@ -57,7 +57,7 @@ namespace Portal2D.Classes.Level
             spriteSheet.GetItemsFromProperties(256, 256, 16, 16);
 
             hero = new Hero(heroRunningTexture,heroIdleTexture, new KeyboardReader());
-            enemy = new Enemy(enemyTexture);
+            enemy = new BasicEnemy(enemyTexture, new Vector2(750, 860), 500, 1000);
             AddGameObject(enemy);
             AddGameObject(hero);
 
