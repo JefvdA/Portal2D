@@ -26,7 +26,9 @@ namespace Portal2D.Classes.Enemies
             else
                 direction = -1f;
 
-            Position += new Vector2(direction * Speed, 0);
+            Vector2 futurePosition = CalculateFuturePosition();
+
+            Position = futurePosition;
         }
     }
 }

@@ -1,12 +1,8 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Portal2D.Classes.Main.Animation;
-using Portal2D.Classes.Managers;
 using Portal2D.Implementations;
 using Portal2D.Interfaces;
-using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace Portal2D.Classes.Enemies
 {
@@ -20,8 +16,9 @@ namespace Portal2D.Classes.Enemies
         public bool SafeForFalling { get; set; }
         public ICollisionTrigger CollisionTrigger { get; set; }
         public bool IsTrigger { get; set; } = true;
+        public bool CanMove { get; set; } = true;
 
-        protected float direction;
+        public float direction;
 
         private Animation animation;
 
@@ -34,11 +31,12 @@ namespace Portal2D.Classes.Enemies
             animation.GetFramesFromTextureProperties(texture.Width, texture.Height, 6, 1);
             HitBox = new Rectangle((int)Position.X, (int)Position.Y+64, 128, 128);
         }
-        public void Update(GameTime gameTime)
+        public virtual void Update(GameTime gameTime)
         {
             animation.Update(gameTime);
 
-            Move();
+            if(CanMove)
+                Move();
             HitBox = new Rectangle((int)Position.X, (int)Position.Y+64, 128, 128);
         }
         public void Draw(SpriteBatch spriteBatch)
@@ -49,5 +47,19 @@ namespace Portal2D.Classes.Enemies
                 spriteBatch.Draw(texture, new Vector2(Position.X - 60, Position.Y), animation.CurrentFrame.SourceRectangle, Color.White, 0f, Vector2.Zero, 4f, SpriteEffects.FlipHorizontally, 0f);
         }
         public virtual void Move() { }
+        public Vector2 CalculateFuturePosition() 
+        {
+            float futureX = Position.X + direction * Speed;
+            Vector2 futurePosition = new Vector2(futureX, Position.Y);
+
+            return futurePosition;
+        }
+        public Rectangle PredictCollision()
+        {
+            Vector2 futurePosition = CalculateFuturePosition();
+
+            Rectangle futureHitBox = new Rectangle((int)futurePosition.X, (int)futurePosition.Y, HitBox.Width, HitBox.Height);
+            return futureHitBox;
+        }
     }
 }

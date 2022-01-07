@@ -18,14 +18,25 @@ namespace Portal2D.Classes.Enemies
             maxX = _maxX;
         }
 
+        public override void Update(GameTime gameTime)
+        {
+            base.Update(gameTime);
+
+            if (!CanMove)
+                direction *= -1;
+        }
+
         public override void Move()
         {
-            float futureX = Position.X + direction * Speed;
+            Vector2 futurePosition = CalculateFuturePosition();
 
-            if (futureX >= maxX || futureX <= minX      ||      futureX >= (GameManager.ScreenWidth-128) || futureX <= 0)
+            if (futurePosition.X >= maxX || futurePosition.X <= minX      ||      futurePosition.X >= (GameManager.ScreenWidth-128) || futurePosition.X <= 0)
+            {
                 direction *= -1;
+                futurePosition = CalculateFuturePosition();
+            }
 
-            Position += new Vector2(direction * Speed, 0);
+            Position = futurePosition;
         }
     }
 }
