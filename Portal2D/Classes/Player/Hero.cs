@@ -9,6 +9,7 @@ namespace Portal2D.Classes.Player
 {
     class Hero : IGameObject, IMoveable, IJumpable, ICollidable
     {
+
         private int previous = 1;
 
         private Texture2D RunningTexture;
@@ -52,6 +53,11 @@ namespace Portal2D.Classes.Player
 
         public void Draw(SpriteBatch spriteBatch)
         {
+            Color color = Color.White;
+            if (!Game1.currentLevel.IsVulnerable())
+            {
+                color = Color.Red;
+            }
             if (InputReader.GetHorizontal() != 0) 
             {
                 previous = InputReader.GetHorizontal();
@@ -59,19 +65,19 @@ namespace Portal2D.Classes.Player
 
             if (InputReader.GetHorizontal() == 1)
             {
-                spriteBatch.Draw(RunningTexture, Position, animation.CurrentFrame.SourceRectangle, Color.White, 0f, Vector2.Zero, 4f, SpriteEffects.None, 0f);
+                spriteBatch.Draw(RunningTexture, Position, animation.CurrentFrame.SourceRectangle, color, 0f, Vector2.Zero, 4f, SpriteEffects.None, 0f);
             }
             else if (InputReader.GetHorizontal() == -1)
             {
-                spriteBatch.Draw(RunningTexture, new Vector2(Position.X - 60, Position.Y), animation.CurrentFrame.SourceRectangle, Color.White, 0f, Vector2.Zero, 4f, SpriteEffects.FlipHorizontally, 0f);
+                spriteBatch.Draw(RunningTexture, new Vector2(Position.X - 60, Position.Y), animation.CurrentFrame.SourceRectangle, color, 0f, Vector2.Zero, 4f, SpriteEffects.FlipHorizontally, 0f);
             }
             else if (InputReader.GetHorizontal() == 0 && previous == 1)
             {
-                spriteBatch.Draw(IdleTexture, new Vector2(Position.X, Position.Y - 60), animation2.CurrentFrame.SourceRectangle, Color.White, 0f, Vector2.Zero, 4f, SpriteEffects.None, 0f);
+                spriteBatch.Draw(IdleTexture, new Vector2(Position.X, Position.Y - 60), animation2.CurrentFrame.SourceRectangle, color, 0f, Vector2.Zero, 4f, SpriteEffects.None, 0f);
             }
             else if (InputReader.GetHorizontal() == 0 && previous == -1)
             {
-                spriteBatch.Draw(IdleTexture, new Vector2(Position.X - 60, Position.Y - 60), animation2.CurrentFrame.SourceRectangle, Color.White, 0f, Vector2.Zero, 4f, SpriteEffects.FlipHorizontally, 0f);
+                spriteBatch.Draw(IdleTexture, new Vector2(Position.X - 60, Position.Y - 60), animation2.CurrentFrame.SourceRectangle, color, 0f, Vector2.Zero, 4f, SpriteEffects.FlipHorizontally, 0f);
             }
 
         }

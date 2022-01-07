@@ -14,6 +14,11 @@ namespace Portal2D.Classes.Level
 {
     public class Level
     {
+        private int lives = 3;
+        public double InvincibleTimer = 3;
+        private double elapsedTime = 0;
+        private bool vulnerable = true;
+
         // Reference to player
         private Hero hero;
         private Enemy enemy1;
@@ -76,6 +81,19 @@ namespace Portal2D.Classes.Level
 
         public void Update(GameTime gameTime)
         {
+            if (lives <= 0)
+                GameManager._gameState = GameState.GameOver;
+            double ElapsedTime = gameTime.ElapsedGameTime.TotalSeconds;
+            if (!vulnerable)
+            {
+                elapsedTime += gameTime.ElapsedGameTime.TotalSeconds;
+            }
+            if(InvincibleTimer < elapsedTime)
+            {
+                elapsedTime = 0;
+                vulnerable = true;
+            }
+
             // Check collisions - TRIGGER - HORIZONTAL *FOR PLAYER*
             foreach (IGameObject gameObject in GameObjects)
             {
@@ -155,6 +173,10 @@ namespace Portal2D.Classes.Level
             {
                 gameObject.Draw(spriteBatch);
             }
+            for (int i = 0; i < lives; i++)
+            {
+                spriteBatch.Draw(Game1._heart, new Vector2(75 * i, 0), null, Color.White, 0f, Vector2.Zero, 0.5f, SpriteEffects.None, 0f);
+            }
         }
 
         public void AddGameObject(IGameObject gameObject)
@@ -198,6 +220,20 @@ namespace Portal2D.Classes.Level
             AddGameObject(trap);
 
             CreateTiles();
+        }
+
+        public void LoseLive()
+        {
+            if (vulnerable)
+            {
+                lives--;
+                vulnerable = false;
+            }
+        }
+
+        public bool IsVulnerable()
+        {
+            return vulnerable;
         }
     }
 }

@@ -46,6 +46,9 @@ namespace Portal2D
         private Texture2D _advancedEnemyTexture;
         private Texture2D _background2;
         private Texture2D _spikes;
+        public static Texture2D _heart;
+
+        public static SpriteFont _score;
 
         private List<IGameObject> gameObjects = new List<IGameObject>();
 
@@ -97,6 +100,9 @@ namespace Portal2D
             _basicEnemyTexture = Content.Load<Texture2D>("Biker_run");
             _advancedEnemyTexture = Content.Load<Texture2D>("Punk_run");
             _spikes = Content.Load<Texture2D>("Spikes");
+            _heart = Content.Load<Texture2D>("Heart");
+
+            _score = Content.Load<SpriteFont>("score");
         }
 
         protected override void Update(GameTime gameTime)
