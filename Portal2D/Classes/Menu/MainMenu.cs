@@ -2,9 +2,7 @@
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using Portal2D.Classes.Managers;
-using System;
-using System.Collections.Generic;
-using System.Text;
+using Portal2D.Implementations;
 
 namespace Portal2D.Classes.Menu
 {
@@ -17,7 +15,6 @@ namespace Portal2D.Classes.Menu
         private Vector2 Level1position;
         private Vector2 Level2position;
         private Vector2 Exitposition;
-        private MouseState mouseState;
         public MainMenu(Texture2D Background, Texture2D Level1,Texture2D Level2, Texture2D Exit)
         {
             this.background = Background;
@@ -31,8 +28,8 @@ namespace Portal2D.Classes.Menu
 
         public void Update()
         {
-            mouseState = Mouse.GetState();
-            if (mouseState.LeftButton == ButtonState.Pressed)
+            MouseState mouseState = MouseReader.GetState();
+            if (MouseReader.leftClicked())
             {
                 MouseClicked(mouseState.X, mouseState.Y);
             }
@@ -56,11 +53,10 @@ namespace Portal2D.Classes.Menu
                 Game1.currentLevel = Game1.level1;
                 GameManager._gameState = GameState.Playing;
             }
-            //else if (mouseClickRect.Intersects(level2ButtonRect))
-            //{
-            //    Game1.currentLevel = Game1.level2;
-            //    GameManager._gameState = GameState.Playing;
-            //}
+            else if (mouseClickRect.Intersects(level2ButtonRect))
+            {
+                GameManager._gameState = GameState.Playing;
+            }
             else if (mouseClickRect.Intersects(exitButtonRect)) 
             {
                 GameManager._gameState = GameState.Exit;

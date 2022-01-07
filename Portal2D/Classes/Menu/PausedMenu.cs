@@ -2,6 +2,7 @@
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using Portal2D.Classes.Managers;
+using Portal2D.Implementations;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -17,7 +18,6 @@ namespace Portal2D.Classes.Menu
         private Vector2 Resumeposition;
         private Vector2 mainMenuPosition;
         private Vector2 Exitposition;
-        private MouseState mouseState;
         public PausedMenu(Texture2D Background, Texture2D Resume,Texture2D mainMenu, Texture2D Exit)
         {
             this.background = Background;
@@ -31,8 +31,8 @@ namespace Portal2D.Classes.Menu
 
         public void Update()
         {
-            mouseState = Mouse.GetState();
-            if (mouseState.LeftButton == ButtonState.Pressed)
+            MouseState mouseState = MouseReader.GetState();
+            if (MouseReader.leftClicked())
             {
                 MouseClicked(mouseState.X, mouseState.Y);
             }

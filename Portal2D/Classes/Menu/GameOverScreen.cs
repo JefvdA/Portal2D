@@ -2,6 +2,7 @@
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using Portal2D.Classes.Managers;
+using Portal2D.Implementations;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -17,7 +18,6 @@ namespace Portal2D.Classes.Menu
         private Vector2 exitPosition;
         private Vector2 mainMenuPosition;
         private Vector2 playAgainPosition;
-        private MouseState mouseState;
 
         public GameOverScreen(Texture2D _background ,Texture2D _mainmenuTexture, Texture2D _playagainTexture,Texture2D _exitTexture)
         {
@@ -32,8 +32,8 @@ namespace Portal2D.Classes.Menu
 
         public void Update()
         {
-            mouseState = Mouse.GetState();
-            if (mouseState.LeftButton == ButtonState.Pressed)
+            MouseState mouseState = MouseReader.GetState();
+            if (MouseReader.leftClicked())
             {
                 MouseClicked(mouseState.X, mouseState.Y);
             }
