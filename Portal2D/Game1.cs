@@ -8,6 +8,7 @@ using Portal2D.Implementations;
 using System.Collections.Generic;
 using Portal2D.Classes.Level;
 using Portal2D.Classes.Menu;
+using System;
 
 namespace Portal2D
 {
@@ -20,11 +21,12 @@ namespace Portal2D
         private const bool SHOW_HITBOXES = false;
 
         // Reference to Level
-        private Level currentLevel;
+        private static Level currentLevel;
         private Level level1;
 
         //Reference to Menu
-        private Menu menu;
+        private MainMenu mainMenu;
+        private PausedMenu pausedMenu;
         private GameOverScreen gameOverScreen;
 
         // Variables for textures
@@ -34,7 +36,11 @@ namespace Portal2D
         private Texture2D _heroIdleTexture;
         private Texture2D _blockTexture;
         private Texture2D _level1;
+        private Texture2D _level2;
         private Texture2D _exit;
+        private Texture2D _play;
+        private Texture2D _playagain;
+        private Texture2D _mainmenu;
         private Texture2D _basicEnemyTexture;
         private Texture2D _advancedEnemyTexture;
 
@@ -52,8 +58,9 @@ namespace Portal2D
             base.Initialize();
             level1 = new Level(_background, _spriteSheet, _heroRunningTexture, _heroIdleTexture, _basicEnemyTexture, _advancedEnemyTexture);
             currentLevel = level1;
-            menu = new Menu(_background, _level1, _exit);
-            gameOverScreen = new GameOverScreen(_exit);
+            mainMenu = new MainMenu(_background, _level1, _level2, _exit);
+            pausedMenu = new PausedMenu(_background, _play, _mainmenu, _exit);
+            gameOverScreen = new GameOverScreen(_background,_mainmenu,_playagain, _exit);
             GameManager.OnStart();
 
             //uncomment for fullscreen
@@ -66,6 +73,11 @@ namespace Portal2D
             GameManager.ScreenHeight = GraphicsDevice.Viewport.Height;
         }
 
+        public static Level getCurrentLevel()
+        {
+            return currentLevel;
+        }
+
         protected override void LoadContent()
         {
             _spriteBatch = new SpriteBatch(GraphicsDevice);
@@ -76,8 +88,12 @@ namespace Portal2D
             _heroIdleTexture = Content.Load<Texture2D>("Cyborg_idle");
             _background = Content.Load<Texture2D>("Background");
             _spriteSheet = Content.Load<Texture2D>("Spritesheet");
-            _level1 = Content.Load<Texture2D>("Level1");
-            _exit = Content.Load<Texture2D>("Exit");
+            _level1 = Content.Load<Texture2D>("Level 1");
+            _level2 = Content.Load<Texture2D>("Level 2");
+            _exit = Content.Load<Texture2D>("exit");
+            _play = Content.Load<Texture2D>("Play");
+            _playagain = Content.Load<Texture2D>("Playagain");
+            _mainmenu = Content.Load<Texture2D>("mainmenu");
             _basicEnemyTexture = Content.Load<Texture2D>("Biker_run");
             _advancedEnemyTexture = Content.Load<Texture2D>("Punk_run");
         }
@@ -112,18 +128,17 @@ namespace Portal2D
                     break;
                 case GameState.MainMenu:
                     this.IsMouseVisible = true;
-                    menu.Draw(_spriteBatch);
+                    mainMenu.Draw(_spriteBatch);
                     break;
                 case GameState.Paused:
                     this.IsMouseVisible = true;
-                    menu.Draw(_spriteBatch);
+                    pausedMenu.Draw(_spriteBatch);
                     break;
                 case GameState.Exit:
                     Exit();
                     break;
                 case GameState.GameOver:
                     this.IsMouseVisible = true;
-                    GraphicsDevice.Clear(Color.Blue);
                     gameOverScreen.Draw(_spriteBatch);
                     break;
                 case GameState.GameWon:
