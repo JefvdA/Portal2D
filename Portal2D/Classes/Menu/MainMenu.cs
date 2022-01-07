@@ -25,13 +25,18 @@ namespace Portal2D.Classes.Menu
             this.Level2position = new Vector2(560, 500);
             this.Exitposition = new Vector2(560, 800);
         }
-        public void Draw(SpriteBatch spriteBatch)
+
+        public void Update()
         {
             MouseState mouseState = MouseReader.GetState();
             if (MouseReader.leftClicked())
             {
                 MouseClicked(mouseState.X, mouseState.Y);
             }
+        }
+
+        public void Draw(SpriteBatch spriteBatch)
+        {
             spriteBatch.Draw(background, new Vector2(0, 0), Color.Gray);
             spriteBatch.Draw(Level1, Level1position, Color.White);
             spriteBatch.Draw(Level2, Level2position, Color.White);
@@ -45,6 +50,7 @@ namespace Portal2D.Classes.Menu
             Rectangle exitButtonRect = new Rectangle((int)Exitposition.X, (int)Exitposition.Y, 800, 200);
             if (mouseClickRect.Intersects(level1ButtonRect))
             {
+                Game1.currentLevel = Game1.level1;
                 GameManager._gameState = GameState.Playing;
             }
             else if (mouseClickRect.Intersects(level2ButtonRect))

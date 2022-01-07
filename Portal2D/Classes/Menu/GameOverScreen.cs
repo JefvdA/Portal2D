@@ -29,13 +29,18 @@ namespace Portal2D.Classes.Menu
             mainMenuPosition = new Vector2(560, 500);
             playAgainPosition = new Vector2(560, 200);
         }
-        public void Draw(SpriteBatch spriteBatch)
+
+        public void Update()
         {
             MouseState mouseState = MouseReader.GetState();
             if (MouseReader.leftClicked())
             {
                 MouseClicked(mouseState.X, mouseState.Y);
             }
+        }
+        public void Draw(SpriteBatch spriteBatch)
+        {
+            Update();
             spriteBatch.Draw(background, Vector2.Zero, Color.Gray);
             spriteBatch.Draw(mainMenuTexture, mainMenuPosition, Color.White);
             spriteBatch.Draw(playAgainTexture, playAgainPosition, Color.White);
@@ -49,12 +54,12 @@ namespace Portal2D.Classes.Menu
             Rectangle exitButtonRect = new Rectangle((int)exitPosition.X, (int)exitPosition.Y, 800, 200);
             if (mouseClickRect.Intersects(mainMenuButtonRect))
             {
-                Game1.getCurrentLevel().reset();
+                Game1.currentLevel.reset();
                 GameManager._gameState = GameState.MainMenu;
             }
             if (mouseClickRect.Intersects(playAgainButtonRect))
             {
-                Game1.getCurrentLevel().reset();
+                Game1.currentLevel.reset();
                 GameManager._gameState = GameState.Playing;
             }
             if (mouseClickRect.Intersects(exitButtonRect))
