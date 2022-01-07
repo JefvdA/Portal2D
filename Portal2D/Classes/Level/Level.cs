@@ -8,6 +8,7 @@ using Portal2D.Classes.Player;
 using Portal2D.Implementations;
 using Portal2D.Interfaces;
 using System.Collections.Generic;
+using System.Diagnostics;
 
 namespace Portal2D.Classes.Level
 {
@@ -38,9 +39,9 @@ namespace Portal2D.Classes.Level
             {  -1,  -1,  -1,  -1,  -1,  -1,  -1,  -1,  -1,  -1,  -1,  -1,  -1,  -1,  -1,  -1,  -1,  -1,  -1,  -1, },
             {  -1,  -1,  -1,  -1,  -1,  -1,  -1,  -1,  -1,  -1,  -1,  -1,  -1,  -1,  -1,  -1,  -1,  -1,  -1,  -1, },
             {  -1,  -1,  -1,  -1,  -1,  -1,  -1,  -1,  -1,  -1,  -1,  -1,  -1,  -1,  -1,  -1,  -1,  -1,  -1,  -1, },
+            {  -1,  -1,  18,  -1,  -1,  -1,  -1,  -1,  -1,  -1,  -1,  -1,  -1,  -1,  -1,  -1,  -1,  -1,  -1,  -1, },
             {  -1,  -1,  -1,  -1,  -1,  -1,  -1,  -1,  -1,  -1,  -1,  -1,  -1,  -1,  -1,  -1,  -1,  -1,  -1,  -1, },
-            {  -1,  -1,  -1,  -1,  -1,  -1,  -1,  -1,  -1,  -1,  -1,  -1,  -1,  -1,  -1,  -1,  -1,  -1,  -1,  -1, },
-            {  -1,  -1,  -1,  -1,  -1,  -1,  -1,  -1,  -1,  -1,  -1,  -1,  -1,  -1,  -1,  -1,  -1,  -1,  -1,  -1, },
+            {  -1,  -1,  -1,  -1,  -1,  -1,  -1,  -1,  -1,  -1,  18,  -1,  -1,  -1,  -1,  -1,  -1,  -1,  -1,  -1, },
             {  17,  18,  18,  18,  18,  18,  18,  18,  18,  18,  18,  18,  18,  18,  18,  18,  18,  18,  18,  19, },
         };
 
@@ -70,13 +71,11 @@ namespace Portal2D.Classes.Level
 
         public void Update(GameTime gameTime)
         {
-            // Check collisions - TRIGGER - HORIZONTAL
+            // Check collisions - TRIGGER - HORIZONTAL *FOR PLAYER*
             foreach (IGameObject gameObject in GameObjects)
             {
-                if (gameObject is ICollidable)
+                if (gameObject is ICollidable collidableObject)
                 {
-                    ICollidable collidableObject = (ICollidable)gameObject;
-
                     bool playerCollision = CollisionManager.CheckCollision(hero.HitBox, collidableObject.HitBox) && collidableObject != hero && collidableObject.IsTrigger;
                     if (playerCollision)
                     {
@@ -91,7 +90,7 @@ namespace Portal2D.Classes.Level
                 }
             }
 
-            // Check collisions - FALLING - JUMPING
+            // Check collisions - FALLING - JUMPING *FOR PLAYER*
             foreach (IGameObject gameObject in GameObjects)
             {
                 if(gameObject is ICollidable collidableObject)
@@ -108,6 +107,32 @@ namespace Portal2D.Classes.Level
 
                     if (futurePlayerCollisionFalling || futurePlayerCollisionJumping)
                         break;
+                }
+            }
+
+            // Check collisions *FOR ENEMIES*
+            List<Enemy> enemies = new List<Enemy>();
+            foreach (IGameObject gameObject in GameObjects)
+            {
+                if (gameObject is Enemy enemy)
+                    enemies.Add(enemy);
+            }
+            foreach(Enemy enemy in enemies)
+            {
+                foreach (IGameObject gameObject in GameObjects)
+                {
+                    if (gameObject is ICollidable collidableObject)
+                    {
+                        bool futureCollision = CollisionManager.CheckCollision(enemy.PredictCollision(), collidableObject.HitBox) && !collidableObject.IsTrigger;
+
+                        if (futureCollision)
+                        {
+                            enemy.CanMove = false;
+                            break;
+                        }
+                        else
+                            enemy.CanMove = true;
+                    }
                 }
             }
 
