@@ -20,15 +20,15 @@ namespace Portal2D.Classes.Managers
             inputreader = new KeyboardReader();
             _gameState = GameState.MainMenu;
         }
-        public static void CheckGameState() 
+        public static void CheckGameState()
         {
             if (inputreader.IsKeyPressed(Keys.Escape) == true)
             {
                 if (_gameState == GameState.Playing)
                     _gameState = GameState.Paused;
             }
-        } 
-}
+        }
+    }
     enum GameState
     {
         Playing, MainMenu,Paused, Exit, GameOver, GameWon

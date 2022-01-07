@@ -21,8 +21,9 @@ namespace Portal2D
         private const bool SHOW_HITBOXES = true;
 
         // Reference to Level
-        private static Level currentLevel;
-        private Level level1;
+        public static Level currentLevel;
+        public static Level level1;
+        public static Level level2;
 
         //Reference to Menu
         private MainMenu mainMenu;
@@ -43,6 +44,7 @@ namespace Portal2D
         private Texture2D _mainmenu;
         private Texture2D _basicEnemyTexture;
         private Texture2D _advancedEnemyTexture;
+        private Texture2D _background2;
 
         private List<IGameObject> gameObjects = new List<IGameObject>();
 
@@ -57,6 +59,7 @@ namespace Portal2D
         {
             base.Initialize();
             level1 = new Level(_background, _spriteSheet, _heroRunningTexture, _heroIdleTexture, _basicEnemyTexture, _advancedEnemyTexture);
+            level2 = new Level(_background2, _spriteSheet, _heroRunningTexture, _heroIdleTexture, _basicEnemyTexture, _advancedEnemyTexture);
             currentLevel = level1;
             mainMenu = new MainMenu(_background, _level1, _level2, _exit);
             pausedMenu = new PausedMenu(_background, _play, _mainmenu, _exit);
@@ -73,11 +76,6 @@ namespace Portal2D
             GameManager.ScreenHeight = GraphicsDevice.Viewport.Height;
         }
 
-        public static Level getCurrentLevel()
-        {
-            return currentLevel;
-        }
-
         protected override void LoadContent()
         {
             _spriteBatch = new SpriteBatch(GraphicsDevice);
@@ -87,6 +85,7 @@ namespace Portal2D
             _heroRunningTexture = Content.Load<Texture2D>("Character_run");
             _heroIdleTexture = Content.Load<Texture2D>("Cyborg_idle");
             _background = Content.Load<Texture2D>("Background");
+            _background2 = Content.Load<Texture2D>("TestBackground");
             _spriteSheet = Content.Load<Texture2D>("Spritesheet");
             _level1 = Content.Load<Texture2D>("Level 1");
             _level2 = Content.Load<Texture2D>("Level 2");
@@ -102,15 +101,37 @@ namespace Portal2D
         {
             if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Back))
                 Exit();
-            if(GameManager._gameState == GameState.Playing)
+            GameManager.CheckGameState();
+            if (GameManager._gameState == GameState.Playing)
                 currentLevel.Update(gameTime);
+            // This Doesnt work, needs fixing
+            //
+            //switch (GameManager._gameState)
+            //{
+            //    case GameState.Playing:
+            //        currentLevel.Update(gameTime);
+            //        break;
+            //    case GameState.MainMenu:
+            //        mainMenu.Update();
+            //        break;
+            //    case GameState.Paused:
+            //        pausedMenu.Update();
+            //        break;
+            //    case GameState.Exit:
+            //        Exit();
+            //        break;
+            //    case GameState.GameOver:
+            //        gameOverScreen.Update();
+            //        break;
+            //    case GameState.GameWon:
+            //        break;
+            //}
 
             base.Update(gameTime);
         }
 
         protected override void Draw(GameTime gameTime)
         {
-            GameManager.CheckGameState();
             _spriteBatch.Begin(SpriteSortMode.Immediate, BlendState.AlphaBlend, samplerState: SamplerState.PointClamp);
             switch (GameManager._gameState)
             {

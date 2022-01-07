@@ -28,13 +28,18 @@ namespace Portal2D.Classes.Menu
             this.mainMenuPosition = new Vector2(560, 500);
             this.Exitposition = new Vector2(560, 800);
         }
-        public void Draw(SpriteBatch spriteBatch)
+
+        public void Update()
         {
             mouseState = Mouse.GetState();
             if (mouseState.LeftButton == ButtonState.Pressed)
             {
                 MouseClicked(mouseState.X, mouseState.Y);
             }
+        }
+        public void Draw(SpriteBatch spriteBatch)
+        {
+            Update();
             spriteBatch.Draw(background, new Vector2(0, 0), Color.Gray);
             spriteBatch.Draw(mainMenu, mainMenuPosition, Color.White);
             spriteBatch.Draw(Resume, Resumeposition, Color.White);
