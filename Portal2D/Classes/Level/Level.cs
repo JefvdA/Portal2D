@@ -18,12 +18,14 @@ namespace Portal2D.Classes.Level
         private Hero hero;
         private Enemy enemy1;
         private Enemy enemy2;
+        private Trap trap;
 
         private Texture2D basicEnemyTexture;
         private Texture2D advancedEnemyTexture;
         private Texture2D heroRunningTexture;
         private Texture2D heroIdleTexture;
         private Texture2D spriteSheetTexture;
+        private Texture2D trapTexture;
 
         private Spritesheet spriteSheet;
 
@@ -45,7 +47,7 @@ namespace Portal2D.Classes.Level
             {  17,  18,  18,  18,  18,  18,  18,  18,  18,  18,  18,  18,  18,  18,  18,  18,  18,  18,  18,  19, },
         };
 
-        public Level(Texture2D backGround, Texture2D spritesheetTexture, Texture2D heroRunningTexture, Texture2D heroIdleTexture, Texture2D basicEnemyTexture, Texture2D advancedEnemyTexture)
+        public Level(Texture2D backGround, Texture2D spritesheetTexture, Texture2D heroRunningTexture, Texture2D heroIdleTexture, Texture2D basicEnemyTexture, Texture2D advancedEnemyTexture, Texture2D trapTexture)
         {
             GameObjects = new List<IGameObject>();
 
@@ -55,6 +57,7 @@ namespace Portal2D.Classes.Level
             this.spriteSheetTexture = spritesheetTexture;
             this.basicEnemyTexture= basicEnemyTexture;
             this.advancedEnemyTexture = advancedEnemyTexture;
+            this.trapTexture = trapTexture;
 
             this.spriteSheet = new Spritesheet();
             spriteSheet.GetItemsFromProperties(256, 256, 16, 16);
@@ -62,9 +65,11 @@ namespace Portal2D.Classes.Level
             hero = new Hero(heroRunningTexture,heroIdleTexture, new KeyboardReader());
             enemy1 = new BasicEnemy(this.basicEnemyTexture, new Vector2(750, 860), 500, 1000);
             enemy2 = new AdvancedEnemy(this.advancedEnemyTexture, new Vector2(1200, 860), hero);
+            trap = new Trap(trapTexture, new Vector2(200, 1000));
             AddGameObject(enemy1);
             AddGameObject(enemy2);
             AddGameObject(hero);
+            AddGameObject(trap);
 
             CreateTiles();
         }
@@ -146,7 +151,6 @@ namespace Portal2D.Classes.Level
         public void Draw(SpriteBatch spriteBatch)
         {
             spriteBatch.Draw(backGround, new Vector2(0, 0), Color.White);
-
             foreach (var gameObject in GameObjects)
             {
                 gameObject.Draw(spriteBatch);
@@ -187,9 +191,11 @@ namespace Portal2D.Classes.Level
             hero = new Hero(heroRunningTexture, heroIdleTexture, new KeyboardReader());
             enemy1 = new BasicEnemy(this.basicEnemyTexture, new Vector2(750, 860), 500, 1000);
             enemy2 = new AdvancedEnemy(this.advancedEnemyTexture, new Vector2(1200, 860), hero);
+            trap = new Trap(trapTexture, new Vector2(200, 1000));
             AddGameObject(enemy1);
             AddGameObject(enemy2);
             AddGameObject(hero);
+            AddGameObject(trap);
 
             CreateTiles();
         }

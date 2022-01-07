@@ -45,6 +45,7 @@ namespace Portal2D
         private Texture2D _basicEnemyTexture;
         private Texture2D _advancedEnemyTexture;
         private Texture2D _background2;
+        private Texture2D _spikes;
 
         private List<IGameObject> gameObjects = new List<IGameObject>();
 
@@ -58,8 +59,8 @@ namespace Portal2D
         protected override void Initialize()
         {
             base.Initialize();
-            level1 = new Level(_background, _spriteSheet, _heroRunningTexture, _heroIdleTexture, _basicEnemyTexture, _advancedEnemyTexture);
-            level2 = new Level(_background2, _spriteSheet, _heroRunningTexture, _heroIdleTexture, _basicEnemyTexture, _advancedEnemyTexture);
+            level1 = new Level(_background, _spriteSheet, _heroRunningTexture, _heroIdleTexture, _basicEnemyTexture, _advancedEnemyTexture, _spikes);
+            level2 = new Level(_background2, _spriteSheet, _heroRunningTexture, _heroIdleTexture, _basicEnemyTexture, _advancedEnemyTexture, _spikes);
             currentLevel = level1;
             mainMenu = new MainMenu(_background, _level1, _level2, _exit);
             pausedMenu = new PausedMenu(_background, _play, _mainmenu, _exit);
@@ -95,6 +96,7 @@ namespace Portal2D
             _mainmenu = Content.Load<Texture2D>("mainmenu");
             _basicEnemyTexture = Content.Load<Texture2D>("Biker_run");
             _advancedEnemyTexture = Content.Load<Texture2D>("Punk_run");
+            _spikes = Content.Load<Texture2D>("Spikes");
         }
 
         protected override void Update(GameTime gameTime)
