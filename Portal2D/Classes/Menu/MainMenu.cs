@@ -37,6 +37,7 @@ namespace Portal2D.Classes.Menu
 
         public void Draw(SpriteBatch spriteBatch)
         {
+            Update();
             spriteBatch.Draw(background, new Vector2(0, 0), Color.Gray);
             spriteBatch.Draw(Level1, Level1position, Color.White);
             spriteBatch.Draw(Level2, Level2position, Color.White);
@@ -51,10 +52,13 @@ namespace Portal2D.Classes.Menu
             if (mouseClickRect.Intersects(level1ButtonRect))
             {
                 Game1.currentLevel = Game1.level1;
+                Game1.currentLevel.reset();
                 GameManager._gameState = GameState.Playing;
             }
             else if (mouseClickRect.Intersects(level2ButtonRect))
             {
+                Game1.currentLevel = Game1.level2;
+                Game1.currentLevel.reset();
                 GameManager._gameState = GameState.Playing;
             }
             else if (mouseClickRect.Intersects(exitButtonRect)) 
