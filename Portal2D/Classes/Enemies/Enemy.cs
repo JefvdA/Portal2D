@@ -47,7 +47,7 @@ namespace Portal2D.Classes.Enemies
                 spriteBatch.Draw(texture, new Vector2(Position.X - 60, Position.Y), animation.CurrentFrame.SourceRectangle, Color.White, 0f, Vector2.Zero, 4f, SpriteEffects.FlipHorizontally, 0f);
         }
         public virtual void Move() { }
-        public Vector2 CalculateFuturePosition() 
+        public virtual Vector2 CalculateFuturePosition() 
         {
             float futureX = Position.X + direction * Speed;
             Vector2 futurePosition = new Vector2(futureX, Position.Y);

@@ -1,6 +1,7 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Portal2D.Interfaces;
+using System.Diagnostics;
 
 namespace Portal2D.Classes.Enemies
 {
@@ -18,6 +19,12 @@ namespace Portal2D.Classes.Enemies
 
         public override void Move()
         {
+            Vector2 futurePosition = CalculateFuturePosition();
+
+            Position = futurePosition;
+        }
+        public override Vector2 CalculateFuturePosition()
+        {
             Vector2 targetPos = target.Position;
 
             var distance = targetPos - Position;
@@ -26,9 +33,7 @@ namespace Portal2D.Classes.Enemies
             else
                 direction = -1f;
 
-            Vector2 futurePosition = CalculateFuturePosition();
-
-            Position = futurePosition;
+            return base.CalculateFuturePosition();
         }
     }
 }

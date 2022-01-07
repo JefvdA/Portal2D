@@ -61,7 +61,7 @@ namespace Portal2D.Classes.Level
 
             hero = new Hero(heroRunningTexture,heroIdleTexture, new KeyboardReader());
             enemy1 = new BasicEnemy(this.basicEnemyTexture, new Vector2(750, 860), 500, 1000);
-            enemy2 = new AdvancedEnemy(this.advancedEnemyTexture, new Vector2(550, 600), hero);
+            enemy2 = new AdvancedEnemy(this.advancedEnemyTexture, new Vector2(1200, 860), hero);
             AddGameObject(enemy1);
             AddGameObject(enemy2);
             AddGameObject(hero);
@@ -186,7 +186,7 @@ namespace Portal2D.Classes.Level
 
             hero = new Hero(heroRunningTexture, heroIdleTexture, new KeyboardReader());
             enemy1 = new BasicEnemy(this.basicEnemyTexture, new Vector2(750, 860), 500, 1000);
-            enemy2 = new AdvancedEnemy(this.advancedEnemyTexture, new Vector2(550, 600), hero);
+            enemy2 = new AdvancedEnemy(this.advancedEnemyTexture, new Vector2(1200, 860), hero);
             AddGameObject(enemy1);
             AddGameObject(enemy2);
             AddGameObject(hero);

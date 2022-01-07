@@ -53,10 +53,10 @@ namespace Portal2D.Classes.Menu
             {
                 GameManager._gameState = GameState.Playing;
             }
-            else if (mouseClickRect.Intersects(level2ButtonRect))
-            {
-                GameManager._gameState = GameState.Playing;
-            }
+            //else if (mouseClickRect.Intersects(level2ButtonRect))
+            //{
+            //    GameManager._gameState = GameState.Playing;
+            //}
             else if (mouseClickRect.Intersects(exitButtonRect)) 
             {
                 GameManager._gameState = GameState.Exit;

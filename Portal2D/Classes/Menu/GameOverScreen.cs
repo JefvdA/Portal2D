@@ -50,7 +50,6 @@ namespace Portal2D.Classes.Menu
             if (mouseClickRect.Intersects(mainMenuButtonRect))
             {
                 Game1.getCurrentLevel().reset();
-                GameManager._gameState = GameState.Playing;
                 GameManager._gameState = GameState.MainMenu;
             }
             if (mouseClickRect.Intersects(playAgainButtonRect))
