@@ -146,7 +146,7 @@ namespace Portal2D.Classes.Level
                 {
                     if (gameObject is ICollidable collidableObject)
                     {
-                        bool futureCollision = CollisionManager.CheckCollision(enemy.PredictCollision(), collidableObject.HitBox) && !collidableObject.IsTrigger;
+                        bool futureCollision = CollisionManager.CheckCollision(enemy.PredictCollision(), collidableObject.HitBox) && !collidableObject.IsTrigger && collidableObject != hero;
 
                         if (futureCollision)
                         {

@@ -30,8 +30,10 @@ namespace Portal2D.Classes.Enemies
             var distance = targetPos - Position;
             if (distance.X > 0)
                 direction = 1f;
-            else
+            else if (distance.X < 0)
                 direction = -1f;
+            else
+                direction = 0f;
 
             return base.CalculateFuturePosition();
         }
