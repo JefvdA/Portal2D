@@ -222,6 +222,7 @@ namespace Portal2D.Classes.Level
             hero = new Hero(heroRunningTexture, heroIdleTexture, new KeyboardReader());
             this.lives = 3;
             this.vulnerable = true;
+            this.score = 0;
             enemy1 = new BasicEnemy(this.basicEnemyTexture, new Vector2(750, 860), 500, 1000);
             enemy2 = new AdvancedEnemy(this.advancedEnemyTexture, new Vector2(1200, 860), hero);
             trap = new Trap(trapTexture, new Vector2(200, 1000));

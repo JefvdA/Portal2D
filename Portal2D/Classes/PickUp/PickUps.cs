@@ -24,7 +24,7 @@ namespace Portal2D.Classes.PickUp
             pickUpTexture = _pickUpTexture;
             CollisionTrigger = new PickUpCollisionTrigger(this);
             Position = new Vector2(1000, 700);
-            HitBox = new Rectangle((int)Position.X, (int)Position.Y, pickUpTexture.Width, pickUpTexture.Height);
+            HitBox = new Rectangle((int)Position.X, (int)Position.Y, pickUpTexture.Width/3, pickUpTexture.Height/3);
         }
 
         public void Update(GameTime gameTime)
@@ -35,7 +35,7 @@ namespace Portal2D.Classes.PickUp
         public void Draw(SpriteBatch spriteBatch)
         {
             if(!pickedUp)
-                spriteBatch.Draw(pickUpTexture, Position, Color.White);
+                spriteBatch.Draw(pickUpTexture, Position, new Rectangle(0, 0, pickUpTexture.Width, pickUpTexture.Height), Color.White, 0f, Vector2.Zero, .33f, SpriteEffects.None, 0f);
         }
     }
 
