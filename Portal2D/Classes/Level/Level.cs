@@ -17,10 +17,10 @@ namespace Portal2D.Classes.Level
         public int score = 0;
         public int scoreNeeded; 
 
-        private int lives = 3;
+        public int lives = 3;
         public double InvincibleTimer = 3;
         private double elapsedTime = 0;
-        private bool vulnerable = true;
+        public bool vulnerable = true;
 
         // Reference to player
         protected Hero hero;
@@ -39,7 +39,7 @@ namespace Portal2D.Classes.Level
         public List<IGameObject> GameObjects { get; private set; }
         protected int[,] gameBoard;
 
-        public Level(Texture2D backGround, Texture2D spritesheetTexture, Texture2D heroRunningTexture, Texture2D heroIdleTexture, Texture2D basicEnemyTexture, Texture2D advancedEnemyTexture, Texture2D trapTexture, Texture2D pickUpTexture)
+        public Level(Texture2D backGround, Texture2D spritesheetTexture, Texture2D heroRunningTexture, Texture2D heroIdleTexture, Texture2D basicEnemyTexture, Texture2D advancedEnemyTexture, Texture2D trapTexture)
         {
             GameObjects = new List<IGameObject>();
 

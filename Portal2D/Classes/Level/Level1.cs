@@ -2,6 +2,7 @@
 using Microsoft.Xna.Framework.Graphics;
 using Portal2D.Classes.Enemies;
 using Portal2D.Classes.PickUp;
+using Portal2D.Implementations;
 
 namespace Portal2D.Classes.Level
 {
@@ -12,18 +13,22 @@ namespace Portal2D.Classes.Level
         private Trap trap;
         private PickUps pickUp;
         private PickUps pickUp2;
+        private PickUps powerUp;
 
-        public Level1(Texture2D backGround, Texture2D spritesheetTexture, Texture2D heroRunningTexture, Texture2D heroIdleTexture, Texture2D basicEnemyTexture, Texture2D advancedEnemyTexture, Texture2D trapTexture, Texture2D pickUpTexture) : base(backGround, spritesheetTexture, heroRunningTexture, heroIdleTexture, basicEnemyTexture, advancedEnemyTexture, trapTexture, pickUpTexture)
+
+        public Level1(Texture2D backGround, Texture2D spritesheetTexture, Texture2D heroRunningTexture, Texture2D heroIdleTexture, Texture2D basicEnemyTexture, Texture2D advancedEnemyTexture, Texture2D trapTexture) : base(backGround, spritesheetTexture, heroRunningTexture, heroIdleTexture, basicEnemyTexture, advancedEnemyTexture, trapTexture)
         {
             enemy1 = new BasicEnemy(this.basicEnemyTexture, new Vector2(800, 865), 600, 1300);
             trap = new Trap(trapTexture, new Vector2(200, 1000));
-            pickUp = new PickUps(pickUpTexture, new Vector2(700, 500));
-            pickUp2 = new PickUps(pickUpTexture, new Vector2(1800, 950));
+            pickUp = new PickUps(Game1._pickUp, new Vector2(700, 500), PickUp.pickUp.collectible);
+            pickUp2 = new PickUps(Game1._pickUp, new Vector2(1800, 950), PickUp.pickUp.collectible);
+            powerUp = new PickUps(Game1._powerUpHealth, new Vector2(1800, 200), PickUp.pickUp.Healthboost);
             scoreNeeded = 2;
             AddGameObject(enemy1);
             AddGameObject(trap);
             AddGameObject(pickUp);
             AddGameObject(pickUp2);
+            AddGameObject(powerUp);
 
             // Initiate the level with the gameboard
             this.gameBoard = new int[,]
@@ -50,13 +55,15 @@ namespace Portal2D.Classes.Level
 
             enemy1 = new BasicEnemy(this.basicEnemyTexture, new Vector2(800, 865), 600, 1300);
             trap = new Trap(trapTexture, new Vector2(200, 1000));
-            pickUp = new PickUps(pickUpTexture, new Vector2(700, 500));
-            pickUp2 = new PickUps(pickUpTexture, new Vector2(1800, 950));
+            pickUp = new PickUps(Game1._pickUp, new Vector2(700, 500), PickUp.pickUp.collectible);
+            pickUp2 = new PickUps(Game1._pickUp, new Vector2(1800, 950), PickUp.pickUp.collectible);
+            powerUp = new PickUps(Game1._powerUpHealth, new Vector2(1800, 200), PickUp.pickUp.Healthboost);
             scoreNeeded = 2;
             AddGameObject(enemy1);
             AddGameObject(trap);
             AddGameObject(pickUp);
             AddGameObject(pickUp2);
+            AddGameObject(powerUp);
 
         }
     }

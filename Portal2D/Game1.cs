@@ -47,7 +47,9 @@ namespace Portal2D
         private Texture2D _advancedEnemyTexture;
         private Texture2D _background2;
         private Texture2D _spikes;
-        private Texture2D _pickUp;
+        public static Texture2D _pickUp;
+        public static Texture2D _powerUpHealth;
+        public static Texture2D _powerUpInvincible;
 
         public static Texture2D _heart;
 
@@ -65,8 +67,8 @@ namespace Portal2D
         protected override void Initialize()
         {
             base.Initialize();
-            level1 = new Level1(_background, _spriteSheet, _heroRunningTexture, _heroIdleTexture, _basicEnemyTexture, _advancedEnemyTexture, _spikes, _pickUp);
-            level2 = new Level2(_background2, _spriteSheet, _heroRunningTexture, _heroIdleTexture, _basicEnemyTexture, _advancedEnemyTexture, _spikes, _pickUp);
+            level1 = new Level1(_background, _spriteSheet, _heroRunningTexture, _heroIdleTexture, _basicEnemyTexture, _advancedEnemyTexture, _spikes);
+            level2 = new Level2(_background2, _spriteSheet, _heroRunningTexture, _heroIdleTexture, _basicEnemyTexture, _advancedEnemyTexture, _spikes);
             currentLevel = level1;
             mainMenu = new MainMenu(_background, _level1, _level2, _exit);
             pausedMenu = new PausedMenu(_background, _play, _mainmenu, _exit);
@@ -106,6 +108,8 @@ namespace Portal2D
             _spikes = Content.Load<Texture2D>("Spikes");
             _heart = Content.Load<Texture2D>("Heart");
             _pickUp = Content.Load<Texture2D>("coin");
+            _powerUpHealth = Content.Load<Texture2D>("PowerUp Extra Health");
+            _powerUpInvincible = Content.Load<Texture2D>("PowerUp Invincibility");
 
             _score = Content.Load<SpriteFont>("score");
         }
