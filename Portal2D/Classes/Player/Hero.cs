@@ -42,7 +42,7 @@ namespace Portal2D.Classes.Player
             animation2 = new Animation();
             animation2.GetFramesFromTextureProperties(IdleTexture.Width,IdleTexture.Height, 4, 1);
 
-            Position = new Vector2(250, 100);
+            Position = new Vector2(0, 800);
             HitBox = new Rectangle((int)Position.X, (int)Position.Y, 128, 128);
             Speed = 15f;
             JumpHeight = 500f;

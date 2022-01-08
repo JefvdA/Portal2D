@@ -72,7 +72,10 @@ namespace Portal2D.Classes.Level
                 elapsedTime = 0;
                 vulnerable = true;
             }
-
+            if (score == 1)
+            {
+                GameManager._gameState = GameState.GameWon;
+            }
             // Check collisions - TRIGGER - HORIZONTAL *FOR PLAYER*
             foreach (IGameObject gameObject in GameObjects)
             {

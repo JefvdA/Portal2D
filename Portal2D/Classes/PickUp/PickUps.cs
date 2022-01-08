@@ -19,11 +19,11 @@ namespace Portal2D.Classes.PickUp
         public Rectangle HitBox { get; set; }
         public Vector2 Position { get; set; }
 
-        public PickUps(Texture2D _pickUpTexture)
+        public PickUps(Texture2D _pickUpTexture, Vector2 position)
         {
             pickUpTexture = _pickUpTexture;
             CollisionTrigger = new PickUpCollisionTrigger(this);
-            Position = new Vector2(1000, 700);
+            Position = position;
             HitBox = new Rectangle((int)Position.X, (int)Position.Y, pickUpTexture.Width/3, pickUpTexture.Height/3);
         }
 

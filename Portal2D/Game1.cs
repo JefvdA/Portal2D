@@ -29,6 +29,7 @@ namespace Portal2D
         private MainMenu mainMenu;
         private PausedMenu pausedMenu;
         private GameOverScreen gameOverScreen;
+        private GameWon gameWon;
 
         // Variables for textures
         private Texture2D _spriteSheet;
@@ -70,6 +71,7 @@ namespace Portal2D
             mainMenu = new MainMenu(_background, _level1, _level2, _exit);
             pausedMenu = new PausedMenu(_background, _play, _mainmenu, _exit);
             gameOverScreen = new GameOverScreen(_background,_mainmenu,_playagain, _exit);
+            gameWon = new GameWon(_background, _mainmenu, _playagain, _exit);
             GameManager.OnStart();
 
             //uncomment for fullscreen
@@ -115,28 +117,6 @@ namespace Portal2D
             GameManager.CheckGameState();
             if (GameManager._gameState == GameState.Playing)
                 currentLevel.Update(gameTime);
-            // This Doesnt work, needs fixing
-            //
-            //switch (GameManager._gameState)
-            //{
-            //    case GameState.Playing:
-            //        currentLevel.Update(gameTime);
-            //        break;
-            //    case GameState.MainMenu:
-            //        mainMenu.Update();
-            //        break;
-            //    case GameState.Paused:
-            //        pausedMenu.Update();
-            //        break;
-            //    case GameState.Exit:
-            //        Exit();
-            //        break;
-            //    case GameState.GameOver:
-            //        gameOverScreen.Update();
-            //        break;
-            //    case GameState.GameWon:
-            //        break;
-            //}
 
             base.Update(gameTime);
         }
@@ -174,6 +154,8 @@ namespace Portal2D
                     gameOverScreen.Draw(_spriteBatch);
                     break;
                 case GameState.GameWon:
+                    this.IsMouseVisible = true;
+                    gameWon.Draw(_spriteBatch);
                     break;
                 default:
                     break;
