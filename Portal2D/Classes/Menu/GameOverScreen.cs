@@ -45,6 +45,7 @@ namespace Portal2D.Classes.Menu
             spriteBatch.Draw(mainMenuTexture, mainMenuPosition, Color.White);
             spriteBatch.Draw(playAgainTexture, playAgainPosition, Color.White);
             spriteBatch.Draw(exitTexture, exitPosition, Color.White);
+            spriteBatch.DrawString(Game1._score, "Score : " + Game1.currentLevel.score.ToString(), new Vector2(1000, 0), Color.White);
         }
         void MouseClicked(int x, int y)
         {

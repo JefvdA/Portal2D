@@ -12,7 +12,6 @@ namespace Portal2D.Implementations
         public void OnTrigger()
         {
             Game1.currentLevel.LoseLive();
-            //GameManager._gameState = GameState.GameOver;
         }
     }
 }

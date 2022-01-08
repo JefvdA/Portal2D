@@ -46,6 +46,8 @@ namespace Portal2D
         private Texture2D _advancedEnemyTexture;
         private Texture2D _background2;
         private Texture2D _spikes;
+        private Texture2D _pickUp;
+
         public static Texture2D _heart;
 
         public static SpriteFont _score;
@@ -62,8 +64,8 @@ namespace Portal2D
         protected override void Initialize()
         {
             base.Initialize();
-            level1 = new Level(_background, _spriteSheet, _heroRunningTexture, _heroIdleTexture, _basicEnemyTexture, _advancedEnemyTexture, _spikes);
-            level2 = new Level(_background2, _spriteSheet, _heroRunningTexture, _heroIdleTexture, _basicEnemyTexture, _advancedEnemyTexture, _spikes);
+            level1 = new Level(_background, _spriteSheet, _heroRunningTexture, _heroIdleTexture, _basicEnemyTexture, _advancedEnemyTexture, _spikes, _pickUp);
+            level2 = new Level(_background2, _spriteSheet, _heroRunningTexture, _heroIdleTexture, _basicEnemyTexture, _advancedEnemyTexture, _spikes, _pickUp);
             currentLevel = level1;
             mainMenu = new MainMenu(_background, _level1, _level2, _exit);
             pausedMenu = new PausedMenu(_background, _play, _mainmenu, _exit);
@@ -101,6 +103,7 @@ namespace Portal2D
             _advancedEnemyTexture = Content.Load<Texture2D>("Punk_run");
             _spikes = Content.Load<Texture2D>("Spikes");
             _heart = Content.Load<Texture2D>("Heart");
+            _pickUp = Content.Load<Texture2D>("coin");
 
             _score = Content.Load<SpriteFont>("score");
         }

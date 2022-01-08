@@ -5,6 +5,7 @@ using Portal2D.Classes.Main;
 using Portal2D.Classes.Main.Spritesheet;
 using Portal2D.Classes.Managers;
 using Portal2D.Classes.Player;
+using Portal2D.Classes.PickUp;
 using Portal2D.Implementations;
 using Portal2D.Interfaces;
 using System.Collections.Generic;
@@ -14,6 +15,8 @@ namespace Portal2D.Classes.Level
 {
     public class Level
     {
+        public int score = 0;
+
         private int lives = 3;
         public double InvincibleTimer = 3;
         private double elapsedTime = 0;
@@ -24,6 +27,7 @@ namespace Portal2D.Classes.Level
         private Enemy enemy1;
         private Enemy enemy2;
         private Trap trap;
+        private PickUps pickUp;
 
         private Texture2D basicEnemyTexture;
         private Texture2D advancedEnemyTexture;
@@ -31,6 +35,7 @@ namespace Portal2D.Classes.Level
         private Texture2D heroIdleTexture;
         private Texture2D spriteSheetTexture;
         private Texture2D trapTexture;
+        private Texture2D pickUpTexture;
 
         private Spritesheet spriteSheet;
 
@@ -52,7 +57,7 @@ namespace Portal2D.Classes.Level
             {  17,  18,  18,  18,  18,  18,  18,  18,  18,  18,  18,  18,  18,  18,  18,  18,  18,  18,  18,  19, },
         };
 
-        public Level(Texture2D backGround, Texture2D spritesheetTexture, Texture2D heroRunningTexture, Texture2D heroIdleTexture, Texture2D basicEnemyTexture, Texture2D advancedEnemyTexture, Texture2D trapTexture)
+        public Level(Texture2D backGround, Texture2D spritesheetTexture, Texture2D heroRunningTexture, Texture2D heroIdleTexture, Texture2D basicEnemyTexture, Texture2D advancedEnemyTexture, Texture2D trapTexture, Texture2D pickUpTexture)
         {
             GameObjects = new List<IGameObject>();
 
@@ -63,6 +68,7 @@ namespace Portal2D.Classes.Level
             this.basicEnemyTexture= basicEnemyTexture;
             this.advancedEnemyTexture = advancedEnemyTexture;
             this.trapTexture = trapTexture;
+            this.pickUpTexture = pickUpTexture;
 
             this.spriteSheet = new Spritesheet();
             spriteSheet.GetItemsFromProperties(256, 256, 16, 16);
@@ -71,10 +77,12 @@ namespace Portal2D.Classes.Level
             enemy1 = new BasicEnemy(this.basicEnemyTexture, new Vector2(750, 860), 500, 1000);
             enemy2 = new AdvancedEnemy(this.advancedEnemyTexture, new Vector2(1200, 860), hero);
             trap = new Trap(trapTexture, new Vector2(200, 1000));
+            pickUp = new PickUps(pickUpTexture);
             AddGameObject(enemy1);
             AddGameObject(enemy2);
             AddGameObject(hero);
             AddGameObject(trap);
+            AddGameObject(pickUp);
 
             CreateTiles();
         }
@@ -177,6 +185,7 @@ namespace Portal2D.Classes.Level
             {
                 spriteBatch.Draw(Game1._heart, new Vector2(75 * i, 0), null, Color.White, 0f, Vector2.Zero, 0.5f, SpriteEffects.None, 0f);
             }
+            spriteBatch.DrawString(Game1._score, "Score : " + score.ToString(), new Vector2(1000, 0), Color.White);
         }
 
         public void AddGameObject(IGameObject gameObject)
@@ -216,10 +225,12 @@ namespace Portal2D.Classes.Level
             enemy1 = new BasicEnemy(this.basicEnemyTexture, new Vector2(750, 860), 500, 1000);
             enemy2 = new AdvancedEnemy(this.advancedEnemyTexture, new Vector2(1200, 860), hero);
             trap = new Trap(trapTexture, new Vector2(200, 1000));
+            pickUp = new PickUps(pickUpTexture);
             AddGameObject(enemy1);
             AddGameObject(enemy2);
             AddGameObject(hero);
             AddGameObject(trap);
+            AddGameObject(pickUp);
 
             CreateTiles();
         }
