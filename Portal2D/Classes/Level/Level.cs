@@ -15,6 +15,7 @@ namespace Portal2D.Classes.Level
     public class Level
     {
         public int score = 0;
+        public int scoreNeeded; 
 
         private int lives = 3;
         public double InvincibleTimer = 3;
@@ -60,6 +61,8 @@ namespace Portal2D.Classes.Level
 
         public void Update(GameTime gameTime)
         {
+            if(score == scoreNeeded)
+                GameManager._gameState = GameState.GameWon;
             if (lives <= 0)
                 GameManager._gameState = GameState.GameOver;
             double ElapsedTime = gameTime.ElapsedGameTime.TotalSeconds;
@@ -71,10 +74,6 @@ namespace Portal2D.Classes.Level
             {
                 elapsedTime = 0;
                 vulnerable = true;
-            }
-            if (score == 1)
-            {
-                GameManager._gameState = GameState.GameWon;
             }
             // Check collisions - TRIGGER - HORIZONTAL *FOR PLAYER*
             foreach (IGameObject gameObject in GameObjects)
@@ -159,7 +158,6 @@ namespace Portal2D.Classes.Level
             {
                 spriteBatch.Draw(Game1._heart, new Vector2(75 * i, 0), null, Color.White, 0f, Vector2.Zero, 0.5f, SpriteEffects.None, 0f);
             }
-            spriteBatch.DrawString(Game1._score, "Score : " + score.ToString(), new Vector2(1000, 0), Color.White);
         }
 
         public void AddGameObject(IGameObject gameObject)
@@ -188,6 +186,7 @@ namespace Portal2D.Classes.Level
 
         public virtual void reset()
         {
+            this.score = 0;
             GameObjects = new List<IGameObject>();
 
             this.spriteSheet = new Spritesheet();
@@ -196,7 +195,6 @@ namespace Portal2D.Classes.Level
             hero = new Hero(heroRunningTexture, heroIdleTexture, new KeyboardReader());
             this.lives = 3;
             this.vulnerable = true;
-            this.score = 0;
             AddGameObject(hero);
 
             CreateTiles();

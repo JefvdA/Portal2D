@@ -1,4 +1,5 @@
 ﻿using Microsoft.Xna.Framework;
+using Portal2D.Classes.Managers;
 using Portal2D.Classes.PickUp;
 using Portal2D.Interfaces;
 using System;
@@ -12,7 +13,7 @@ namespace Portal2D.Implementations
         private PickUps pickUp;
         public PickUpCollisionTrigger(PickUps _pickUp)
         {
-            pickUp = _pickUp;
+        pickUp = _pickUp;
         }
         public void OnTrigger()
         {

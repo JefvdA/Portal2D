@@ -71,7 +71,7 @@ namespace Portal2D
             mainMenu = new MainMenu(_background, _level1, _level2, _exit);
             pausedMenu = new PausedMenu(_background, _play, _mainmenu, _exit);
             gameOverScreen = new GameOverScreen(_background,_mainmenu,_playagain, _exit);
-            gameWon = new GameWon(_background, _mainmenu, _playagain, _exit);
+            gameWon = new GameWon(_background, _mainmenu, _exit);
             GameManager.OnStart();
 
             //uncomment for fullscreen
