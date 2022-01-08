@@ -22,8 +22,8 @@ namespace Portal2D
 
         // Reference to Level
         public static Level currentLevel;
-        public static Level level1;
-        public static Level level2;
+        public static Level1 level1;
+        public static Level2 level2;
 
         //Reference to Menu
         private MainMenu mainMenu;
@@ -64,8 +64,8 @@ namespace Portal2D
         protected override void Initialize()
         {
             base.Initialize();
-            level1 = new Level(_background, _spriteSheet, _heroRunningTexture, _heroIdleTexture, _basicEnemyTexture, _advancedEnemyTexture, _spikes, _pickUp);
-            level2 = new Level(_background2, _spriteSheet, _heroRunningTexture, _heroIdleTexture, _basicEnemyTexture, _advancedEnemyTexture, _spikes, _pickUp);
+            level1 = new Level1(_background, _spriteSheet, _heroRunningTexture, _heroIdleTexture, _basicEnemyTexture, _advancedEnemyTexture, _spikes, _pickUp);
+            level2 = new Level2(_background2, _spriteSheet, _heroRunningTexture, _heroIdleTexture, _basicEnemyTexture, _advancedEnemyTexture, _spikes, _pickUp);
             currentLevel = level1;
             mainMenu = new MainMenu(_background, _level1, _level2, _exit);
             pausedMenu = new PausedMenu(_background, _play, _mainmenu, _exit);

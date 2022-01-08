@@ -7,7 +7,7 @@ using Portal2D.Interfaces;
 
 namespace Portal2D.Classes.Player
 {
-    class Hero : IGameObject, IMoveable, IJumpable, ICollidable
+    public class Hero : IGameObject, IMoveable, IJumpable, ICollidable
     {
 
         private int previous = 1;

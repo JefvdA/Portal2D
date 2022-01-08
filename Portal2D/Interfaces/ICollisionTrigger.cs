@@ -1,6 +1,6 @@
 ﻿namespace Portal2D.Interfaces
 {
-    internal interface ICollisionTrigger
+    public interface ICollisionTrigger
     {
         public void OnTrigger();
     }

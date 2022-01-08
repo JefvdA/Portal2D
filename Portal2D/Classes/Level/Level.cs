@@ -9,7 +9,6 @@ using Portal2D.Classes.PickUp;
 using Portal2D.Implementations;
 using Portal2D.Interfaces;
 using System.Collections.Generic;
-using System.Diagnostics;
 
 namespace Portal2D.Classes.Level
 {
@@ -23,39 +22,21 @@ namespace Portal2D.Classes.Level
         private bool vulnerable = true;
 
         // Reference to player
-        private Hero hero;
-        private Enemy enemy1;
-        private Enemy enemy2;
-        private Trap trap;
-        private PickUps pickUp;
+        protected Hero hero;
 
-        private Texture2D basicEnemyTexture;
-        private Texture2D advancedEnemyTexture;
-        private Texture2D heroRunningTexture;
-        private Texture2D heroIdleTexture;
-        private Texture2D spriteSheetTexture;
-        private Texture2D trapTexture;
-        private Texture2D pickUpTexture;
+        protected Texture2D basicEnemyTexture;
+        protected Texture2D advancedEnemyTexture;
+        protected Texture2D heroRunningTexture;
+        protected Texture2D heroIdleTexture;
+        protected Texture2D spriteSheetTexture;
+        protected Texture2D trapTexture;
+        protected Texture2D pickUpTexture;
 
         private Spritesheet spriteSheet;
 
         private Texture2D backGround;
         public List<IGameObject> GameObjects { get; private set; }
-        private int[,] gameBoard = new int[,]
-        {
-            {  -1,  -1,  -1,  -1,  -1,  -1,  -1,  -1,  -1,  -1,  -1,  -1,  -1,  -1,  -1,  -1,  -1,  -1,  -1,  -1, },
-            {  -1,  -1,  -1,  -1,  -1,  -1,  -1,  -1,  -1,  -1,  -1,  -1,  -1,  -1,  -1,  -1,  -1,  -1,  -1,  -1, },
-            {  -1,  -1,  -1,  -1,  -1,  -1,  -1,  -1,  -1,  -1,  -1,  -1,  -1,  -1,  -1,  -1,  -1,  -1,  -1,  -1, },
-            {  -1,  -1,  -1,  -1,  -1,  -1,  -1,  -1,  -1,  -1,  -1,  -1,  -1,  -1,  -1,  -1,  -1,  -1,  -1,  -1, },
-            {  -1,  -1,  -1,  -1,  -1,  -1,  -1,  -1,  -1,  -1,  -1,  -1,  -1,  -1,  -1,  -1,  -1,  -1,  -1,  -1, },
-            {  -1,  -1,  -1,  -1,  -1,  -1,  -1,  -1,  -1,  -1,  -1,  -1,  -1,  -1,  -1,  -1,  -1,  -1,  -1,  -1, },
-            {  -1,  -1,  -1,  -1,  -1,  -1,  -1,  -1,  -1,  -1,  -1,  -1,  -1,  -1,  -1,  -1,  -1,  -1,  -1,  -1, },
-            {  -1,  -1,  -1,  -1,  -1,  -1,  -1,  -1,  -1,  -1,  -1,  -1,  -1,  -1,  -1,  -1,  -1,  -1,  -1,  -1, },
-            {  -1,  -1,  18,  -1,  -1,  -1,  -1,  -1,  -1,  -1,  -1,  -1,  -1,  -1,  -1,  -1,  -1,  -1,  -1,  -1, },
-            {  -1,  -1,  -1,  -1,  -1,  -1,  -1,  -1,  -1,  -1,  -1,  -1,  -1,  -1,  -1,  -1,  -1,  -1,  -1,  -1, },
-            {  -1,  -1,  -1,  -1,  -1,  -1,  -1,  -1,  -1,  -1,  18,  -1,  -1,  -1,  -1,  -1,  -1,  -1,  -1,  -1, },
-            {  17,  18,  18,  18,  18,  18,  18,  18,  18,  18,  18,  18,  18,  18,  18,  18,  18,  18,  18,  19, },
-        };
+        protected int[,] gameBoard;
 
         public Level(Texture2D backGround, Texture2D spritesheetTexture, Texture2D heroRunningTexture, Texture2D heroIdleTexture, Texture2D basicEnemyTexture, Texture2D advancedEnemyTexture, Texture2D trapTexture, Texture2D pickUpTexture)
         {
@@ -74,17 +55,7 @@ namespace Portal2D.Classes.Level
             spriteSheet.GetItemsFromProperties(256, 256, 16, 16);
 
             hero = new Hero(heroRunningTexture,heroIdleTexture, new KeyboardReader());
-            enemy1 = new BasicEnemy(this.basicEnemyTexture, new Vector2(750, 860), 500, 1000);
-            enemy2 = new AdvancedEnemy(this.advancedEnemyTexture, new Vector2(1200, 860), hero);
-            trap = new Trap(trapTexture, new Vector2(200, 1000));
-            pickUp = new PickUps(pickUpTexture);
-            AddGameObject(enemy1);
-            AddGameObject(enemy2);
             AddGameObject(hero);
-            AddGameObject(trap);
-            AddGameObject(pickUp);
-
-            CreateTiles();
         }
 
         public void Update(GameTime gameTime)
@@ -193,7 +164,7 @@ namespace Portal2D.Classes.Level
             GameObjects.Add(gameObject);
         }
 
-        private void CreateTiles()
+        protected void CreateTiles()
         {
             for(int y = 0; y < gameBoard.GetLength(0); y++)
             {
@@ -212,7 +183,7 @@ namespace Portal2D.Classes.Level
             }
         }
 
-        public void reset()
+        public virtual void reset()
         {
             GameObjects = new List<IGameObject>();
 
@@ -223,15 +194,7 @@ namespace Portal2D.Classes.Level
             this.lives = 3;
             this.vulnerable = true;
             this.score = 0;
-            enemy1 = new BasicEnemy(this.basicEnemyTexture, new Vector2(750, 860), 500, 1000);
-            enemy2 = new AdvancedEnemy(this.advancedEnemyTexture, new Vector2(1200, 860), hero);
-            trap = new Trap(trapTexture, new Vector2(200, 1000));
-            pickUp = new PickUps(pickUpTexture);
-            AddGameObject(enemy1);
-            AddGameObject(enemy2);
             AddGameObject(hero);
-            AddGameObject(trap);
-            AddGameObject(pickUp);
 
             CreateTiles();
         }
