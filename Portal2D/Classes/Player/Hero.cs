@@ -96,17 +96,17 @@ namespace Portal2D.Classes.Player
 
         public void Move()
         {
-            MovementManager.MoveHorizontal(this);
+            MovementManager.Instance().MoveHorizontal(this);
         }
 
         public void Jump()
         {
-            MovementManager.Jump(this);
+            MovementManager.Instance().Jump(this);
         }
 
         public void Fall()
         {
-            MovementManager.Fall(this);
+            MovementManager.Instance().Fall(this);
         }
 
         public void ChangeInput(IInputReader inputReader)

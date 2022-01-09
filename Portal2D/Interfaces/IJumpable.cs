@@ -1,6 +1,6 @@
 ﻿namespace Portal2D.Interfaces
 {
-    internal interface IJumpable : IMoveable
+    public interface IJumpable : IMoveable
     {
         public bool CanJump { get; set; }
         public bool IsJumping { get; set; }

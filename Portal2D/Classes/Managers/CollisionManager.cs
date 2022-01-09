@@ -16,7 +16,7 @@ namespace Portal2D.Classes.Managers
         public static Rectangle PredictCollisionHorizontal<T>(T gameObject) 
             where T : ICollidable, IMoveable
         {
-            Vector2 futurePosition = MovementManager.PredictMoveHorizontal(gameObject);
+            Vector2 futurePosition = MovementManager.Instance().PredictMoveHorizontal(gameObject);
 
             Rectangle futureHitBox = new Rectangle((int)futurePosition.X, (int)futurePosition.Y, gameObject.HitBox.Width, gameObject.HitBox.Height);
             return futureHitBox;
@@ -25,7 +25,7 @@ namespace Portal2D.Classes.Managers
         public static Rectangle PredictFallCollision<T>(T gameObject)
             where T : ICollidable, IMoveable
         {
-            Vector2 futurePosition = MovementManager.PredictFall(gameObject);
+            Vector2 futurePosition = MovementManager.Instance().PredictFall(gameObject);
 
             Rectangle futureHitBox = new Rectangle((int)futurePosition.X, (int)futurePosition.Y, gameObject.HitBox.Width, gameObject.HitBox.Height);
             return futureHitBox;
@@ -34,7 +34,7 @@ namespace Portal2D.Classes.Managers
         public static Rectangle PredictJumpCollision<T>(T gameObject)
             where T: ICollidable, IJumpable
         {
-            Vector2 futurePosition = MovementManager.PredictJump(gameObject);
+            Vector2 futurePosition = MovementManager.Instance().PredictJump(gameObject);
 
             Rectangle futureHitBox = new Rectangle((int)futurePosition.X, (int)futurePosition.Y, gameObject.HitBox.Width, gameObject.HitBox.Height);
             return futureHitBox;

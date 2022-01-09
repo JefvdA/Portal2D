@@ -4,9 +4,21 @@ using Portal2D.Interfaces;
 
 namespace Portal2D.Classes.Managers
 {
-    static class MovementManager
+    public class MovementManager
     {
-        public static void MoveHorizontal(IMoveable moveable)
+        private volatile static MovementManager instance;
+        private MovementManager() { }
+
+        public static MovementManager Instance()
+        {
+            if (instance == null)
+            {
+                instance = new MovementManager();
+            }
+            return instance;
+        }
+
+        public void MoveHorizontal(IMoveable moveable)
         {
             var direction = moveable.InputReader.GetHorizontal();
             var distance = new Vector2(direction * moveable.Speed, 0);
@@ -31,7 +43,7 @@ namespace Portal2D.Classes.Managers
             }
         }
 
-        public static void Jump(IJumpable jumpable)
+        public void Jump(IJumpable jumpable)
         {
             bool hasJumped = jumpable.InputReader.IsKeyPressed(Keys.Space);
             var distance = new Vector2(0, 0);
@@ -63,7 +75,7 @@ namespace Portal2D.Classes.Managers
                 jumpable.CanJump = true;
         }
 
-        public static void Fall(IMoveable moveable)
+        public void Fall(IMoveable moveable)
         {
             var distance = new Vector2(0, GameManager.Gravity);
 
@@ -88,7 +100,7 @@ namespace Portal2D.Classes.Managers
             }
         }
 
-        public static Vector2 PredictMoveHorizontal(IMoveable moveable)
+        public Vector2 PredictMoveHorizontal(IMoveable moveable)
         {
             var direction = moveable.InputReader.GetHorizontal();
             var distance = new Vector2(direction * moveable.Speed, 0);
@@ -97,7 +109,7 @@ namespace Portal2D.Classes.Managers
             return futurePosition;
         }
 
-        public static Vector2 PredictFall(IMoveable moveable)
+        public Vector2 PredictFall(IMoveable moveable)
         {
             var distance = new Vector2(0, GameManager.Gravity);
             var futurePosition = moveable.Position + distance;
@@ -105,7 +117,7 @@ namespace Portal2D.Classes.Managers
             return futurePosition;
         }
 
-        public static Vector2 PredictJump(IJumpable jumpable)
+        public Vector2 PredictJump(IJumpable jumpable)
         {
             var jumpForce = jumpable.JumpHeight / 12;
             var distance = new Vector2(0, -jumpForce);
