@@ -1,7 +1,6 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Input;
 using Portal2D.Interfaces;
-using System.Diagnostics;
 
 namespace Portal2D.Classes.Managers
 {

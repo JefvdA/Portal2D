@@ -1,5 +1,4 @@
-﻿using Portal2D.Classes.Managers;
-using Portal2D.Interfaces;
+﻿using Portal2D.Interfaces;
 using System.Diagnostics;
 
 namespace Portal2D.Implementations

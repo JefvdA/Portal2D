@@ -1,9 +1,6 @@
 ﻿using Microsoft.Xna.Framework;
 using Portal2D.Classes.PickUp;
 using Portal2D.Interfaces;
-using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace Portal2D.Implementations
 {

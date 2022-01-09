@@ -5,7 +5,6 @@ using Portal2D.Classes.Main;
 using Portal2D.Classes.Main.Spritesheet;
 using Portal2D.Classes.Managers;
 using Portal2D.Classes.Player;
-using Portal2D.Classes.PickUp;
 using Portal2D.Implementations;
 using Portal2D.Interfaces;
 using System.Collections.Generic;

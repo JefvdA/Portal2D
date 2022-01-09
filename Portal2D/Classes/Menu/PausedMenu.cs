@@ -3,9 +3,6 @@ using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using Portal2D.Classes.Managers;
 using Portal2D.Implementations;
-using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace Portal2D.Classes.Menu
 {

@@ -2,7 +2,6 @@
 using Microsoft.Xna.Framework.Graphics;
 using Portal2D.Classes.Enemies;
 using Portal2D.Classes.PickUp;
-using Portal2D.Implementations;
 
 namespace Portal2D.Classes.Level
 {

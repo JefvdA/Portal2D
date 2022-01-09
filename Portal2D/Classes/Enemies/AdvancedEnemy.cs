@@ -1,7 +1,6 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Portal2D.Interfaces;
-using System.Diagnostics;
 
 namespace Portal2D.Classes.Enemies
 {
