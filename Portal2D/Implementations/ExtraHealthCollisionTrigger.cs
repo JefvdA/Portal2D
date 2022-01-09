@@ -4,7 +4,7 @@ using Portal2D.Interfaces;
 
 namespace Portal2D.Implementations
 {
-    class ExtraHealthCollisionTrigger : PickUpAble, ICollisionTrigger
+    class ExtraHealthCollisionTrigger : PickUpAble
     {
         public ExtraHealthCollisionTrigger(PickUps _pickUp) : base(_pickUp) {}
         public override void OnTrigger()

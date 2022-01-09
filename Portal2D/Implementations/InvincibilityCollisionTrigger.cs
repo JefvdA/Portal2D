@@ -4,7 +4,7 @@ using Portal2D.Interfaces;
 
 namespace Portal2D.Implementations
 {
-    class InvincibilityCollisionTrigger : PickUpAble,ICollisionTrigger
+    class InvincibilityCollisionTrigger : PickUpAble
     {
         public InvincibilityCollisionTrigger(PickUps _pickUp) : base(_pickUp) { }
         public override void OnTrigger()
