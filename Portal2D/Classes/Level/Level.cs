@@ -12,7 +12,7 @@ using System.Collections.Generic;
 
 namespace Portal2D.Classes.Level
 {
-    public class Level
+    abstract public class Level
     {
         public int score = 0;
         public int scoreNeeded; 

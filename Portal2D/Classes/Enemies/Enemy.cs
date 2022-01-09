@@ -6,7 +6,7 @@ using Portal2D.Interfaces;
 
 namespace Portal2D.Classes.Enemies
 {
-    class Enemy : IGameObject, ICollidable
+    abstract class Enemy : IGameObject, ICollidable
     {
         private Texture2D texture;
         public Vector2 Position { get; set; }

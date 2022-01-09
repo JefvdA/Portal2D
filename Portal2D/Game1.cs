@@ -18,7 +18,7 @@ namespace Portal2D
         private GraphicsDeviceManager _graphics;
         private SpriteBatch _spriteBatch;
 
-        private const bool SHOW_HITBOXES = true;
+        private const bool SHOW_HITBOXES = false;
 
         // Reference to Level
         public static Level currentLevel;
